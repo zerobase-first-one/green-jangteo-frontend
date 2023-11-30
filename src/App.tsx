@@ -3,6 +3,7 @@ import Login from "./routes/Login";
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
 import Home from "./routes/Home";
+import Signup from "./routes/Signup";
 
 const GlobalStyle = createGlobalStyle`
   ${reset};
@@ -27,6 +28,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/users/login" element={<Login />}></Route>
+        <Route path="/users/signup" element={<Signup />}></Route>
       </Routes>
     </BrowserRouter>
   );
