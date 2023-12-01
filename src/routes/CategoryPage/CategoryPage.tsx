@@ -28,7 +28,6 @@ const CategoryPage = () => {
             setProducts(response.data)
          })
          .catch(err => console.log(err.message));
-      
    }, []);
 
    const {firstCategory} = useParams();
