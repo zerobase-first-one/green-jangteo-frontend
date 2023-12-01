@@ -3,6 +3,7 @@ import Header from "../components/Header";
 import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { BASE_URL } from "../constant/union";
 
 const Wrapper = styled.div`
   display: flex;
@@ -67,10 +68,10 @@ export default function Login() {
   const [error, setError] = useState("");
 
   const login = async ({ username, password }: LoginProps) => {
-    const response = await axios.post(
-      "https://221a0901-f1cb-4b6b-9d22-44830818381a.mock.pstmn.io/users/login",
-      { username, password }
-    );
+    const response = await axios.post(`${BASE_URL}/users/login`, {
+      username,
+      password,
+    });
     const { access_token } = response.data;
     if (access_token) {
       localStorage.setItem("accessToken", access_token);
