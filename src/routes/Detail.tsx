@@ -1,10 +1,17 @@
 import styled from "styled-components";
 import Header from "../components/Header";
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
-import { Link, Outlet, useMatch, useParams } from "react-router-dom";
+import {
+  Link,
+  Outlet,
+  useMatch,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../constant/union";
+import DetailPageModal from "../components/modal/DetailPageModal";
 
 const Wrapper = styled.div`
   width: 430px;
@@ -72,18 +79,20 @@ interface ProductType {
 
 export default function Detail() {
   const { productId } = useParams();
+  const navigate = useNavigate();
   console.log(productId);
   const [product, setProduct] = useState<ProductType>();
   const descriptionMatch = useMatch("products/:productId/description");
   const reviewMatch = useMatch("products/:productId/review");
+  const [clicked, setClicked] = useState(false);
 
-  const token = localStorage.getItem("accessToken");
+  const access_token = localStorage.getItem("accessToken");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`${BASE_URL}/products/${productId}`, {
-          headers: { Authorization: token },
+          headers: { Authorization: access_token },
         });
         setProduct(response.data.product);
       } catch (error) {
@@ -92,7 +101,16 @@ export default function Detail() {
     };
 
     fetchData();
-  }, [productId, token]);
+  }, [productId, access_token]);
+
+  const onOrderBtnClick = () => {
+    if (!access_token) {
+      alert("로그인 화면으로 이동합니다.");
+      navigate("/users/login");
+    } else {
+      setClicked(true);
+    }
+  };
 
   return (
     <Wrapper>
@@ -120,8 +138,9 @@ export default function Detail() {
             cursor: "pointer",
           }}
         />
-        <OrderBtn>주문하기</OrderBtn>
+        <OrderBtn onClick={onOrderBtnClick}>주문하기</OrderBtn>
       </BottomActionBar>
+      {clicked ? <DetailPageModal setClicked={setClicked} /> : null}
     </Wrapper>
   );
 }

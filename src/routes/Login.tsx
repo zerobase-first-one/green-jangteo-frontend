@@ -1,9 +1,7 @@
 import styled from "styled-components";
 import Header from "../components/Header";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { accessTokenState } from "../store/atom/auth";
-import { useSetRecoilState } from "recoil";
 import axios from "axios";
 import { BASE_URL } from "../constant/union";
 
@@ -68,7 +66,6 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const setAccessToken = useSetRecoilState(accessTokenState);
 
   const login = async ({ username, password }: LoginProps) => {
     const response = await axios.post(`${BASE_URL}/users/login`, {
@@ -77,7 +74,7 @@ export default function Login() {
     });
     const { access_token } = response.data;
     if (access_token) {
-      setAccessToken(access_token);
+      localStorage.setItem("accessToken", access_token);
     }
   };
 
@@ -105,6 +102,12 @@ export default function Login() {
       setPassword(value);
     }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("accessToken")) {
+      navigate("/");
+    }
+  }, [navigate]);
 
   return (
     <Wrapper>

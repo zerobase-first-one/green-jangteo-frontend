@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Header from "../components/Header";
 import axios from "axios";
 import { BASE_URL } from "../constant/union";
+import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
   display: flex;
@@ -56,6 +57,7 @@ interface IForm {
 }
 
 export default function Signup() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -84,6 +86,8 @@ export default function Signup() {
         userAddress: data.userAddress,
       });
       console.log("회원가입 성공", response);
+      alert("회원가입이 완료되었습니다.");
+      navigate("/users/login");
     } catch (e) {
       console.error(e);
     }
