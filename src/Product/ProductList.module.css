@@ -1,0 +1,28 @@
+.container {
+   padding: 0 20px;
+}
+
+h2.title {
+   font-size: 24px;
+   font-weight: bold;
+   margin: 50px 0 20px;
+}
+
+.membershipIcon {
+   margin-left: 5px;
+   transform: translateY(2px);
+   color: var(--maincolor);
+}
+
+.containerBox {
+   position: relative;
+}
+
+ul.listBox {
+   display: flex;
+   width: 300%;
+   height: 100%;
+   position: relative;
+   transition: .3s ease-out;
+   padding-bottom: 10px;
+}
