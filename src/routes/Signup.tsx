@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import Header from "../components/Header";
 import axios from "axios";
+import { BASE_URL } from "../constant/union";
 
 const Wrapper = styled.div`
   display: flex;
@@ -76,15 +77,12 @@ export default function Signup() {
     }
 
     try {
-      const response = await axios.post(
-        `https://221a0901-f1cb-4b6b-9d22-44830818381a.mock.pstmn.io/users/signup`,
-        {
-          username: data.username,
-          password: data.password,
-          email: data.email,
-          userAddress: data.userAddress,
-        }
-      );
+      const response = await axios.post(`${BASE_URL}/users/signup`, {
+        username: data.username,
+        password: data.password,
+        email: data.email,
+        userAddress: data.userAddress,
+      });
       console.log("회원가입 성공", response);
     } catch (e) {
       console.error(e);

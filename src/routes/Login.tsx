@@ -1,8 +1,11 @@
 import styled from "styled-components";
 import Header from "../components/Header";
-import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { accessTokenState } from "../store/atom/auth";
+import { useSetRecoilState } from "recoil";
+import axios from "axios";
+import { BASE_URL } from "../constant/union";
 
 const Wrapper = styled.div`
   display: flex;
@@ -65,15 +68,16 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const setAccessToken = useSetRecoilState(accessTokenState);
 
   const login = async ({ username, password }: LoginProps) => {
-    const response = await axios.post(
-      "https://221a0901-f1cb-4b6b-9d22-44830818381a.mock.pstmn.io/users/login",
-      { username, password }
-    );
+    const response = await axios.post(`${BASE_URL}/users/login`, {
+      username,
+      password,
+    });
     const { access_token } = response.data;
     if (access_token) {
-      localStorage.setItem("accessToken", access_token);
+      setAccessToken(access_token);
     }
   };
 
@@ -83,11 +87,12 @@ export default function Login() {
     try {
       setLoading(true);
       await login({ username, password });
+      navigate("/");
     } catch (e) {
       setError("입력하신 정보가 일치하지 않습니다.");
+    } finally {
+      setLoading(false);
     }
-    navigate("/");
-    setLoading(false);
   };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -120,13 +125,13 @@ export default function Login() {
           name="password"
           placeholder="비밀번호"
           type="password"
-          minLength={4}
+          minLength={8}
           required
         />
         <Input
           className="login-btn"
           type="submit"
-          value={isLoading ? "Loading..." : "로그인하기"}
+          value={isLoading ? "로그인 중..." : "로그인하기"}
         />
         <CreateAccount>
           <Link to={"/users/signup"}>

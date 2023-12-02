@@ -4,6 +4,7 @@ import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import { Link, Outlet, useMatch, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { BASE_URL } from "../constant/union";
 
 const Wrapper = styled.div`
   width: 430px;
@@ -81,10 +82,9 @@ export default function Detail() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `https://221a0901-f1cb-4b6b-9d22-44830818381a.mock.pstmn.io/products/${productId}`,
-          { headers: { Authorization: token } }
-        );
+        const response = await axios.get(`${BASE_URL}/products/${productId}`, {
+          headers: { Authorization: token },
+        });
         setProduct(response.data.product);
       } catch (error) {
         console.error("Error fetching data:", error);
