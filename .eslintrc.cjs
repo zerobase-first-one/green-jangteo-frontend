@@ -16,4 +16,7 @@ module.exports = {
     ],
     "@typescript-eslint/no-explicit-any": "off",
   },
-}
+  settings: {
+    react: { version: "detect" },
+  },
+};

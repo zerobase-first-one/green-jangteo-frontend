@@ -32,11 +32,6 @@ const CategoryPage = () => {
    `;
 
 
-
-
-
-
-
    const [products, setProducts] = useState([
       //    {
       //       productId: 0,

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Header from "../components/Header";
 import axios from "axios";
 import { BASE_URL } from "../constant/union";
+import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
   display: flex;
@@ -56,6 +57,7 @@ interface IForm {
 }
 
 export default function Signup() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -69,21 +71,25 @@ export default function Signup() {
 
   const onValid = async (data: IForm) => {
     if (data.password !== data.passwordConfirm) {
-      return setError(
+      setError(
         "passwordConfirm",
         { message: "비밀번호가 일치하지 않습니다" },
         { shouldFocus: true }
       );
+      return;
     }
 
     try {
-      const response = await axios.post(`${BASE_URL}/users/signup`, {
-        username: data.username,
-        password: data.password,
-        email: data.email,
-        userAddress: data.userAddress,
-      });
-      console.log("회원가입 성공", response);
+      await axios
+        .post(`${BASE_URL}/users/signup`, {
+          username: data.username,
+          password: data.password,
+          email: data.email,
+          userAddress: data.userAddress,
+        })
+        .then((response) => console.log(response));
+      alert("회원가입이 완료되었습니다.");
+      navigate("/users/login");
     } catch (e) {
       console.error(e);
     }
@@ -125,18 +131,35 @@ export default function Signup() {
           {...register("email", {
             required: "이메일을 입력해주세요",
             pattern: {
-              value: /^[A-Za-z0-9._%+-]+@naver.com$/,
-              message: "@naver.com 이메일을 사용해주세요",
+              value: /^[A-Za-z0-9._%+-]+@abc.com$/,
+              message: "@abc.com 이메일을 사용해주세요",
             },
           })}
-          placeholder="이메일@naver.com"
+          placeholder="이메일@abc.com"
         />
         <Error>{errors?.email?.message}</Error>
         <Input
-          {...register("userAddress", { required: "주소를 입력해주세요" })}
-          placeholder="주소"
+          {...register("city", { required: "도시를 입력해주세요" })}
+          placeholder="도시"
         />
-        <Error>{errors?.userAddress?.message}</Error>
+        <Error>{errors?.city?.message}</Error>
+        <Input
+          {...register("detailedAddress", {
+            required: "상세주소를 입력해주세요",
+          })}
+          placeholder="상세주소"
+        />
+        <Error>{errors?.detailedAddress?.message}</Error>
+        <Input
+          {...register("street", { required: "도로명을 입력해주세요" })}
+          placeholder="도로명"
+        />
+        <Error>{errors?.street?.message}</Error>
+        <Input
+          {...register("zipcode", { required: "우편번호를 입력해주세요" })}
+          placeholder="우편번호"
+        />
+        <Error>{errors?.zipcode?.message}</Error>
         <Input className="signin-btn" type="submit" value="회원가입하기" />
       </Form>
     </Wrapper>
