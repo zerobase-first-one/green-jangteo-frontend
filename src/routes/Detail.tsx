@@ -12,6 +12,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../constant/union";
 import DetailPageModal from "../components/modal/DetailPageModal";
+import { useRecoilValue } from "recoil";
+import { tokenState } from "../store/atom/auth";
 
 const Wrapper = styled.div`
   width: 430px;
@@ -80,31 +82,36 @@ interface ProductType {
 export default function Detail() {
   const { productId } = useParams();
   const navigate = useNavigate();
-  console.log(productId);
   const [product, setProduct] = useState<ProductType>();
   const descriptionMatch = useMatch("products/:productId/description");
   const reviewMatch = useMatch("products/:productId/review");
   const [clicked, setClicked] = useState(false);
-
-  const access_token = localStorage.getItem("accessToken");
+  const token = useRecoilValue(tokenState);
+  console.log("1", token);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/products/${productId}`, {
-          headers: { Authorization: access_token },
-        });
-        setProduct(response.data.product);
+        console.log("2", token);
+        await axios
+          .get(`${BASE_URL}/products/${productId}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((response) => {
+            setProduct(response.data.product);
+          });
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
-  }, [productId, access_token]);
+  }, [productId, token]);
 
   const onOrderBtnClick = () => {
-    if (!access_token) {
+    if (token === null) {
       alert("로그인 화면으로 이동합니다.");
       navigate("/users/login");
     } else {

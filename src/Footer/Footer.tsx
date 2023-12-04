@@ -1,12 +1,26 @@
-import styles from "./Footer.module.css"
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+   height: 100px;
+   background-color: #dedede;
+   margin-top: 80px;
+   padding: 20px;
+`;
+const FooterList = styled.ul`
+   li {}
+`;
+
+
 
 const Footer = () => {
+
+
    return (
-      <footer className={styles.footer}>
-         <ul className={styles.footerNav}>
+      <Wrapper>
+         <FooterList>
             <li>고객센터</li>
-         </ul>
-      </footer>
+         </FooterList>
+      </Wrapper>
    )
 }
 

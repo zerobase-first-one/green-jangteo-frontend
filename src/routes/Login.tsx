@@ -1,9 +1,11 @@
 import styled from "styled-components";
 import Header from "../components/Header";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../constant/union";
+import { useSetRecoilState } from "recoil";
+import { tokenState } from "../store/atom/auth";
 
 const Wrapper = styled.div`
   display: flex;
@@ -56,34 +58,42 @@ const Error = styled.span`
 `;
 
 interface LoginProps {
-  username: string;
+  emailOrUsername: string;
   password: string;
 }
 
 export default function Login() {
   const navigate = useNavigate();
   const [isLoading, setLoading] = useState(false);
-  const [username, setUsername] = useState("");
+  const [emailOrUsername, setEmailOrUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const setToken = useSetRecoilState(tokenState);
+  // const [token, setToken] = useRecoilState(tokenState);
 
-  const login = async ({ username, password }: LoginProps) => {
-    const response = await axios.post(`${BASE_URL}/users/login`, {
-      username,
-      password,
-    });
-    const { access_token } = response.data;
-    if (access_token) {
-      localStorage.setItem("accessToken", access_token);
-    }
+  const login = async ({ emailOrUsername, password }: LoginProps) => {
+    const data = { emailOrUsername, password };
+    await axios
+      .post(`${BASE_URL}/users/login`, data)
+      .then((response) => {
+        const { token } = response.data;
+        console.log(response);
+        console.log(token);
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        setToken(token);
+      })
+      .catch((e) => {
+        console.error("Login Error:", e);
+        throw e;
+      });
   };
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (isLoading || username === "" || password === "") return;
+    if (isLoading || emailOrUsername === "" || password === "") return;
     try {
+      await login({ emailOrUsername, password });
       setLoading(true);
-      await login({ username, password });
       navigate("/");
     } catch (e) {
       setError("입력하신 정보가 일치하지 않습니다.");
@@ -96,18 +106,18 @@ export default function Login() {
     const {
       target: { name, value },
     } = e;
-    if (name === "username") {
-      setUsername(value);
+    if (name === "emailOrUsername") {
+      setEmailOrUsername(value);
     } else if (name === "password") {
       setPassword(value);
     }
   };
 
-  useEffect(() => {
-    if (localStorage.getItem("accessToken")) {
-      navigate("/");
-    }
-  }, [navigate]);
+  // useEffect(() => {
+  //   if (token !== null) {
+  //     navigate("/");
+  //   }
+  // }, [navigate, token]);
 
   return (
     <Wrapper>
@@ -116,9 +126,9 @@ export default function Login() {
       <Form onSubmit={onSubmit}>
         <Input
           onChange={onChange}
-          value={username}
-          name="username"
-          placeholder="아이디"
+          value={emailOrUsername}
+          name="emailOrUsername"
+          placeholder="이메일 또는 아이디"
           type="text"
           required
         />
