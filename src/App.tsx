@@ -21,13 +21,28 @@ import Review from "./routes/Review";
 
 const GlobalStyle = createGlobalStyle`
   ${reset};
+  :root {
+    --maincolor : #16A114;
+  }
+
+  #root {
+    width: 430px;
+    position: relative;
+    color: #333333;
+    height: 800px;
+    overflow-x: hidden;
+  }
+  
   * {
     box-sizing: border-box;
   }
+
   body {
     width: 430px;
-    height: 800px;
     background-color: beige;
+    color: #333333;
+    height: 800px;
+    overflow-x: hidden;
     a {
       text-decoration: none;
       color: inherit;
@@ -39,7 +54,7 @@ function App() {
   return (
     <BrowserRouter>
       <GlobalStyle />
-      <Header />
+      {/* <Header /> */}
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/:firstCategory" element={<CategoryPage/>}></Route>
