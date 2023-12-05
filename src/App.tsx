@@ -1,9 +1,3 @@
-
-import './App.css'
-import './index.css'
-import './reset.css'
-
-
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./routes/Login";
 
@@ -13,12 +7,9 @@ import Signup from "./routes/Signup";
 import Detail from "./routes/Detail";
 import Description from "./routes/Description";
 import Review from "./routes/Review";
-import Header from './components/Header';
 import Home from './routes/Home/Home';
-import CategoryPage from './routes/CategoryPage/CategoryPage';
-import Footer from './Footer/Footer';
-import NavBar from './NavBar/NavBar';
-// import Home from './routes/Home';
+import CategoryPage from "./routes/CategoryPage";
+import Search from "./routes/Search";
 
 const GlobalStyle = createGlobalStyle`
   ${reset};
@@ -56,10 +47,9 @@ function App() {
   return (
     <BrowserRouter>
       <GlobalStyle />
-      <Header />
       <Routes>
-      <Route path="/" element={<Home />}></Route>
-      <Route path="/:firstCategory" element={<CategoryPage/>}></Route>
+        <Route path="/" element={<Home />}></Route>
+        <Route path="/:firstCategory" element={<CategoryPage/>}></Route>
         <Route path="/:firstCategory/:secondCategory" element={<CategoryPage/>}></Route>
         <Route path="/users/login" element={<Login />}></Route>
         <Route path="/users/signup" element={<Signup />}></Route>
@@ -67,9 +57,8 @@ function App() {
           <Route path="description" element={<Description />} />
           <Route path="review" element={<Review />} />
         </Route>
+        <Route path="/search" element={<Search />}></Route>
       </Routes>
-      <Footer />
-      <NavBar />
     </BrowserRouter>
   );
 }

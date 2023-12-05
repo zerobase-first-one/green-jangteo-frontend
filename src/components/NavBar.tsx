@@ -9,7 +9,7 @@ const Wrapper = styled.div`
    display: flex;
    align-items: center;
    justify-content: space-between;
-   position: sticky;
+   position: absolute;
    bottom: 0;
    z-index: 999;
    width: 100%;
@@ -48,9 +48,13 @@ const NavBar = () => {
          <Link to={"/"}>
             <button type="button"><AiFillHome /><span className="blind">홈</span></button>
          </Link>
-         <button type="button"><IoSearch /><span className="blind">검색</span></button>
+         <Link to={"/search"}>
+            <button type="button"><IoSearch /><span className="blind">검색</span></button>
+         </Link>
          <button type="button"><IoIosDocument /><span className="blind">주문내역</span></button>
-         <button type="button"><BsPersonFill /><span className="blind">마이페이지</span></button>
+         <Link to={"/users/login"}>
+            <button type="button"><BsPersonFill /><span className="blind">마이페이지</span></button>
+         </Link>
       </Wrapper>
    )
 }

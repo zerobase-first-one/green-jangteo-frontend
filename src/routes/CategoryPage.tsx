@@ -3,19 +3,22 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { IoIosArrowForward } from "react-icons/io";
-import ProductListItem from "../../Product/ProductListItem";
+import ProductListItem from "../Product/ProductListItem";
+import Footer from "../components/Footer";
+import NavBar from "../components/NavBar";
+import Header from "../components/Header";
 
 
 const CategoryPage = () => {
 
    const Wrapper = styled.div`
-         padding: 0 20px;
-         height: 100%;
-         &::after {
-            content: "";
-            display: block;
-            clear: both;
-         }
+      padding: 0 20px;
+      height: 100%;
+      &::after {
+         content: "";
+         display: block;
+         clear: both;
+      }
    `;
    const CategoryNameBox = styled.div`
       display: flex;
@@ -60,17 +63,22 @@ const CategoryPage = () => {
    const {secondCategory} = useParams();
    
    return (
-      <Wrapper>
-         <CategoryNameBox>
-            <FirstCategory><Link to={`/${firstCategory}`}>{firstCategory}</Link></FirstCategory>
-            {secondCategory !== undefined && <SecondCategory><IoIosArrowForward style={{margin: "0 5px"}} />{secondCategory}</SecondCategory>}
-         </CategoryNameBox>
-         {products.map((item: any) => (
-            secondCategory !== undefined 
-            ? secondCategory == item.categories.secondCategory && <ProductListItem imgURL={item.imgURL} title={item.productName} price={item.price} key={item.productId} membership={item.membership} width={`50%`}/> 
-            : firstCategory == item.categories.firstCategory && <ProductListItem imgURL={item.imgURL} title={item.productName} price={item.price} key={item.productId} membership={item.membership} width={`50%`}/>
-         ))}
-      </Wrapper>
+      <>
+         <Header />
+         <Wrapper>
+            <CategoryNameBox>
+               <FirstCategory><Link to={`/${firstCategory}`}>{firstCategory}</Link></FirstCategory>
+               {secondCategory !== undefined && <SecondCategory><IoIosArrowForward style={{margin: "0 5px"}} />{secondCategory}</SecondCategory>}
+            </CategoryNameBox>
+            {products.map((item: any) => (
+               secondCategory !== undefined 
+               ? secondCategory == item.categories.secondCategory && <ProductListItem imgURL={item.imgURL} title={item.productName} price={item.price} key={item.productId} membership={item.membership} width={`50%`}/> 
+               : firstCategory == item.categories.firstCategory && <ProductListItem imgURL={item.imgURL} title={item.productName} price={item.price} key={item.productId} membership={item.membership} width={`50%`}/>
+            ))}
+         </Wrapper>
+         <Footer />
+         <NavBar />
+      </>
 
    )
 }

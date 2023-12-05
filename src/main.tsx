@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
-import "./index.css";
 import { RecoilRoot } from "recoil";
 import axios from "axios";
 import { BASE_URL } from "./constant/union.ts";

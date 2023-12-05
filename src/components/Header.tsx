@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { FaBell, FaShoppingCart } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
@@ -9,7 +8,7 @@ import { useReducer } from "react";
 const HeaderWrapper = styled.div`
   background-color: #16a114;
   width: 100%;
-  height: 120px;
+  height: 100px;
 `;
 
 const HeaderContainer = styled.header`
@@ -98,6 +97,25 @@ const List = styled.li`
 const UtilBtnBox = styled.div`
   display: flex;
   align-items: center;
+
+  button {
+    color: #ffffff;
+    background: none;
+    border: none;font: inherit;
+    line-height: 1;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 28px;
+  }
+
+  .blind {
+    display: block;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+ }
 `;
 
 const Header = () => {
@@ -183,12 +201,7 @@ const Header = () => {
           <button type="button">
             <FaBell />
             <span
-              style={{
-                display: "block",
-                width: "1px",
-                height: "1px",
-                overflow: "hidden",
-              }}
+              className="blind"
             >
               알림
             </span>
@@ -196,12 +209,7 @@ const Header = () => {
           <button type="button">
             <FaShoppingCart />
             <span
-              style={{
-                display: "block",
-                width: "1px",
-                height: "1px",
-                overflow: "hidden",
-              }}
+              className="blind"
             >
               장바구니
             </span>
