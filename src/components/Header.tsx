@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import { FaBell, FaShoppingCart } from "react-icons/fa";
 import { IoClose } from "react-icons/io5";
@@ -30,6 +29,13 @@ const Logo = styled.h1`
   font-weight: bold;
   text-align: center;
   line-height: 100px;
+
+  .blind {
+    display: block;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
 `;
 
 const CategoryBtn = styled.button`
@@ -45,6 +51,13 @@ const CategoryBtn = styled.button`
   font-size: 32px;
   color: white;
   order: -1;
+
+  .blind {
+    display: block;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
 `;
 
 const Navigation = styled.nav`
@@ -98,6 +111,13 @@ const List = styled.li`
 const UtilBtnBox = styled.div`
   display: flex;
   align-items: center;
+
+  .blind {
+    display: block;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
 `;
 
 const Header = () => {
@@ -127,32 +147,11 @@ const Header = () => {
     <HeaderWrapper>
       <HeaderContainer>
         <Logo>
-          <span
-            style={{
-              display: "block",
-              width: "1px",
-              height: "1px",
-              overflow: "hidden",
-            }}
-          >
-            그린장터
-          </span>
+          <span className="blind">그린장터</span>
         </Logo>
-        <CategoryBtn
-          type="button"
-          onClick={setDisplay}
-        >
+        <CategoryBtn type="button" onClick={setDisplay}>
           {display === "none" ? <TbMenu2 /> : <IoClose />}
-          <span
-            style={{
-              display: "block",
-              width: "1px",
-              height: "1px",
-              overflow: "hidden",
-            }}
-          >
-            카테고리
-          </span>
+          <span className="blind">카테고리</span>
         </CategoryBtn>
         <Navigation style={{ display }}>
           <Ul1deps>
@@ -182,29 +181,11 @@ const Header = () => {
         <UtilBtnBox>
           <button type="button">
             <FaBell />
-            <span
-              style={{
-                display: "block",
-                width: "1px",
-                height: "1px",
-                overflow: "hidden",
-              }}
-            >
-              알림
-            </span>
+            <span className="blind">알림</span>
           </button>
           <button type="button">
             <FaShoppingCart />
-            <span
-              style={{
-                display: "block",
-                width: "1px",
-                height: "1px",
-                overflow: "hidden",
-              }}
-            >
-              장바구니
-            </span>
+            <span className="blind">장바구니</span>
           </button>
         </UtilBtnBox>
       </HeaderContainer>
