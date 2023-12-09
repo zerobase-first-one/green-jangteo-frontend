@@ -69,7 +69,6 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const setToken = useSetRecoilState(tokenState);
-  // const [token, setToken] = useRecoilState(tokenState);
 
   const login = async ({ emailOrUsername, password }: LoginProps) => {
     const data = { emailOrUsername, password };
@@ -123,6 +122,7 @@ export default function Login() {
     <Wrapper>
       <Header />
       <Title>로그인</Title>
+      {error !== "" ? <Error>{error}</Error> : null}
       <Form onSubmit={onSubmit}>
         <Input
           onChange={onChange}
@@ -148,14 +148,10 @@ export default function Login() {
         />
         <CreateAccount>
           <Link to={"/users/signup"}>
-            <div>구매자 계정 생성하기 &rarr;</div>
-          </Link>
-          <Link to={"/users/seller-signup"}>
-            <div>판매자 계정 생성하기 &rarr;</div>
+            <div>그린장터 가입하기 &rarr;</div>
           </Link>
         </CreateAccount>
       </Form>
-      {error !== "" ? <Error>{error}</Error> : null}
     </Wrapper>
   );
 }

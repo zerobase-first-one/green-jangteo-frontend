@@ -87,17 +87,15 @@ export default function Detail() {
   const reviewMatch = useMatch("products/:productId/review");
   const [clicked, setClicked] = useState(false);
   const token = useRecoilValue(tokenState);
-  console.log("1", token);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("2", token);
         await axios
           .get(`${BASE_URL}/products/${productId}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+            // headers: {
+            //   Authorization: `Bearer ${token}`,
+            // },
           })
           .then((response) => {
             setProduct(response.data.product);

@@ -9,5 +9,5 @@ const Wrapper = styled.div`
 `;
 
 export default function Description() {
-  return <Wrapper>Desciption</Wrapper>;
+  return <Wrapper>Description</Wrapper>;
 }
