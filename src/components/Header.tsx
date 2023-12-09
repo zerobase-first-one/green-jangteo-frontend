@@ -101,7 +101,8 @@ const UtilBtnBox = styled.div`
   button {
     color: #ffffff;
     background: none;
-    border: none;font: inherit;
+    border: none;
+    font: inherit;
     line-height: 1;
     margin: 0;
     padding: 0;
@@ -176,11 +177,9 @@ const Header = () => {
           <Ul1deps>
             {categories.map((category: any) => (
               <CategoryList key={category.firstCategory}>
-                <List>
-                  <Link to={`/${category.firstCategory}`} onClick={setDisplay}>
-                    {category.firstCategory}
-                  </Link>
-                </List>
+                <Link to={`/${category.firstCategory}`} onClick={setDisplay}>
+                  {category.firstCategory}
+                </Link>
                 <Ul2deps key={category.firstCategory}>
                   {category.secondCategoryList.map((list: any) => (
                     <List key={list.secondCategory}>
@@ -206,14 +205,16 @@ const Header = () => {
               알림
             </span>
           </button>
-          <button type="button">
-            <FaShoppingCart />
-            <span
-              className="blind"
-            >
-              장바구니
-            </span>
-          </button>
+          <Link to={"/carts"}>
+            <button type="button">
+              <FaShoppingCart />
+              <span
+                className="blind"
+              >
+                장바구니
+              </span>
+            </button>
+          </Link>
         </UtilBtnBox>
       </HeaderContainer>
     </HeaderWrapper>

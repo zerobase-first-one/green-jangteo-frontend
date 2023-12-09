@@ -40,11 +40,16 @@ const ProductList = () => {
       // axios.get("https://d53733be-f889-423d-81e7-e8f003a8ebae.mock.pstmn.io/products")
       axios.get("http://localhost:3000/products")
          .then(response => {
+            // const LIMIT = 5;
             setProducts(response.data)
          })
          .catch(err => console.log(err.message));
       
    }, []);
+
+   // const product = products.filter((item) => item.categories.firstCategory === "음식")
+
+   // console.log(product)
 
 
    return (
@@ -57,7 +62,7 @@ const ProductList = () => {
             <Slick>
                {products.map((item: any) => (
                   item.membership == true && <ProductListItem imgURL={item.imgURL} title={item.productName} price={item.price} key={item.productId} membership={item.membership} width={`100%`}/>
-               ))}
+               )).slice(0,4)}
             </Slick>
          <Title>음식</Title>
             <Slick>
