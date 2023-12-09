@@ -12,6 +12,11 @@ import CategoryPage from "./routes/CategoryPage";
 import Search from "./routes/Search";
 import Cart from "./routes/Cart/Cart";
 import Order from "./routes/Order/Order";
+import Board from "./routes/Board";
+import MyBoard from "./routes/MyBoardList";
+import AllBoard from "./routes/AllBoardList";
+import CreatePostForm from "./routes/CreatePostForm";
+import MyBoardDetail from "./routes/MyBoardDetail";
 
 const GlobalStyle = createGlobalStyle`
   ${reset};
@@ -37,8 +42,6 @@ const GlobalStyle = createGlobalStyle`
     width: 430px;
     height: 800px;
     background-color: beige;
-    color: #333333;
-    height: 800px;
     overflow-x: hidden;
     a {
       text-decoration: none;
@@ -53,10 +56,19 @@ function App() {
       <GlobalStyle />
       <Routes>
         <Route path="/" element={<Home />}></Route>
-        <Route path="/:firstCategory" element={<CategoryPage/>}></Route>
-        <Route path="/:firstCategory/:secondCategory" element={<CategoryPage/>}></Route>
+        <Route path="/:firstCategory" element={<CategoryPage />}></Route>
+        <Route
+          path="/:firstCategory/:secondCategory"
+          element={<CategoryPage />}
+        ></Route>
         <Route path="/users/login" element={<Login />}></Route>
         <Route path="/users/signup" element={<Signup />}></Route>
+        <Route path="/posts" element={<Board />}>
+          <Route path="my-post" element={<MyBoard />} />
+          <Route path="all-post" element={<AllBoard />} />
+        </Route>
+        <Route path="/posts/:postId" element={<MyBoardDetail />} />
+        <Route path="/create-post" element={<CreatePostForm />}></Route>
         <Route path="/products/:productId" element={<Detail />}>
           <Route path="description" element={<Description />} />
           <Route path="review" element={<Review />} />

@@ -29,6 +29,13 @@ const Logo = styled.h1`
   font-weight: bold;
   text-align: center;
   line-height: 100px;
+
+  .blind {
+    display: block;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
 `;
 
 const CategoryBtn = styled.button`
@@ -44,6 +51,13 @@ const CategoryBtn = styled.button`
   font-size: 32px;
   color: white;
   order: -1;
+
+  .blind {
+    display: block;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
 `;
 
 const Navigation = styled.nav`
@@ -146,32 +160,11 @@ const Header = () => {
     <HeaderWrapper>
       <HeaderContainer>
         <Logo>
-          <span
-            style={{
-              display: "block",
-              width: "1px",
-              height: "1px",
-              overflow: "hidden",
-            }}
-          >
-            그린장터
-          </span>
+          <span className="blind">그린장터</span>
         </Logo>
-        <CategoryBtn
-          type="button"
-          onClick={setDisplay}
-        >
+        <CategoryBtn type="button" onClick={setDisplay}>
           {display === "none" ? <TbMenu2 /> : <IoClose />}
-          <span
-            style={{
-              display: "block",
-              width: "1px",
-              height: "1px",
-              overflow: "hidden",
-            }}
-          >
-            카테고리
-          </span>
+          <span className="blind">카테고리</span>
         </CategoryBtn>
         <Navigation style={{ display }}>
           <Ul1deps>
@@ -199,22 +192,12 @@ const Header = () => {
         <UtilBtnBox>
           <button type="button">
             <FaBell />
-            <span
-              className="blind"
-            >
-              알림
-            </span>
+            <span className="blind">알림</span>
           </button>
-          <Link to={"/carts"}>
-            <button type="button">
-              <FaShoppingCart />
-              <span
-                className="blind"
-              >
-                장바구니
-              </span>
-            </button>
-          </Link>
+          <button type="button">
+            <FaShoppingCart />
+            <span className="blind">장바구니</span>
+          </button>
         </UtilBtnBox>
       </HeaderContainer>
     </HeaderWrapper>

@@ -12,6 +12,8 @@ const Wrapper = styled.div`
   width: 430px;
   height: 800px;
   background-color: white;
+  overflow: scroll;
+  overflow-x: hidden;
 `;
 
 const Title = styled.h1`
@@ -23,6 +25,26 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const Tabs = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: 500;
+
+  label {
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    cursor: pointer; /* 마우스 호버 시 포인터로 변경 */
+
+    input {
+      margin-right: 8px;
+    }
+  }
 `;
 
 const Input = styled.input`
@@ -49,11 +71,20 @@ const Error = styled.span`
 `;
 
 interface IForm {
+  email: string;
   username: string;
   password: string;
   passwordConfirm: string;
-  email: string;
-  userAddress: string;
+  fullName: string;
+  phone: string;
+  addressDto: {
+    city: string;
+    street: string;
+    zipcode: string;
+    detailedAddress: string;
+  };
+  storeName?: string;
+  roles: string[];
 }
 
 export default function Signup() {
@@ -65,34 +96,47 @@ export default function Signup() {
     setError,
   } = useForm<IForm>({
     defaultValues: {
-      email: "@naver.com",
+      email: "@abc.com",
     },
   });
 
   const onValid = async (data: IForm) => {
     if (data.password !== data.passwordConfirm) {
-      setError(
+      return setError(
         "passwordConfirm",
         { message: "비밀번호가 일치하지 않습니다" },
         { shouldFocus: true }
       );
-      return;
     }
 
     try {
       await axios
         .post(`${BASE_URL}/users/signup`, {
           username: data.username,
+          fullName: data.fullName,
           password: data.password,
+          passwordConfirm: data.passwordConfirm,
           email: data.email,
-          userAddress: data.userAddress,
+          phone: data.phone,
+          addressDto: {
+            city: data.city,
+            detailedAddress: data.detailedAddress,
+            street: data.street,
+            zipcode: data.zipcode,
+          },
+          storeName: data.storeName,
+          roles: [data.roles],
         })
         .then((response) => console.log(response));
-      alert("회원가입이 완료되었습니다.");
-      navigate("/users/login");
-    } catch (e) {
-      console.error(e);
+    } catch (error) {
+      console.error("에러가 발생했습니다:", error);
+
+      if (error.response) {
+        console.error("서버 응답 데이터:", error.response.data);
+      }
     }
+    alert("회원가입이 완료되었습니다.");
+    navigate("/users/login");
   };
 
   return (
@@ -100,6 +144,32 @@ export default function Signup() {
       <Header />
       <Title>회원가입</Title>
       <Form onSubmit={handleSubmit(onValid)}>
+        <Tabs>
+          <label>
+            <input
+              type="radio"
+              {...register("roles", { required: "가입유형을 선택해주세요" })}
+              value="ROLE_BUYER"
+              name="roles"
+            />
+            구매자
+          </label>
+          <label>
+            <input
+              type="radio"
+              {...register("roles", { required: "가입유형을 선택해주세요" })}
+              value="ROLE_SELLER"
+              name="roles"
+            />
+            판매자
+          </label>
+        </Tabs>
+        <Error>{errors?.roles?.message}</Error>
+        <Input
+          {...register("fullName", { required: "성명을 입력해주세요" })}
+          placeholder="성명"
+        />
+        <Error>{errors?.fullName?.message}</Error>
         <Input
           {...register("username", { required: "아이디를 입력해주세요" })}
           placeholder="아이디"
@@ -139,6 +209,11 @@ export default function Signup() {
         />
         <Error>{errors?.email?.message}</Error>
         <Input
+          {...register("phone", { required: "전화번호를 입력해주세요" })}
+          placeholder="전화번호"
+        />
+        <Error>{errors?.phone?.message}</Error>
+        <Input
           {...register("city", { required: "도시를 입력해주세요" })}
           placeholder="도시"
         />
@@ -160,6 +235,11 @@ export default function Signup() {
           placeholder="우편번호"
         />
         <Error>{errors?.zipcode?.message}</Error>
+        <Input
+          {...register("storeName", { required: false })}
+          placeholder="상점명 (판매자로 가입할 경우 필수 입력)"
+        />
+        <Error>{errors?.storeName?.message}</Error>
         <Input className="signin-btn" type="submit" value="회원가입하기" />
       </Form>
     </Wrapper>
