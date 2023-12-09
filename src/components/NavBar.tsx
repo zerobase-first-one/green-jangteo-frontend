@@ -4,6 +4,8 @@ import { IoSearch } from "react-icons/io5";
 import { IoIosDocument } from "react-icons/io";
 import { BsPersonFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { tokenState, userIdState } from "../store/atom/auth";
 
 const Wrapper = styled.div`
   display: flex;
@@ -43,6 +45,9 @@ const Wrapper = styled.div`
 `;
 
 const NavBar = () => {
+  const token = useRecoilValue(tokenState);
+  const userId = useRecoilValue(userIdState);
+
   return (
     <Wrapper>
       <Link to={"/"}>
@@ -59,7 +64,7 @@ const NavBar = () => {
         <IoIosDocument />
         <span className="blind">주문내역</span>
       </button>
-      <Link to={"/users/login"}>
+      <Link to={token ? `users/${userId}/profile` : "/users/login"}>
         <button type="button">
           <BsPersonFill />
           <span className="blind">마이페이지</span>

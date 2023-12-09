@@ -14,3 +14,8 @@ export const tokenState = atom({
     },
   ],
 });
+
+export const userIdState = atom({
+  key: "userIdState",
+  default: null,
+});
