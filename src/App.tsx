@@ -17,6 +17,8 @@ import MyBoard from "./routes/MyBoardList";
 import AllBoard from "./routes/AllBoardList";
 import CreatePostForm from "./routes/CreatePostForm";
 import MyBoardDetail from "./routes/MyBoardDetail";
+import Profile from "./routes/Profile";
+import ChangePassword from "./routes/ChangePassword";
 
 const GlobalStyle = createGlobalStyle`
   ${reset};
@@ -61,14 +63,16 @@ function App() {
           path="/:firstCategory/:secondCategory"
           element={<CategoryPage />}
         ></Route>
-        <Route path="/users/login" element={<Login />}></Route>
-        <Route path="/users/signup" element={<Signup />}></Route>
+        <Route path="/users/login" element={<Login />} />
+        <Route path="/users/signup" element={<Signup />} />
+        <Route path="/users/:userId/profile" element={<Profile />} />
+        <Route path="/users/:userId/password" element={<ChangePassword />} />
         <Route path="/posts" element={<Board />}>
           <Route path="my-post" element={<MyBoard />} />
           <Route path="all-post" element={<AllBoard />} />
         </Route>
         <Route path="/posts/:postId" element={<MyBoardDetail />} />
-        <Route path="/create-post" element={<CreatePostForm />}></Route>
+        <Route path="/create-post" element={<CreatePostForm />} />
         <Route path="/products/:productId" element={<Detail />}>
           <Route path="description" element={<Description />} />
           <Route path="review" element={<Review />} />

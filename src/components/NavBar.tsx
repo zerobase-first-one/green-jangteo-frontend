@@ -4,6 +4,8 @@ import { IoSearch } from "react-icons/io5";
 import { IoIosDocument } from "react-icons/io";
 import { BsPersonFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import { tokenState, userIdState } from "../store/atom/auth";
 
 const Wrapper = styled.div`
    display: flex;
@@ -43,20 +45,33 @@ const Wrapper = styled.div`
 
 
 const NavBar = () => {
-   return (
-      <Wrapper>
-         <Link to={"/"}>
-            <button type="button"><AiFillHome /><span className="blind">홈</span></button>
-         </Link>
-         <Link to={"/search"}>
-            <button type="button"><IoSearch /><span className="blind">검색</span></button>
-         </Link>
-         <button type="button"><IoIosDocument /><span className="blind">주문내역</span></button>
-         <Link to={"/users/login"}>
-            <button type="button"><BsPersonFill /><span className="blind">마이페이지</span></button>
-         </Link>
-      </Wrapper>
-   )
-}
+  const token = useRecoilValue(tokenState);
+  const userId = useRecoilValue(userIdState);
+
+  return (
+    <Wrapper>
+      <Link to={"/"}>
+        <button type="button">
+          <AiFillHome />
+          <span className="blind">홈</span>
+        </button>
+      </Link>
+      <button type="button">
+        <IoSearch />
+        <span className="blind">검색</span>
+      </button>
+      <button type="button">
+        <IoIosDocument />
+        <span className="blind">주문내역</span>
+      </button>
+      <Link to={token ? `users/${userId}/profile` : "/users/login"}>
+        <button type="button">
+          <BsPersonFill />
+          <span className="blind">마이페이지</span>
+        </button>
+      </Link>
+    </Wrapper>
+  );
+};
 
 export default NavBar
