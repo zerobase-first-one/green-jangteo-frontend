@@ -8,7 +8,7 @@ import { useReducer } from "react";
 const HeaderWrapper = styled.div`
   background-color: #16a114;
   width: 100%;
-  height: 120px;
+  height: 100px;
 `;
 
 const HeaderContainer = styled.header`
@@ -112,12 +112,25 @@ const UtilBtnBox = styled.div`
   display: flex;
   align-items: center;
 
+  button {
+    color: #ffffff;
+    background: none;
+    border: none;
+    font: inherit;
+    line-height: 1;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 28px;
+  }
+
   .blind {
     display: block;
     width: 1px;
     height: 1px;
     overflow: hidden;
-  }
+ }
 `;
 
 const Header = () => {
@@ -157,11 +170,9 @@ const Header = () => {
           <Ul1deps>
             {categories.map((category: any) => (
               <CategoryList key={category.firstCategory}>
-                <List>
-                  <Link to={`/${category.firstCategory}`} onClick={setDisplay}>
-                    {category.firstCategory}
-                  </Link>
-                </List>
+                <Link to={`/${category.firstCategory}`} onClick={setDisplay}>
+                  {category.firstCategory}
+                </Link>
                 <Ul2deps key={category.firstCategory}>
                   {category.secondCategoryList.map((list: any) => (
                     <List key={list.secondCategory}>

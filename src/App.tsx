@@ -7,9 +7,12 @@ import Signup from "./routes/Signup";
 import Detail from "./routes/Detail";
 import Description from "./routes/Description";
 import Review from "./routes/Review";
-import Home from "./routes/Home/Home";
-import Board from "./routes/Board";
+import Home from './routes/Home/Home';
 import CategoryPage from "./routes/CategoryPage";
+import Search from "./routes/Search";
+import Cart from "./routes/Cart/Cart";
+import Order from "./routes/Order/Order";
+import Board from "./routes/Board";
 import MyBoard from "./routes/MyBoardList";
 import AllBoard from "./routes/AllBoardList";
 import CreatePostForm from "./routes/CreatePostForm";
@@ -21,6 +24,16 @@ const GlobalStyle = createGlobalStyle`
   ${reset};
   :root {
     --maincolor : #16A114;
+  }
+
+  #root {
+    width: 430px;
+    position: relative;
+    color: #333333;
+    min-height: 800px;
+    max-height: 800px;
+    overflow-x: hidden;
+    background-color: #ffffff;
   }
   
   * {
@@ -64,6 +77,9 @@ function App() {
           <Route path="description" element={<Description />} />
           <Route path="review" element={<Review />} />
         </Route>
+        <Route path="/search" element={<Search />}></Route>
+        <Route path="/carts" element={<Cart />}></Route>
+        <Route path="/orders" element={<Order />}></Route>
       </Routes>
     </BrowserRouter>
   );

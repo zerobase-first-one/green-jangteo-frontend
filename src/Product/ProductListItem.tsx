@@ -33,8 +33,7 @@ const ProductName = styled.strong`
 `;
 const ProductPrice = styled.span`
    padding-bottom: 10px;
-   
-   &.price {
+   .price {
       font-size: 20px;
       font-weight: bold;
    }
