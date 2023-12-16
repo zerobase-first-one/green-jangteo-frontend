@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BASE_URL } from "../constant/union";
 import { useSetRecoilState } from "recoil";
-import { tokenState } from "../store/atom/auth";
+import { tokenState, userIdState } from "../store/atom/auth";
 
 const Wrapper = styled.div`
   display: flex;
@@ -68,6 +68,7 @@ export default function Login() {
   const [emailOrUsername, setEmailOrUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const setUserId = useSetRecoilState(userIdState);
   const setToken = useSetRecoilState(tokenState);
 
   const login = async ({ emailOrUsername, password }: LoginProps) => {
@@ -75,11 +76,13 @@ export default function Login() {
     await axios
       .post(`${BASE_URL}/users/login`, data)
       .then((response) => {
-        const { token } = response.data;
+        const { token, id } = response.data;
         console.log(response);
         console.log(token);
+        console.log(id);
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         setToken(token);
+        setUserId(id);
       })
       .catch((e) => {
         console.error("Login Error:", e);
