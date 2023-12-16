@@ -43,6 +43,7 @@ const ProductList = () => {
       })
       .then((response) => {
         setProducts(response.data);
+        console.log(response);
       })
       .catch((err) => console.log(err.message));
   }, [token]);
@@ -60,19 +61,16 @@ const ProductList = () => {
         />
       </Title>
       <Slick>
-        {products.map(
-          (item: any) =>
-            item.membership == true && (
-              <ProductListItem
-                imgURL={item.imgURL}
-                title={item.productName}
-                price={item.price}
-                key={item.productId}
-                membership={item.membership}
-                width={`100%`}
-              />
-            )
-        )}
+        {products.map((item: any) => (
+          // item.membership == true && (
+          <ProductListItem
+            image={item.image}
+            title={item.productName}
+            price={item.price}
+            key={item.productId}
+            width={`100%`}
+          />
+        ))}
       </Slick>
       <Title>음식</Title>
       <Slick>
@@ -80,14 +78,13 @@ const ProductList = () => {
           (item: any) =>
             item.categories.firstCategory == `음식` && (
               <ProductListItem
-                imgURL={item.imgURL}
+                image={item.image}
                 title={item.productName}
                 price={item.price}
                 key={item.productId}
-                membership={item.membership}
                 width={`100%`}
               />
-            )
+            ),
         )}
       </Slick>
       <Title>의류</Title>
@@ -96,14 +93,13 @@ const ProductList = () => {
           (item: any) =>
             item.categories.firstCategory == `의류` && (
               <ProductListItem
-                imgURL={item.imgURL}
+                image={item.image}
                 title={item.productName}
                 price={item.price}
                 key={item.productId}
-                membership={item.membership}
                 width={`100%`}
               />
-            )
+            ),
         )}
       </Slick>
       <Title>하의</Title>
@@ -112,14 +108,13 @@ const ProductList = () => {
           (item: any) =>
             item.categories.secondCategory == `하의` && (
               <ProductListItem
-                imgURL={item.imgURL}
+                image={item.image}
                 title={item.productName}
                 price={item.price}
                 key={item.productId}
-                membership={item.membership}
                 width={`100%`}
               />
-            )
+            ),
         )}
       </Slick>
     </Wrapper>
