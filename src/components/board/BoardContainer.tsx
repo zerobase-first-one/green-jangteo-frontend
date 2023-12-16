@@ -1,13 +1,35 @@
 import styled from "styled-components";
-import Header from "../components/Header";
-import { Outlet, useMatch } from "react-router-dom";
+import { useMatch } from "react-router-dom";
 import { Link } from "react-router-dom";
+import AllBoardList from "./AllBoardList";
+import MyBoardList from "./MyBoardList";
+
+export default function BoardContainer() {
+  const allPostMatch = useMatch("/posts");
+  const myPostMatch = useMatch("/posts/my");
+
+  return (
+    <Wrapper>
+      <Tabs>
+        <Tab isActive={allPostMatch !== null}>
+          <Link to="/posts">전체 문의</Link>
+        </Tab>
+        <Tab isActive={myPostMatch !== null}>
+          <Link to="/posts/my">나의 문의</Link>
+        </Tab>
+      </Tabs>
+      {allPostMatch !== null ? <AllBoardList /> : <MyBoardList />}
+      <Link to={"/create-post"}>
+        <PostButton>글쓰기</PostButton>
+      </Link>
+    </Wrapper>
+  );
+}
 
 const Wrapper = styled.div`
   position: relative;
-  width: 430px;
-  height: 800px;
   background-color: #e7e7e7;
+  height: 100vh;
 `;
 
 const Tabs = styled.div`
@@ -41,26 +63,3 @@ const PostButton = styled.button`
   font-size: 16px;
   cursor: pointer;
 `;
-
-export default function Board() {
-  const allPostMatch = useMatch("/posts/all-post");
-  const myPostMatch = useMatch("/posts/my-post");
-
-  return (
-    <Wrapper>
-      <Header />
-      <Tabs>
-        <Tab isActive={allPostMatch !== null}>
-          <Link to="all-post">전체 문의</Link>
-        </Tab>
-        <Tab isActive={myPostMatch !== null}>
-          <Link to="my-post">나의 문의</Link>
-        </Tab>
-      </Tabs>
-      <Outlet />
-      <Link to={"/create-post"}>
-        <PostButton>글쓰기</PostButton>
-      </Link>
-    </Wrapper>
-  );
-}

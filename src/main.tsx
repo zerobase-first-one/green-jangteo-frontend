@@ -4,6 +4,7 @@ import App from "./App.tsx";
 import { RecoilRoot } from "recoil";
 import axios from "axios";
 import { BASE_URL } from "./constant/union.ts";
+import { Container } from "@mui/material";
 
 axios.defaults.baseURL = BASE_URL;
 axios.defaults.withCredentials = true;
@@ -11,7 +12,9 @@ axios.defaults.withCredentials = true;
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <RecoilRoot>
-      <App />
+      <Container>
+        <App />
+      </Container>
     </RecoilRoot>
   </React.StrictMode>
 );

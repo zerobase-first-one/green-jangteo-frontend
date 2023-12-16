@@ -1,12 +1,26 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
+export default function ConfirmModal() {
+  return (
+    <Overlay>
+      <Wrapper>
+        <Text>게시물이 등록되었습니다.</Text>
+        <Link to={"/posts/my"}>
+          <Button>확인</Button>
+        </Link>
+      </Wrapper>
+    </Overlay>
+  );
+}
+
 const Overlay = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
-  width: 430px;
-  height: 800px;
+  width: 100%;
+  height: 100vh;
   position: fixed;
   top: 0;
+  left: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -41,16 +55,3 @@ const Button = styled.button`
   font-size: 18px;
   cursor: pointer;
 `;
-
-export default function ConfirmModal() {
-  return (
-    <Overlay>
-      <Wrapper>
-        <Text>게시물이 등록되었습니다.</Text>
-        <Link to={"/posts/myPost"}>
-          <Button>확인</Button>
-        </Link>
-      </Wrapper>
-    </Overlay>
-  );
-}

@@ -10,15 +10,13 @@ import {
 } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { BASE_URL } from "../constant/union";
 import DetailPageModal from "../components/modal/DetailPageModal";
 import { useRecoilValue } from "recoil";
 import { tokenState } from "../store/atom/auth";
 
 const Wrapper = styled.div`
-  width: 430px;
-  height: 800px;
   background-color: white;
+  height: 100vh;
 `;
 
 const Image = styled.div`
@@ -63,7 +61,7 @@ const BottomActionBar = styled.div`
 `;
 
 const OrderBtn = styled.button`
-  width: 300px;
+  width: 70%;
   height: 50px;
   background-color: #16a113;
   color: white;
@@ -92,12 +90,13 @@ export default function Detail() {
     const fetchData = async () => {
       try {
         await axios
-          .get(`${BASE_URL}/products/${productId}`, {
-            // headers: {
-            //   Authorization: `Bearer ${token}`,
-            // },
+          .get(`/products/${productId}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           })
           .then((response) => {
+            console.log(response);
             setProduct(response.data.product);
           });
       } catch (error) {
@@ -106,7 +105,7 @@ export default function Detail() {
     };
 
     fetchData();
-  }, [productId, token]);
+  }, []);
 
   const onOrderBtnClick = () => {
     if (token === null) {
@@ -137,7 +136,7 @@ export default function Detail() {
       <BottomActionBar>
         <IoChatbubbleEllipsesOutline
           style={{
-            width: "40px",
+            width: "30%",
             height: "40px",
             marginLeft: "40px",
             cursor: "pointer",
