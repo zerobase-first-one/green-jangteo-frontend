@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { ImLeaf } from "react-icons/im";
 import Slick from "./slick";
 import ProductListItem from "./ProductListItem";
-import { BASE_URL } from "../constant/union";
+import { useRecoilValue } from "recoil";
+import { tokenState } from "../store/atom/auth";
 
 const Wrapper = styled.div`
   padding: 0 20px;
@@ -31,20 +32,22 @@ const ProductList = () => {
     //    membership: boolean,
     //  },
   ]);
+  const token = useRecoilValue(tokenState);
+
   useEffect(() => {
     axios
-      // .get("http://localhost:3000/products")
-      .get(`${BASE_URL}/products`, {
-        // headers: {
-        //   Authorization: `eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2Iiwicm9sZXMiOlsiUk9MRV9CVVlFUiJdLCJpYXQiOjE3MDI2MTYxODQsImV4cCI6MTcwMjYyMzM4NH0.pOHy--C8KIF57gB-Suepkiii5elZJ_Jd4SKiqBOmx0o`,
-        // },
+      .get("/products", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       })
       .then((response) => {
         setProducts(response.data);
         console.log(response);
       })
       .catch((err) => console.log(err.message));
-  }, []);
+  }, [token]);
+
   return (
     <Wrapper>
       <Title>

@@ -18,7 +18,7 @@ const Footer = () => {
   return (
     <Wrapper>
       <FooterList>
-        <Link to={"/posts/allPost"}>
+        <Link to={"/posts"}>
           <li>고객센터</li>
         </Link>
       </FooterList>

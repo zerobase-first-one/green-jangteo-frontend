@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { IBoardListForm } from "../store/atom/postState";
+import { IBoardListForm } from "../../store/atom/postState";
 import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
-  width: 400px;
+  width: 95%;
   height: 170px;
   background-color: #ffffff;
   margin: 10px auto;
@@ -31,7 +31,7 @@ const Comment = styled.p`
 
 export default function BoardListForm({
   postId,
-  title,
+  subject,
   username,
   createdAt,
   commentCount,
@@ -39,7 +39,7 @@ export default function BoardListForm({
   return (
     <Link to={`/posts/${postId}`}>
       <Wrapper>
-        <Title>{title}</Title>
+        <Title>{subject}</Title>
         <Username>{username}</Username>
         <CreateAt>{createdAt}</CreateAt>
         <hr />

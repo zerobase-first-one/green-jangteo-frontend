@@ -1,22 +1,30 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Login from "./routes/Login";
-
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
-import Signup from "./routes/Signup";
-import Detail from "./routes/Detail";
-import Description from "./routes/Description";
-import Review from "./routes/Review";
-import Home from "./routes/Home/Home";
+import { Login } from "./views/Login";
+import { Signup } from "./views/Signup";
+import { Board } from "./views/Board";
+import Detail from "./views/Detail";
+import Description from "./views/Description";
+import Review from "./views/Review";
+import Home from "./views/Home/Home";
+import CategoryPage from "./views/CategoryPage";
+import Search from "./views/Search";
+import Cart from "./views/Cart/Cart";
+import Order from "./views/Order/Order";
+import CreatePostForm from "./views/CreatePostForm";
+import MyBoardDetail from "./views/MyBoardDetail";
+import Profile from "./views/profile/Profile";
+import { ChangePassword } from "./views/profile/ChangePassword";
+import MyBoardList from "./components/board/MyBoardList";
+import { ChangeEmail } from "./views/profile/ChangeEmail";
+import { ChangePhone } from "./views/profile/ChangePhone";
+import { DeleteAccount } from "./views/profile/DeleteAccount";
+import { ChangeAddress } from "./views/profile/ChangeAddress";
 import CategoryPage from "./routes/CategoryPage";
 import Search from "./routes/Search";
 import Cart from "./routes/cart/Cart";
 import Order from "./routes/Order/Order";
-import Board from "./routes/Board";
-import MyBoard from "./routes/MyBoardList";
-import AllBoard from "./routes/AllBoardList";
-import CreatePostForm from "./routes/CreatePostForm";
-import MyBoardDetail from "./routes/MyBoardDetail";
 import SellerProfile from "./routes/Seller/SellerProfile";
 import SellerProductList from "./routes/Seller/SellerProductList";
 import SellerOrderList from "./routes/Seller/SellerOrderList";
@@ -25,8 +33,7 @@ import UploadProduct from "./routes/Seller/UploadProduct";
 import SellerProductDetail from "./routes/Seller/SellerProductDetail";
 import SellerDescription from "./routes/Seller/SellerDescription";
 import SellerReview from "./routes/Seller/SellerReview";
-import Profile from "./routes/Profile";
-import ChangePassword from "./routes/ChangePassword";
+
 
 const GlobalStyle = createGlobalStyle`
   ${reset};
@@ -53,7 +60,6 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    background-color: beige;
     overflow-x: hidden;
     a {
       text-decoration: none;
@@ -77,16 +83,20 @@ function App() {
         <Route path="/users/signup" element={<Signup />} />
         <Route path="/users/:userId/profile" element={<Profile />} />
         <Route path="/users/:userId/password" element={<ChangePassword />} />
+        <Route path="/users/:userId/email" element={<ChangeEmail />} />
+        <Route path="/users/:userId/phone" element={<ChangePhone />} />
+        <Route path="/users/:userId/address" element={<ChangeAddress />} />
+        <Route path="/users/:userId" element={<DeleteAccount />} />
         <Route path="/posts" element={<Board />}>
-          <Route path="my-post" element={<MyBoard />} />
-          <Route path="all-post" element={<AllBoard />} />
+          <Route path="my" element={<MyBoardList />} />
         </Route>
         <Route path="/posts/:postId" element={<MyBoardDetail />} />
         <Route path="/create-post" element={<CreatePostForm />} />
         <Route path="/products/:productId" element={<Detail />}>
           <Route path="description" element={<Description />} />
-          <Route path="review" element={<Review />} />
+          {/* <Route path="review" element={<Review />} /> */}
         </Route>
+        <Route path="/reviews/products/:productId" element={<Review />} />
         <Route path="/search" element={<Search />}></Route>
         <Route path="/carts" element={<Cart />}></Route>
         <Route path="/orders" element={<Order />}></Route>

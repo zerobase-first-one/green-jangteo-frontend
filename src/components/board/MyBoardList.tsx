@@ -1,37 +1,10 @@
-import { useState } from "react";
 // import styled from "styled-components";
+import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
-import { BASE_URL } from "../constant/union";
 import { useRecoilState } from "recoil";
-import { postState } from "../store/atom/postState";
-import BoardListForm from "../components/BoardListForm";
-
-// const Wrapper = styled.div`
-//   width: 400px;
-//   height: 170px;
-//   background-color: #ffffff;
-//   margin: 10px auto;
-//   padding: 30px 20px;
-// `;
-
-// const Title = styled.div`
-//   width: 100%;
-//   margin-bottom: 30px;
-// `;
-
-// const Username = styled.p`
-//   font-size: 12px;
-// `;
-
-// const CreateAt = styled.p`
-//   font-size: 12px;
-//   color: #999999;
-// `;
-
-// const Comment = styled.p`
-//   margin-top: 20px;
-// `;
+import { postState } from "../../store/atom/postState";
+import BoardListForm from "./BoardListForm";
 
 // interface MyBoardListProps {
 //   content: {
@@ -53,7 +26,7 @@ export default function MyBoardList() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`${BASE_URL}/posts/my-post`, {
+        const response = await axios.get(`/posts/my`, {
           // headers: {
           //   Authorization: `Bearer ${token}`,
           // },
@@ -81,3 +54,29 @@ export default function MyBoardList() {
     </>
   );
 }
+
+// const Wrapper = styled.div`
+//   width: 400px;
+//   height: 170px;
+//   background-color: #ffffff;
+//   margin: 10px auto;
+//   padding: 30px 20px;
+// `;
+
+// const Title = styled.div`
+//   width: 100%;
+//   margin-bottom: 30px;
+// `;
+
+// const Username = styled.p`
+//   font-size: 12px;
+// `;
+
+// const CreateAt = styled.p`
+//   font-size: 12px;
+//   color: #999999;
+// `;
+
+// const Comment = styled.p`
+//   margin-top: 20px;
+// `;

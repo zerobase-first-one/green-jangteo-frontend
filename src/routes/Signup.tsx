@@ -54,7 +54,7 @@ const Input = styled.input`
   border-radius: 6px;
   border: none;
   background-color: #d9d9d9;
-  &.signin-btn {
+  &.signup-btn {
     margin-top: 53px;
     background-color: #16a114;
     color: white;
@@ -240,7 +240,7 @@ export default function Signup() {
           placeholder="상점명 (판매자로 가입할 경우 필수 입력)"
         />
         <Error>{errors?.storeName?.message}</Error>
-        <Input className="signin-btn" type="submit" value="회원가입하기" />
+        <Input className="signup-btn" type="submit" value="회원가입하기" />
       </Form>
     </Wrapper>
   );
