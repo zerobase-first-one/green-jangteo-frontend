@@ -7,16 +7,24 @@ import Signup from "./routes/Signup";
 import Detail from "./routes/Detail";
 import Description from "./routes/Description";
 import Review from "./routes/Review";
-import Home from './routes/Home/Home';
+import Home from "./routes/Home/Home";
 import CategoryPage from "./routes/CategoryPage";
 import Search from "./routes/Search";
-import Cart from "./routes/Cart/Cart";
+import Cart from "./routes/cart/Cart";
 import Order from "./routes/Order/Order";
 import Board from "./routes/Board";
 import MyBoard from "./routes/MyBoardList";
 import AllBoard from "./routes/AllBoardList";
 import CreatePostForm from "./routes/CreatePostForm";
 import MyBoardDetail from "./routes/MyBoardDetail";
+import SellerProfile from "./routes/Seller/SellerProfile";
+import SellerProductList from "./routes/Seller/SellerProductList";
+import SellerOrderList from "./routes/Seller/SellerOrderList";
+import SellerOrderDetail from "./routes/Seller/SellerOrderDetail";
+import UploadProduct from "./routes/Seller/UploadProduct";
+import SellerProductDetail from "./routes/Seller/SellerProductDetail";
+import SellerDescription from "./routes/Seller/SellerDescription";
+import SellerReview from "./routes/Seller/SellerReview";
 import Profile from "./routes/Profile";
 import ChangePassword from "./routes/ChangePassword";
 
@@ -27,13 +35,17 @@ const GlobalStyle = createGlobalStyle`
   }
 
   #root {
-    width: 430px;
+    margin: 0 auto;
     position: relative;
     color: #333333;
-    min-height: 800px;
-    max-height: 800px;
     overflow-x: hidden;
     background-color: #ffffff;
+    // @media screen and (min-width: 1080px) {
+    //   width: 1080px;
+    // }
+    // @media screen and (max-width: 430px) {
+    //   width: 430px;
+    // }
   }
   
   * {
@@ -41,8 +53,6 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    width: 430px;
-    height: 800px;
     background-color: beige;
     overflow-x: hidden;
     a {
@@ -80,6 +90,25 @@ function App() {
         <Route path="/search" element={<Search />}></Route>
         <Route path="/carts" element={<Cart />}></Route>
         <Route path="/orders" element={<Order />}></Route>
+        <Route path="/stores/:userId" element={<SellerProfile />}>
+          <Route path="" element={<SellerProductList />}></Route>
+          <Route path="order" element={<SellerOrderList />}></Route>
+        </Route>
+        <Route
+          path="/stores/:userId/products/:productId"
+          element={<SellerProductDetail />}
+        >
+          <Route path="" element={<SellerDescription />}></Route>
+          <Route path="review" element={<SellerReview />}></Route>
+        </Route>
+        <Route
+          path="/stores/:userId/order/:orderId"
+          element={<SellerOrderDetail />}
+        ></Route>
+        <Route
+          path="/stores/:userId/upload"
+          element={<UploadProduct />}
+        ></Route>
       </Routes>
     </BrowserRouter>
   );

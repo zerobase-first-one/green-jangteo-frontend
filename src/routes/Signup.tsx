@@ -105,7 +105,7 @@ export default function Signup() {
       return setError(
         "passwordConfirm",
         { message: "비밀번호가 일치하지 않습니다" },
-        { shouldFocus: true }
+        { shouldFocus: true },
       );
     }
 
