@@ -2,6 +2,18 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import { RecoilRoot } from "recoil";
+import { Container } from "@mui/material";
+// import { Container } from “@mui/material”;
+// ReactDOM.createRoot(document.getElementById(“root”)!).render(
+//   <React.StrictMode>
+//     <RecoilRoot>
+//       <Container fixed>
+//         <App />
+//       </Container>
+//     </RecoilRoot>
+//   </React.StrictMode>
+// );
+
 // import axios from "axios";
 // import { BASE_URL } from "./constant/union.ts";
 
@@ -11,7 +23,9 @@ import { RecoilRoot } from "recoil";
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <RecoilRoot>
-      <App />
+      <Container>
+        <App />
+      </Container>
     </RecoilRoot>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

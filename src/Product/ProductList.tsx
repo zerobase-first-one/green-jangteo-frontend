@@ -33,9 +33,15 @@ const ProductList = () => {
   ]);
   useEffect(() => {
     axios
-      .get(`${BASE_URL}/products`)
+      // .get("http://localhost:3000/products")
+      .get(`${BASE_URL}/products`, {
+        // headers: {
+        //   Authorization: `eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI2Iiwicm9sZXMiOlsiUk9MRV9CVVlFUiJdLCJpYXQiOjE3MDI2MTYxODQsImV4cCI6MTcwMjYyMzM4NH0.pOHy--C8KIF57gB-Suepkiii5elZJ_Jd4SKiqBOmx0o`,
+        // },
+      })
       .then((response) => {
         setProducts(response.data);
+        console.log(response);
       })
       .catch((err) => console.log(err.message));
   }, []);
@@ -52,19 +58,16 @@ const ProductList = () => {
         />
       </Title>
       <Slick>
-        {products.map(
-          (item: any) =>
-            item.membership == true && (
-              <ProductListItem
-                imgURL={item.imgURL}
-                title={item.productName}
-                price={item.price}
-                key={item.productId}
-                membership={item.membership}
-                width={`100%`}
-              />
-            )
-        )}
+        {products.map((item: any) => (
+          // item.membership == true && (
+          <ProductListItem
+            image={item.image}
+            title={item.productName}
+            price={item.price}
+            key={item.productId}
+            width={`100%`}
+          />
+        ))}
       </Slick>
       <Title>음식</Title>
       <Slick>
@@ -72,14 +75,13 @@ const ProductList = () => {
           (item: any) =>
             item.categories.firstCategory == `음식` && (
               <ProductListItem
-                imgURL={item.imgURL}
+                image={item.image}
                 title={item.productName}
                 price={item.price}
                 key={item.productId}
-                membership={item.membership}
                 width={`100%`}
               />
-            )
+            ),
         )}
       </Slick>
       <Title>의류</Title>
@@ -88,14 +90,13 @@ const ProductList = () => {
           (item: any) =>
             item.categories.firstCategory == `의류` && (
               <ProductListItem
-                imgURL={item.imgURL}
+                image={item.image}
                 title={item.productName}
                 price={item.price}
                 key={item.productId}
-                membership={item.membership}
                 width={`100%`}
               />
-            )
+            ),
         )}
       </Slick>
       <Title>하의</Title>
@@ -104,18 +105,17 @@ const ProductList = () => {
           (item: any) =>
             item.categories.secondCategory == `하의` && (
               <ProductListItem
-                imgURL={item.imgURL}
+                image={item.image}
                 title={item.productName}
                 price={item.price}
                 key={item.productId}
-                membership={item.membership}
                 width={`100%`}
               />
-            )
+            ),
         )}
       </Slick>
     </Wrapper>
   );
 };
 
-export default ProductList
+export default ProductList;

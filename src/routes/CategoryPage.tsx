@@ -8,30 +8,30 @@ import Header from "../components/Header";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 
-const CategoryPage = () => {
-  const Wrapper = styled.div`
-    padding: 0 20px;
-    height: 100%;
-    &::after {
-      content: "";
-      display: block;
-      clear: both;
-    }
-  `;
-  const CategoryNameBox = styled.div`
-    display: flex;
-    align-items: flex-end;
-    margin: 50px 0 20px;
-  `;
-  const FirstCategory = styled.h2`
-    font-size: 24px;
-    font-weight: bold;
-  `;
-  const SecondCategory = styled.h3`
-    display: flex;
-    align-items: center;
-  `;
+const Wrapper = styled.div`
+  padding: 0 20px;
+  height: 100%;
+  &::after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+`;
+const CategoryNameBox = styled.div`
+  display: flex;
+  align-items: flex-end;
+  margin: 50px 0 20px;
+`;
+const FirstCategory = styled.h2`
+  font-size: 24px;
+  font-weight: bold;
+`;
+const SecondCategory = styled.h3`
+  display: flex;
+  align-items: center;
+`;
 
+const CategoryPage = () => {
   const [products, setProducts] = useState([
     //    {
     //       productId: 0,
@@ -96,7 +96,7 @@ const CategoryPage = () => {
                   membership={item.membership}
                   width={`50%`}
                 />
-              )
+              ),
         )}
       </Wrapper>
       <Footer />

@@ -71,7 +71,8 @@ const Navigation = styled.nav`
   height: 620px;
 `;
 
-const Ul1deps = styled.ul``;
+const Ul1deps = styled.ul`
+`;
 
 const CategoryList = styled.li`
   width: 150px;
@@ -194,10 +195,12 @@ const Header = () => {
             <FaBell />
             <span className="blind">알림</span>
           </button>
+          <Link to={`/carts`}>
           <button type="button">
             <FaShoppingCart />
             <span className="blind">장바구니</span>
           </button>
+          </Link>
         </UtilBtnBox>
       </HeaderContainer>
     </HeaderWrapper>

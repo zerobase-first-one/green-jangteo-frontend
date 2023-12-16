@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 const BannerContainer = styled.div`
-<<<
   height: 380px;
   background-color: #ededed;
 `;

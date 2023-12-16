@@ -7,6 +7,7 @@ const Wrapper = styled.div`
   background-color: #dedede;
   margin-top: 80px;
   padding: 20px;
+  margin-bottom: 100px;
 `;
 const FooterList = styled.ul`
   li {
