@@ -79,24 +79,24 @@ const CategoryPage = () => {
           secondCategory !== undefined
             ? secondCategory == item.categories.secondCategory && (
                 <ProductListItem
-                  imgURL={item.imgURL}
+                  image={item.image}
                   title={item.productName}
                   price={item.price}
                   key={item.productId}
-                  membership={item.membership}
+                  // membership={item.membership}
                   width={`50%`}
                 />
               )
             : firstCategory == item.categories.firstCategory && (
                 <ProductListItem
-                  imgURL={item.imgURL}
+                  image={item.image}
                   title={item.productName}
                   price={item.price}
                   key={item.productId}
-                  membership={item.membership}
+                  // membership={item.membership}
                   width={`50%`}
                 />
-              ),
+              )
         )}
       </Wrapper>
       <Footer />

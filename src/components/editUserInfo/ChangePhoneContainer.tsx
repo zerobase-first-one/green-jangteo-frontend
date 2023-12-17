@@ -1,16 +1,17 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { useNavigate, useParams } from "react-router-dom";
-import { changePhone } from "../../apiFetcher/patchUserPhone";
+import { useState } from 'react';
+import styled from 'styled-components';
+import { useNavigate, useParams } from 'react-router-dom';
+import { changePhone } from '../../apiFetcher/patchUserPhone';
 
 export default function ChangePhoneContainer() {
   const { userId } = useParams();
   const navigate = useNavigate();
-  const [password, setPassword] = useState("");
-  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState('');
+  const [phone, setPhone] = useState('');
 
   const onChangeBtnClick = () => {
-    changePhone(userId, password, phone, navigate);
+    if (!userId) return;
+    changePhone({ userId, password, phone, navigate });
   };
 
   return (
@@ -20,14 +21,14 @@ export default function ChangePhoneContainer() {
         type="password"
         placeholder="현재 비밀번호를 입력하세요"
         value={password}
-        onChange={(e) => setPassword(e.currentTarget.value)}
+        onChange={e => setPassword(e.currentTarget.value)}
       />
       <InputLabel>새로운 전화번호</InputLabel>
       <InputField
         type="text"
         placeholder="새로운 전화번호를 입력하세요"
         value={phone}
-        onChange={(e) => setPhone(e.currentTarget.value)}
+        onChange={e => setPhone(e.currentTarget.value)}
       />
       <ChangeButton onClick={onChangeBtnClick}>전화번호 변경하기</ChangeButton>
     </ContentWrapper>

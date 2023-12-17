@@ -1,9 +1,9 @@
-import { useParams } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import styled from "styled-components";
-import { tokenState } from "../store/atom/auth";
-import { useEffect } from "react";
-import axios from "axios";
+import { useParams } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import styled from 'styled-components';
+import { tokenState } from '../store/atom/auth';
+import { useEffect } from 'react';
+import axios from 'axios';
 
 export default function Review() {
   const { productId } = useParams();
@@ -18,7 +18,7 @@ export default function Review() {
       });
       console.log(response);
     } catch (error) {
-      console.error("Error fetching product reviews:", error.message);
+      console.error('Error fetching product reviews:');
     }
   };
 

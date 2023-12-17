@@ -1,10 +1,28 @@
-import React, { useState } from "react";
-import axios from "axios";
-import styled from "styled-components";
-import { useRecoilValue } from "recoil";
-import { userIdState } from "../store/atom/auth";
+import React, { useState } from 'react';
+import axios from 'axios';
+import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
+import { userIdState } from '../store/atom/auth';
 
-const EditMyBoardDetail = ({ postId, subject, content, onSave, onCancel }) => {
+interface IEditMyBoardDetail {
+  postId?: string;
+  subject: string;
+  content: string;
+  handleSaveEdit: (params: {
+    userId: string;
+    editedSubject: string;
+    editedContent: string;
+  }) => void;
+  handleCancelEdit: () => void;
+}
+
+const EditMyBoardDetail = ({
+  postId,
+  subject,
+  content,
+  handleSaveEdit,
+  handleCancelEdit,
+}: IEditMyBoardDetail) => {
   const [editedSubject, setEditedSubject] = useState(subject);
   const [editedContent, setEditedContent] = useState(content);
   const userId = useRecoilValue(userIdState); // TODO: userId 쓰임 확인할 것
@@ -24,9 +42,10 @@ const EditMyBoardDetail = ({ postId, subject, content, onSave, onCancel }) => {
         subject: editedSubject,
         content: editedContent,
       });
-      onSave(userId, editedSubject, editedContent);
+      if (!userId) return;
+      handleSaveEdit({ userId, editedSubject, editedContent });
     } catch (error) {
-      console.error("게시물 업데이트 오류:", error);
+      console.error('게시물 업데이트 오류:', error);
     }
   };
 
@@ -36,7 +55,7 @@ const EditMyBoardDetail = ({ postId, subject, content, onSave, onCancel }) => {
       <TextArea value={editedContent} onChange={handleContentChange} />
       <ButtonWrapper>
         <SaveButton onClick={handleSave}>수정 저장</SaveButton>
-        <CancelButton onClick={onCancel}>취소</CancelButton>
+        <CancelButton onClick={handleCancelEdit}>취소</CancelButton>
       </ButtonWrapper>
     </Form>
   );

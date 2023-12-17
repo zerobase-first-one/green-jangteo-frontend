@@ -1,13 +1,17 @@
-import styled from "styled-components";
-import { Link } from "react-router-dom";
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
-export default function ConfirmModal() {
+interface ConfirmModalProps {
+  onClose: () => void;
+}
+
+export default function ConfirmModal({ onClose }: ConfirmModalProps) {
   return (
     <Overlay>
       <Wrapper>
         <Text>게시물이 등록되었습니다.</Text>
-        <Link to={"/posts/my"}>
-          <Button>확인</Button>
+        <Link to={'/posts/my'}>
+          <Button onClick={onClose}>확인</Button>
         </Link>
       </Wrapper>
     </Overlay>

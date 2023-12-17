@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { IBoardListForm } from "../../store/atom/postState";
-import { Link } from "react-router-dom";
+import styled from 'styled-components';
+import { IBoard } from '../../store/atom/postState';
+import { Link } from 'react-router-dom';
 
 const Wrapper = styled.div`
   width: 95%;
@@ -35,7 +35,7 @@ export default function BoardListForm({
   username,
   createdAt,
   commentCount,
-}: IBoardListForm) {
+}: IBoard) {
   return (
     <Link to={`/posts/${postId}`}>
       <Wrapper>

@@ -1,17 +1,19 @@
-import { atom } from "recoil";
+import { atom } from 'recoil';
+
+export interface IBoard {
+  postId: string;
+  username: string;
+  subject: string;
+  createdAt: string;
+  modifiedAt?: string;
+  commentCount: number;
+}
 
 export interface IBoardListForm {
-  content: {
-    postId: string;
-    username: string;
-    title: string;
-    createdAt: string;
-    modifiedAt?: string;
-    commentCount: number;
-  }[];
+  content: IBoard[];
 }
 
 export const postState = atom<IBoardListForm>({
-  key: "postState",
+  key: 'postState',
   default: { content: [] },
 });
