@@ -1,16 +1,17 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { useNavigate, useParams } from "react-router-dom";
-import { changeEmail } from "../../apiFetcher/patchUserEmail";
+import { useState } from 'react';
+import styled from 'styled-components';
+import { useNavigate, useParams } from 'react-router-dom';
+import { changeEmail } from '../../apiFetcher/patchUserEmail';
 
 export default function ChangeEmailContainer() {
   const { userId } = useParams();
   const navigate = useNavigate();
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
 
   const onChangeBtnClick = () => {
-    changeEmail(userId, password, email, navigate);
+    if (!userId) return;
+    changeEmail({ userId, password, email, navigate });
   };
 
   return (
@@ -20,14 +21,14 @@ export default function ChangeEmailContainer() {
         type="password"
         placeholder="현재 비밀번호를 입력하세요"
         value={password}
-        onChange={(e) => setPassword(e.currentTarget.value)}
+        onChange={e => setPassword(e.currentTarget.value)}
       />
       <InputLabel>새로운 이메일</InputLabel>
       <InputField
         type="text"
         placeholder="새로운 이메일을 입력하세요"
         value={email}
-        onChange={(e) => setEmail(e.currentTarget.value)}
+        onChange={e => setEmail(e.currentTarget.value)}
       />
       <ChangeButton onClick={onChangeBtnClick}>이메일 변경하기</ChangeButton>
     </ContentWrapper>

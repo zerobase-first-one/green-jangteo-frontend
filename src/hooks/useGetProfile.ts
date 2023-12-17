@@ -7,7 +7,7 @@ import { tokenState } from "../store/atom/auth";
 export const useGetProfile = () => {
   const { userId } = useParams();
   const token = useRecoilValue(tokenState);
-  const [userData, setUserData] = useState({
+  const [userData, setUserData] = useState<any>({
     username: "",
     userId: userId || null,
     loading: true,

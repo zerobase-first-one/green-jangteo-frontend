@@ -1,18 +1,27 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { useNavigate, useParams } from "react-router-dom";
-import { changeAddress } from "../../apiFetcher/patchUserAddress";
+import { useState } from 'react';
+import styled from 'styled-components';
+import { useNavigate, useParams } from 'react-router-dom';
+import { changeAddress } from '../../apiFetcher/patchUserAddress';
+import { IAddressDto } from '../../store/atom/userDataState';
 
 export default function ChangeAddressContainer() {
   const { userId } = useParams();
   const navigate = useNavigate();
-  const [city, setCity] = useState("");
-  const [detailedAddress, setDetailedAddress] = useState("");
-  const [street, setStreet] = useState("");
-  const [zipcode, setZipcode] = useState("");
+  const [city, setCity] = useState('');
+  const [detailedAddress, setDetailedAddress] = useState('');
+  const [street, setStreet] = useState('');
+  const [zipcode, setZipcode] = useState('');
+
+  const addressDto: IAddressDto = {
+    city,
+    detailedAddress,
+    street,
+    zipcode,
+  };
 
   const onChangeBtnClick = () => {
-    changeAddress(userId, city, detailedAddress, street, zipcode, navigate);
+    if (!userId) return;
+    changeAddress({ userId, addressDto, navigate });
   };
 
   return (
@@ -22,28 +31,28 @@ export default function ChangeAddressContainer() {
         type="text"
         placeholder="도시를 입력하세요"
         value={city}
-        onChange={(e) => setCity(e.currentTarget.value)}
+        onChange={e => setCity(e.currentTarget.value)}
       />
       <InputLabel>상세주소</InputLabel>
       <InputField
         type="text"
         placeholder="상세주소를 입력하세요"
         value={detailedAddress}
-        onChange={(e) => setDetailedAddress(e.currentTarget.value)}
+        onChange={e => setDetailedAddress(e.currentTarget.value)}
       />
       <InputLabel>도로명</InputLabel>
       <InputField
         type="text"
         placeholder="도로명을 입력하세요"
         value={street}
-        onChange={(e) => setStreet(e.currentTarget.value)}
+        onChange={e => setStreet(e.currentTarget.value)}
       />
       <InputLabel>우편번호</InputLabel>
       <InputField
         type="text"
         placeholder="우편번호를 입력하세요"
         value={zipcode}
-        onChange={(e) => setZipcode(e.currentTarget.value)}
+        onChange={e => setZipcode(e.currentTarget.value)}
       />
       <ChangeButton onClick={onChangeBtnClick}>주소 변경하기</ChangeButton>
     </ContentWrapper>

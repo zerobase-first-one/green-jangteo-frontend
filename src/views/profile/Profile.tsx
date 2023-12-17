@@ -1,8 +1,8 @@
-import Header from "../../components/Header";
-import styled from "styled-components";
-import NavBar from "../../components/NavBar";
-import { Link } from "react-router-dom";
-import { useGetProfile } from "../../hooks/useGetProfile";
+import Header from '../../components/Header';
+import styled from 'styled-components';
+import NavBar from '../../components/NavBar';
+import { Link } from 'react-router-dom';
+import { useGetProfile } from '../../hooks/useGetProfile';
 
 export default function Profile() {
   const { userId, username, loading } = useGetProfile();
@@ -22,15 +22,15 @@ export default function Profile() {
           <RatingBtn>등급 혜택보기</RatingBtn>
         </RatingWrapper>
       </TopWrapper>
-      <Button>적립금</Button>
+      {/* <Button>적립금</Button>
       <Button>쿠폰</Button>
-      <Button>주문 내역</Button>
+      <Button>주문 내역</Button> */}
       <Button to={`/users/${userId}/password`}>비밀번호 변경하기</Button>
       <Button to={`/users/${userId}/email`}>이메일 변경하기</Button>
       <Button to={`/users/${userId}/phone`}>전화번호 변경하기</Button>
       <Button to={`/users/${userId}/address`}>주소 변경하기</Button>
-      <Button>구매후기</Button>
-      <Button>로그아웃</Button>
+      {/* <Button>구매후기</Button>
+      <Button>로그아웃</Button> */}
       <Button to={`/users/${userId}`}>회원탈퇴</Button>
       <NavBar />
     </Wrapper>

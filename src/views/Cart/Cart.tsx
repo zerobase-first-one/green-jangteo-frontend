@@ -1,11 +1,10 @@
-import styled from "styled-components";
-import addCommaPrice from "../../../public/module/addComma";
-import CartItem from "./CartItem";
-import { useEffect, useState } from "react";
-import HeaderBackPageBtn from "../../components/HeaderPrevPageBtn";
-import { Link } from "react-router-dom";
-import axios from "axios";
-import { BASE_URL } from "../../constant/union";
+import styled from 'styled-components';
+import addCommaPrice from '../../../public/module/addComma';
+import CartItem from './CartItem';
+import { useEffect, useState } from 'react';
+import HeaderBackPageBtn from '../../components/HeaderPrevPageBtn';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const Wrapper = styled.div`
   font-size: 18px;
@@ -90,14 +89,14 @@ const Cart = () => {
   const [cartList, setCartList] = useState([]);
   useEffect(() => {
     axios
-      .get("http://localhost:3000/products")
+      .get('http://localhost:3000/products')
       // .get(`${BASE_URL}/carts`)
-      .then((response) => {
-        const arr = response.data.map((item) => item).slice(0, 4);
+      .then(response => {
+        const arr = response.data.map((item: any) => item).slice(0, 4);
         // setCartList(response.data);
         setCartList(arr);
       })
-      .catch((err) => console.log(err.message));
+      .catch(err => console.log(err.message));
   }, []);
   console.log(cartList);
 
@@ -132,12 +131,12 @@ const Cart = () => {
     // quantity: any,
   ) => {
     if (checked) {
-      setCheckedItem((prev) => [...prev, productId]);
-      setCheckedItemPrice((prev) => [...prev, price]);
+      setCheckedItem(prev => [...prev, productId]);
+      setCheckedItemPrice(prev => [...prev, price]);
       // setCheckedItemQuantity((prev) => [...prev, quantity]);
     } else {
-      setCheckedItem(checkedItem.filter((item) => item !== productId));
-      setCheckedItemPrice(checkedItemPrice.filter((item) => item !== price));
+      setCheckedItem(checkedItem.filter(item => item !== productId));
+      setCheckedItemPrice(checkedItemPrice.filter(item => item !== price));
       // setCheckedItemQuantity(
       //   checkedItemQuantity.filter((item) => item !== quantity);
       // );
@@ -202,7 +201,7 @@ const Cart = () => {
             <Price className="orderPrice">{addCommaPrice(8000)} 원</Price>
           </PriceName>
         </TextBox>
-        <Link to={"/orders"}>
+        <Link to={'/orders'}>
           <OrderBtn>주문하기</OrderBtn>
         </Link>
       </Container>

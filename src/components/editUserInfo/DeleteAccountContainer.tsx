@@ -1,18 +1,19 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { useNavigate, useParams } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
-import { deleteAccount } from "../../apiFetcher/deleteAccount";
-import { userIdState } from "../../store/atom/auth";
+import { useState } from 'react';
+import styled from 'styled-components';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
+import { deleteAccount } from '../../apiFetcher/deleteAccount';
+import { userIdState } from '../../store/atom/auth';
 
 export default function DeleteAccountContainer() {
   const { userId } = useParams();
   const navigate = useNavigate();
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState('');
   const setUserId = useSetRecoilState(userIdState);
 
   const onChangeBtnClick = () => {
-    deleteAccount(userId, setUserId, password, navigate);
+    if (!userId) return;
+    deleteAccount({ userId, setUserId, password, navigate });
   };
 
   return (
@@ -22,7 +23,7 @@ export default function DeleteAccountContainer() {
         type="password"
         placeholder="현재 비밀번호를 입력하세요"
         value={password}
-        onChange={(e) => setPassword(e.currentTarget.value)}
+        onChange={e => setPassword(e.currentTarget.value)}
       />
       <ChangeButton onClick={onChangeBtnClick}>회원 탈퇴하기</ChangeButton>
     </ContentWrapper>
