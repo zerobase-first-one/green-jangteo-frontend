@@ -1,15 +1,15 @@
 // import styled from "styled-components";
-import { useState } from "react";
-import { useEffect } from "react";
-import axios from "axios";
-import { useRecoilState } from "recoil";
-import { postState } from "../../store/atom/postState";
-import BoardListForm from "./BoardListForm";
+import { useState } from 'react';
+import { useEffect } from 'react';
+import axios from 'axios';
+import { useRecoilState } from 'recoil';
+import { IBoardListForm, postState } from '../../store/atom/postState';
+import BoardListForm from './BoardListForm';
 
 export default function AllBoardList() {
   const [isLoading, setLoading] = useState(false);
-  const [posts, setPost] = useRecoilState(postState);
-  console.log("리스트목록", posts);
+  const [posts, setPost] = useRecoilState<IBoardListForm>(postState);
+  console.log('리스트목록', posts);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,7 +19,7 @@ export default function AllBoardList() {
         const postData = response.data.content || [];
         setPost({ content: postData });
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error('Error fetching data:', error);
       } finally {
         setLoading(false);
       }
@@ -32,7 +32,7 @@ export default function AllBoardList() {
     <div>로딩중...</div>
   ) : (
     <>
-      {posts.content.map((post) => (
+      {posts.content.map(post => (
         <BoardListForm key={post.postId} {...post} />
       ))}
     </>

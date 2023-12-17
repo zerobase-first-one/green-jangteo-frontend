@@ -1,11 +1,11 @@
-import styled from "styled-components";
-import { useState } from "react";
-import axios from "axios";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { postState } from "../store/atom/postState";
-import ConfirmModal from "../components/modal/ConfirmModal";
-import { userIdState } from "../store/atom/auth";
-import HeaderPrevPageBtn from "../components/HeaderPrevPageBtn";
+import styled from 'styled-components';
+import { useState } from 'react';
+import axios from 'axios';
+import { useRecoilState } from 'recoil';
+import { postState } from '../store/atom/postState';
+import ConfirmModal from '../components/modal/ConfirmModal';
+import HeaderPrevPageBtn from '../components/HeaderPrevPageBtn';
+import { useParams } from 'react-router-dom';
 // import { useParams } from "react-router-dom";
 
 interface IForm {
@@ -15,32 +15,31 @@ interface IForm {
 }
 
 const CreatePostForm = () => {
-  // const { userId } = useParams();
-  const [subject, setSubject] = useState("");
-  const [content, setContent] = useState("");
+  const { userId } = useParams();
+  const [subject, setSubject] = useState('');
+  const [content, setContent] = useState('');
   const [posts, setPost] = useRecoilState(postState);
   const [showModal, setShowModal] = useState(false);
   // const userId = useRecoilValue(userIdState);
-  const userId = 1;
-  console.log("등록페이지", posts);
-  console.log("userId", userId);
+  console.log('등록페이지', posts);
+  console.log('userId', userId);
 
   const createPost = async ({ userId, subject, content }: IForm) => {
     const data = { userId, subject, content };
     await axios
       .post(`/posts`, data)
-      .then((response) => {
+      .then(response => {
         // const { token } = response.data;
         console.log(response.data);
         // axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
         // setToken(token);
         const newPostData = response.data;
-        setPost((prevPosts) => ({
+        setPost(prevPosts => ({
           content: [...prevPosts.content, newPostData],
         }));
       })
-      .catch((e) => {
-        console.error("Login Error:", e);
+      .catch(e => {
+        console.error('Login Error:', e);
         throw e;
       });
   };
@@ -57,10 +56,11 @@ const CreatePostForm = () => {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!userId) return;
     try {
       createPost({ userId, subject, content });
-      setSubject("");
-      setContent("");
+      setSubject('');
+      setContent('');
     } catch (e) {
       console.error(e);
     }
