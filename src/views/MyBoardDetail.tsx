@@ -1,4 +1,3 @@
-import axios from 'axios';
 import styled from 'styled-components';
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -8,6 +7,7 @@ import MyBoardDetailModal from '../components/modal/MyBoardDetailModal';
 import EditMyBoardDetail from './EditMyBoardDetail';
 import { useRecoilValue } from 'recoil';
 import { userIdState } from '../store/atom/auth';
+import customAxios from '../apiFetcher/customAxios';
 
 interface IComment {
   commentId: string;
@@ -34,7 +34,7 @@ export default function MyBoardDetail() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`/posts/${postId}`);
+      const response = await customAxios.get(`/posts/${postId}`);
 
       console.log('코멘츠', response.data.comments);
       setSubject(response.data.subject);
@@ -69,7 +69,10 @@ export default function MyBoardDetail() {
   }) => {
     const data = { userId, content };
     try {
-      const response = await axios.post(`/posts/${postId}/comments`, data);
+      const response = await customAxios.post(
+        `/posts/${postId}/comments`,
+        data,
+      );
       const newComment = {
         commentId: response.data.commentId,
         createdAt: response.data.createdAt,

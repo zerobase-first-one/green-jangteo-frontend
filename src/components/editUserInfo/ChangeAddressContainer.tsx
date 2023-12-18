@@ -21,7 +21,14 @@ export default function ChangeAddressContainer() {
 
   const onChangeBtnClick = () => {
     if (!userId) return;
-    changeAddress({ userId, addressDto, navigate });
+    changeAddress({
+      userId,
+      city,
+      detailedAddress,
+      street,
+      zipcode,
+      navigate,
+    });
   };
 
   return (
@@ -30,28 +37,28 @@ export default function ChangeAddressContainer() {
       <InputField
         type="text"
         placeholder="도시를 입력하세요"
-        value={city}
+        value={addressDto.city}
         onChange={e => setCity(e.currentTarget.value)}
       />
       <InputLabel>상세주소</InputLabel>
       <InputField
         type="text"
         placeholder="상세주소를 입력하세요"
-        value={detailedAddress}
+        value={addressDto.detailedAddress}
         onChange={e => setDetailedAddress(e.currentTarget.value)}
       />
       <InputLabel>도로명</InputLabel>
       <InputField
         type="text"
         placeholder="도로명을 입력하세요"
-        value={street}
+        value={addressDto.street}
         onChange={e => setStreet(e.currentTarget.value)}
       />
       <InputLabel>우편번호</InputLabel>
       <InputField
         type="text"
         placeholder="우편번호를 입력하세요"
-        value={zipcode}
+        value={addressDto.zipcode}
         onChange={e => setZipcode(e.currentTarget.value)}
       />
       <ChangeButton onClick={onChangeBtnClick}>주소 변경하기</ChangeButton>

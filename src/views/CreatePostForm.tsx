@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import axios from 'axios';
 import { useRecoilState } from 'recoil';
 import { postState } from '../store/atom/postState';
 import ConfirmModal from '../components/modal/ConfirmModal';
 import HeaderPrevPageBtn from '../components/HeaderPrevPageBtn';
 import { useParams } from 'react-router-dom';
+import customAxios from '../apiFetcher/customAxios';
 // import { useParams } from "react-router-dom";
 
 interface IForm {
@@ -26,7 +26,7 @@ const CreatePostForm = () => {
 
   const createPost = async ({ userId, subject, content }: IForm) => {
     const data = { userId, subject, content };
-    await axios
+    await customAxios
       .post(`/posts`, data)
       .then(response => {
         // const { token } = response.data;

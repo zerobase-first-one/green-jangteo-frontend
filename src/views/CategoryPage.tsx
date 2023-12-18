@@ -1,18 +1,18 @@
-import styled from "styled-components";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { IoIosArrowForward } from "react-icons/io";
-import ProductListItem from "../Product/ProductListItem";
-import Header from "../components/Header";
-import NavBar from "../components/NavBar";
-import Footer from "../components/Footer";
+import styled from 'styled-components';
+import { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { IoIosArrowForward } from 'react-icons/io';
+import ProductListItem from '../Product/ProductListItem';
+import Header from '../components/Header';
+import NavBar from '../components/NavBar';
+import Footer from '../components/Footer';
+import customAxios from '../apiFetcher/customAxios';
 
 const Wrapper = styled.div`
   padding: 0 20px;
   height: 100%;
   &::after {
-    content: "";
+    content: '';
     display: block;
     clear: both;
   }
@@ -49,12 +49,12 @@ const CategoryPage = () => {
 
   useEffect(() => {
     // axios.get("https://d53733be-f889-423d-81e7-e8f003a8ebae.mock.pstmn.io/products")
-    axios
-      .get("http://localhost:3000/products")
-      .then((response) => {
+    customAxios
+      .get('http://localhost:3000/products')
+      .then(response => {
         setProducts(response.data);
       })
-      .catch((err) => console.log(err.message));
+      .catch(err => console.log(err.message));
   }, []);
 
   const { firstCategory } = useParams();
@@ -70,7 +70,7 @@ const CategoryPage = () => {
           </FirstCategory>
           {secondCategory !== undefined && (
             <SecondCategory>
-              <IoIosArrowForward style={{ margin: "0 5px" }} />
+              <IoIosArrowForward style={{ margin: '0 5px' }} />
               {secondCategory}
             </SecondCategory>
           )}
@@ -96,7 +96,7 @@ const CategoryPage = () => {
                   // membership={item.membership}
                   width={`50%`}
                 />
-              )
+              ),
         )}
       </Wrapper>
       <Footer />
