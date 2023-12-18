@@ -2,10 +2,12 @@ import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { postUserSignup } from '../apiFetcher/user/postUserSignup';
-import { IForm } from '../store/atom/userDataState';
+import { IForm, userDataState } from '../store/atom/userDataState';
+import { useSetRecoilState } from 'recoil';
 
 export default function SignupContainer() {
   const navigate = useNavigate();
+  const setUserInfo = useSetRecoilState(userDataState);
   const {
     register,
     handleSubmit,
@@ -46,6 +48,7 @@ export default function SignupContainer() {
 
       await postUserSignup(userData);
       alert('회원가입이 완료되었습니다.');
+      setUserInfo(userData);
       navigate('/users/login');
     } catch (error) {
       console.error('에러가 발생했습니다:', error);

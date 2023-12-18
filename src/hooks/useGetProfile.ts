@@ -73,7 +73,7 @@ export const useGetProfile = () => {
     }
 
     getData();
-  }, [userId]);
+  }, []);
 
   return userData;
 };

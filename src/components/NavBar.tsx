@@ -6,6 +6,7 @@ import { BsPersonFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { tokenState, userIdState } from '../store/atom/auth';
+import { userDataState } from '../store/atom/userDataState';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -58,6 +59,9 @@ const Container = styled.div`
 const NavBar = () => {
   const token = useRecoilValue(tokenState);
   const userId = useRecoilValue(userIdState);
+  const userInfo = useRecoilValue(userDataState);
+  console.log(userInfo?.roles[0]);
+  const storeId = 11;
 
   return (
     <Wrapper>
@@ -80,8 +84,12 @@ const NavBar = () => {
         </button>
         <Link
           to={
-            token && userId !== null
-              ? `users/${userId}/profile`
+            token && userId && userInfo !== null
+              ? userInfo.roles[0] === 'ROLE_BUYER'
+                ? `/users/${userId}/profile`
+                : userInfo.roles[0] === 'ROLE_SELLER'
+                  ? `/store/${storeId}`
+                  : '/users/login'
               : '/users/login'
           }
         >

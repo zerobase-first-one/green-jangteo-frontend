@@ -1,9 +1,9 @@
-import axios from "axios";
-import HeaderPrevPageBtn from "../../components/HeaderPrevPageBtn";
-import { useNavigate, useParams } from "react-router-dom";
+import HeaderPrevPageBtn from '../../components/HeaderPrevPageBtn';
+import { useNavigate, useParams } from 'react-router-dom';
 // import { useState } from "react";
-import styled from "styled-components";
-import { useForm } from "react-hook-form";
+import styled from 'styled-components';
+import { useForm } from 'react-hook-form';
+import customAxios from '../../apiFetcher/customAxios';
 // import { BASE_URL } from "../../constant/union";
 
 const Wrapper = styled.div`
@@ -77,7 +77,7 @@ interface formValue {
     category1: string;
     category2: string;
   };
-  productImage: "";
+  productImage: '';
   description: string;
   inventory: number;
 }
@@ -88,7 +88,7 @@ const UploadProduct = () => {
     handleSubmit,
     // formState: { errors },
   } = useForm<formValue>({
-    mode: "onSubmit",
+    mode: 'onSubmit',
   });
 
   const { userId } = useParams();
@@ -98,7 +98,7 @@ const UploadProduct = () => {
   };
 
   const onSubmit = (data: formValue) => {
-    axios.post(`http://localhost:3000/post`, {
+    customAxios.post(`/post`, {
       // axios.post(`${BASE_URL/products}`, {
       userId: userId,
       productName: data.productName,
@@ -114,7 +114,7 @@ const UploadProduct = () => {
     navigate(-1);
   };
 
-  const firstCategory = ["음식", "의류", "생필품"];
+  const firstCategory = ['음식', '의류', '생필품'];
   // const secondCategory = ["음식", "의류", "생필품"];
   return (
     <>
@@ -132,21 +132,21 @@ const UploadProduct = () => {
             <Input
               type="file"
               id="image"
-              {...register("productImage", {})}
+              {...register('productImage', {})}
             ></Input>
           </Box>
           <Box>
             <Label htmlFor="firstCategories">분류1</Label>
             <Select
               id="firstCategories"
-              {...register("categories.category1", {
-                required: "카테고리를 지정해주세요",
+              {...register('categories.category1', {
+                required: '카테고리를 지정해주세요',
               })}
             >
               <Option value="카테고리" disabled>
                 카테고리
               </Option>
-              {firstCategory.map((category) => (
+              {firstCategory.map(category => (
                 <Option value={category} key={category}>
                   {category}
                 </Option>
@@ -157,14 +157,14 @@ const UploadProduct = () => {
             <Label htmlFor="SecondCategories">분류2</Label>
             <Select
               id="SecondCategories"
-              {...register("categories.category2", {
-                required: "카테고리를 지정해주세요",
+              {...register('categories.category2', {
+                required: '카테고리를 지정해주세요',
               })}
             >
               <Option value="카테고리" disabled>
                 카테고리
               </Option>
-              {firstCategory.map((category) => (
+              {firstCategory.map(category => (
                 <Option value={category} key={category}>
                   {category}
                 </Option>
@@ -176,8 +176,8 @@ const UploadProduct = () => {
             <Input
               type="text"
               id="productName"
-              {...register("productName", {
-                required: "상품명을 입력해주세요",
+              {...register('productName', {
+                required: '상품명을 입력해주세요',
               })}
             ></Input>
           </Box>
@@ -186,7 +186,7 @@ const UploadProduct = () => {
             <Input
               type="number"
               id="price"
-              {...register("price", { required: "가격을 입력해주세요" })}
+              {...register('price', { required: '가격을 입력해주세요' })}
             ></Input>
           </Box>
           <Box>
@@ -194,16 +194,16 @@ const UploadProduct = () => {
             <Input
               type="number"
               id="produectQuantity"
-              {...register("inventory", {
-                required: "재고 수량을 입력해주세요",
+              {...register('inventory', {
+                required: '재고 수량을 입력해주세요',
               })}
             ></Input>
           </Box>
           <Textarea
             rows={20}
             placeholder="제품의 설명을 입력해주세요"
-            {...register("description", {
-              required: "제품의 설명을 입력해주세요",
+            {...register('description', {
+              required: '제품의 설명을 입력해주세요',
             })}
           ></Textarea>
         </UploadForm>

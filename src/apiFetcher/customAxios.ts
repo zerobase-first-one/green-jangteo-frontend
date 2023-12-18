@@ -1,9 +1,8 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
-import { BASE_URL } from '../constant/union';
 
 const customAxios: AxiosInstance = axios.create({
   withCredentials: true,
-  baseURL: BASE_URL,
+  baseURL: '/api',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -12,7 +11,7 @@ const customAxios: AxiosInstance = axios.create({
 customAxios.interceptors.request.use(
   config => {
     // const token =
-    //   'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfQlVZRVIiLCJST0xFX1NFTExFUiJdLCJpYXQiOjE3MDI4Mjc1OTgsImV4cCI6MTcwMjgzNDc5OH0.lC3x1QDCtnyrH1VJrctOXQZx-dmJZJQMOeyh_ECdnJ8';
+    //   'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfQlVZRVIiLCJST0xFX1NFTExFUiJdLCJpYXQiOjE3MDI5MjA1NDYsImV4cCI6MTcwMjkyNzc0Nn0.w3ReQGo0SQPdK8s_X0MOE5nUabqBkbX1TpxYmlNK3dA';
     const token = JSON.parse(localStorage.getItem('token') as string);
 
     if (token) {

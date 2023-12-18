@@ -1,8 +1,8 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import styled from "styled-components";
-import addCommaPrice from "../../../public/module/addComma";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import addCommaPrice from '../../../public/module/addComma';
+import { Link } from 'react-router-dom';
+import customAxios from '../../apiFetcher/customAxios';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -49,13 +49,13 @@ const SellerProductList = () => {
 
   // console.log(products);
   useEffect(() => {
-    axios
-      .get("http://localhost:3000/post")
+    customAxios
+      .get('/post')
       // .get(`${BASE_URL}/stores/{userId}`)
-      .then((response) => {
+      .then(response => {
         setProducts(response.data);
       })
-      .catch((err) => console.log(err.message));
+      .catch(err => console.log(err.message));
   }, []);
 
   return (

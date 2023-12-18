@@ -3,10 +3,14 @@ import styled from 'styled-components';
 import NavBar from '../../components/NavBar';
 import { Link, useParams } from 'react-router-dom';
 import { useGetProfile } from '../../hooks/useGetProfile';
+import { useRecoilValue } from 'recoil';
+import { userDataState } from '../../store/atom/userDataState';
 
 export default function Profile() {
   const { userId } = useParams();
   const { username, loading } = useGetProfile();
+  const userInfo = useRecoilValue(userDataState);
+  console.log(userInfo?.roles);
 
   if (loading) {
     return <div>로딩중...</div>;

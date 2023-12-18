@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { tokenState, userIdState } from '../store/atom/auth';
 import { postUserLogin } from '../apiFetcher/user/postUserLogin';
+import { userDataState } from '../store/atom/userDataState';
 
 export default function LoginContainer() {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ export default function LoginContainer() {
   const [error, setError] = useState('');
   const setUserId = useSetRecoilState(userIdState);
   const setToken = useSetRecoilState(tokenState);
+  const [userInfo, setUserInfo] = useRecoilState(userDataState);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -24,6 +26,7 @@ export default function LoginContainer() {
       });
       setUserId(userId);
       setToken(token);
+      setUserInfo(userInfo);
       navigate('/');
     } catch (e) {
       setError('입력하신 정보가 일치하지 않습니다.');
