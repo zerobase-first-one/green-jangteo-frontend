@@ -46,15 +46,15 @@ const DetailBtn = styled.button`
 `;
 
 const SellerOrderList = () => {
-  //   const [order, setOrder] = useState([]);
-  //   useEffect(() => {
-  //     axios
-  //       .get(`${BASE_URL}/orders`)
-  //       .then((response) => {
-  //         setOrder(response.data);
-  //       })
-  //       .catch((err) => console.log(err.message));
-  //   }, []);
+  // const [order, setOrder] = useState([]);
+  // useEffect(() => {
+  //   axios
+  //     .get(`${BASE_URL}/orders`, { params: { userId: userId } })
+  //     .then((response) => {
+  //       setOrder(response.data);
+  //     })
+  //     .catch((err) => console.log(err.message));
+  // }, []);
 
   const order = [
     {

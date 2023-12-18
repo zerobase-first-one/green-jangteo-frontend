@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import HeaderPrevPageBtn from "../../components/HeaderPrevPageBtn";
 import addCommaPrice from "../../../public/module/addComma";
+import { userIdState } from "../../store/atom/auth";
+import { useRecoilValue } from "recoil";
 
 const Wrapper = styled.div`
   background-color: #f1f1f1;
@@ -66,7 +68,6 @@ const OrderListItem = styled.li`
     border: none;
   }
 `;
-
 const ProductImgBox = styled.div`
   width: 80px;
   height: 80px;
@@ -87,7 +88,6 @@ const ProductQuantity = styled.span`
 const ProductPrice = styled.span`
   text-align: right;
 `;
-
 const OrderBtn = styled.button`
   background: var(--maincolor);
   line-height: 50px;
@@ -102,6 +102,8 @@ const OrderBtn = styled.button`
 `;
 
 const Order = () => {
+  const token = useRecoilValue(userIdState);
+  console.log(token);
   return (
     <>
       <HeaderPrevPageBtn />

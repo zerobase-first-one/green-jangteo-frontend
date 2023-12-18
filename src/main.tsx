@@ -5,7 +5,6 @@ import { RecoilRoot } from "recoil";
 import { Container } from "@mui/material";
 import axios from "axios";
 import { BASE_URL } from "./constant/union.ts";
-import { Container } from "@mui/material";
 
 axios.defaults.baseURL = BASE_URL;
 axios.defaults.withCredentials = true;

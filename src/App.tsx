@@ -21,10 +21,6 @@ import { ChangeEmail } from "./views/profile/ChangeEmail";
 import { ChangePhone } from "./views/profile/ChangePhone";
 import { DeleteAccount } from "./views/profile/DeleteAccount";
 import { ChangeAddress } from "./views/profile/ChangeAddress";
-import CategoryPage from "./routes/CategoryPage";
-import Search from "./routes/Search";
-import Cart from "./routes/cart/Cart";
-import Order from "./routes/Order/Order";
 import SellerProfile from "./routes/Seller/SellerProfile";
 import SellerProductList from "./routes/Seller/SellerProductList";
 import SellerOrderList from "./routes/Seller/SellerOrderList";
@@ -33,7 +29,6 @@ import UploadProduct from "./routes/Seller/UploadProduct";
 import SellerProductDetail from "./routes/Seller/SellerProductDetail";
 import SellerDescription from "./routes/Seller/SellerDescription";
 import SellerReview from "./routes/Seller/SellerReview";
-
 
 const GlobalStyle = createGlobalStyle`
   ${reset};

@@ -1,9 +1,11 @@
 import styled from "styled-components";
-import Header from "../../components/Header";
-import { Link, NavLink, Outlet, useMatch, useParams } from "react-router-dom";
-// import { Link, Outlet, useMatch, useParams } from "react-router-dom";
-// import axios from "axios";
-// import { useEffect, useState } from "react";
+import { Link, NavLink, Outlet, useMatch } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { BASE_URL } from "../../constant/union";
+import { useRecoilValue } from "recoil";
+import { tokenState, userIdState } from "../../store/atom/auth";
+import HeaderPrevPageBtn from "../../components/HeaderPrevPageBtn";
 
 const Wrapper = styled.div`
   // padding: 0 20px;
@@ -88,29 +90,66 @@ const Tab = styled.div`
 `;
 const Div = styled.div``;
 
-const SellerProfile = () => {
-  const { userId } = useParams();
-  // const [product, setProduct] = useState([]);
-  // const productMatch = useMatch("stores/:userId");
-  const orderMatch = useMatch("stores/:userId/order");
+interface Info {
+  storeName: string;
+  description: string;
+  imageUrl: string;
+}
 
-  // useEffect(() => {
-  //   axios
-  //     .get(`${BASE_URL}/stores/${userId}`)
-  //     .then((response) => {
-  //       setProduct(response.data.storeProductDtos);
-  //     })
-  //     .catch((error) => console.log("Error fetching data:", error));
-  // }, []);
+const SellerProfile = () => {
+  // const profile = {
+  //   "createdAt": "2023-12-16T14:40:57.955Z",
+  //   "description": "string",
+  //   "imageUrl": "string",
+  //   "modifiedAt": "2023-12-16T14:40:57.955Z",
+  //   "storeName": "string",
+  //   "storeProductDtos": [
+  //     {
+  //       "averageScore": 0,
+  //       "createdAt": "2023-12-16T14:40:57.955Z",
+  //       "imageUrl": "string",
+  //       "modifiedAt": "2023-12-16T14:40:57.955Z",
+  //       "price": 0,
+  //       "productName": "string"
+  //     }
+  //   ]
+  // }
+  // const { userId } = useParams();
+  const [profile, setProfile] = useState<Info>({
+    storeName: "",
+    description: "",
+    imageUrl: "",
+  });
+  const token = useRecoilValue(tokenState);
+  const userId = useRecoilValue(userIdState);
+
+  const orderMatch = useMatch("stores/:userId/order");
+  console.log(profile);
+  console.log(userId);
+
+  useEffect(() => {
+    axios
+      .get(`${BASE_URL}/stores/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setProfile(response.data);
+      })
+      .catch((error) => console.log("Error fetching data:", error));
+  }, [userId, token]);
 
   return (
     <Wrapper>
-      <Header />
+      <HeaderPrevPageBtn />
       <Profile>
         <ProfileImgBox></ProfileImgBox>
         <ProfileTextBox>
-          <StoreName>상점명</StoreName>
-          <StoreDescription>상점소개</StoreDescription>
+          <StoreName>{profile.storeName}</StoreName>
+          <StoreDescription>
+            description: {profile.description}
+          </StoreDescription>
         </ProfileTextBox>
       </Profile>
       <Link to={`/stores/${userId}/upload`}>

@@ -6,6 +6,7 @@ import Slick from "./slick";
 import ProductListItem from "./ProductListItem";
 import { useRecoilValue } from "recoil";
 import { tokenState } from "../store/atom/auth";
+import { BASE_URL } from "../constant/union";
 
 const Wrapper = styled.div`
   padding: 0 20px;
@@ -36,14 +37,14 @@ const ProductList = () => {
 
   useEffect(() => {
     axios
-      .get("/products", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+      .get(`${BASE_URL}/products`, {
+        // headers: {
+        //   Authorization: `Bearer ${token}`,
+        // },
       })
       .then((response) => {
         setProducts(response.data);
-        console.log(response);
+        console.log(response.data);
       })
       .catch((err) => console.log(err.message));
   }, [token]);

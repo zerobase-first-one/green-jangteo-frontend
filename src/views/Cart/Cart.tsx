@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import HeaderBackPageBtn from "../../components/HeaderPrevPageBtn";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { BASE_URL } from "../../constant/union";
+// import { BASE_URL } from "../../constant/union";
 
 const Wrapper = styled.div`
   font-size: 18px;
@@ -93,7 +93,7 @@ const Cart = () => {
       .get("http://localhost:3000/products")
       // .get(`${BASE_URL}/carts`)
       .then((response) => {
-        const arr = response.data.map((item) => item).slice(0, 4);
+        const arr = response.data.map((item: any) => item).slice(0, 4);
         // setCartList(response.data);
         setCartList(arr);
       })
@@ -108,18 +108,6 @@ const Cart = () => {
     ...cartList.map((item: any) => item.price),
   ]);
   console.log(checkedItem);
-  // const [checkedItemPrice, setCheckedItemPrice] = useState([
-  //   ...cartList.map((item: any) => item.price),
-  // ]);
-  // const [checkedItemQuantity, setCheckedItemQuantity] = useState([
-  //   ...cartList.map((item: any) => item.quantity),
-  // ]);
-  // console.log(checkedItemPrice);
-
-  // const totalPrice = [...checkedItemPrice].reduce((prev, curr) => {
-  //   prev + curr;
-  // });
-  // console.log(totalPrice);
   const totalPrice = checkedItemPrice.reduce((acc: number, cur: number) => {
     return acc + cur;
   }, 0);
@@ -138,9 +126,6 @@ const Cart = () => {
     } else {
       setCheckedItem(checkedItem.filter((item) => item !== productId));
       setCheckedItemPrice(checkedItemPrice.filter((item) => item !== price));
-      // setCheckedItemQuantity(
-      //   checkedItemQuantity.filter((item) => item !== quantity);
-      // );
     }
     // return checkedItem;
   };
@@ -148,14 +133,9 @@ const Cart = () => {
   const allCheckedHandler = (e: any) => {
     if (e.target.checked) {
       setCheckedItem(cartList.map((item: any) => item.productId));
-      // setCheckedItemPrice(price);
-      // checkedItemHandler(productId, checked, price);
-      // setCheckedItemPrice(cartList.map((item: any) => item.price));
-      // setCheckedItemQuantity(cartList.map((item: any) => item.quantity));
     } else {
       setCheckedItem([]);
       setCheckedItemPrice([]);
-      // setCheckedItemQuantity([]);
     }
   };
 

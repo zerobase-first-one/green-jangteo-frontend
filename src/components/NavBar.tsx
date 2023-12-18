@@ -8,9 +8,9 @@ import { useRecoilValue } from "recoil";
 import { tokenState, userIdState } from "../store/atom/auth";
 
 const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  // display: flex;
+  // align-items: center;
+  // justify-content: space-between;
   position: fixed;
   bottom: 0;
   z-index: 999;
@@ -23,40 +23,39 @@ const Wrapper = styled.div`
 
   @media screen and (max-width: 1200px) {
     width: calc(100% - 48px);
-}
-@media screen and (max-width: 430px) {
-  width: calc(100% - 32px);
-}
-
+  }
+  @media screen and (max-width: 430px) {
+    width: calc(100% - 32px);
+  }
 `;
 
 const Container = styled.div`
-display: flex;
-align-items: center;
-justify-content: space-between;
-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100px;
 
-button {
-  color: #d9d9d9;
-  background: none;
-  border: none;
-  font: inherit;
-  line-height: 1;
-  margin: 0;
-  padding: 0;
-  cursor: pointer;
-}
+  button {
+    color: #d9d9d9;
+    background: none;
+    border: none;
+    font: inherit;
+    line-height: 1;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+  }
 
-button:hover {
-  color: var(--maincolor);
-}
+  button:hover {
+    color: var(--maincolor);
+  }
 
-button .blind {
-  display: block;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-}
+  button .blind {
+    display: block;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
 `;
 
 const NavBar = () => {
@@ -78,29 +77,25 @@ const NavBar = () => {
             <span className="blind">검색</span>
           </button>
         </Link>
-        <button type="button">
-          <IoIosDocument />
-          <span className="blind">주문내역</span>
-        </button>
-      </Link>
-      <button type="button">
-        <IoSearch />
-        <span className="blind">검색</span>
-      </button>
-      <button type="button">
-        <IoIosDocument />
-        <span className="blind">주문내역</span>
-      </button>
-      <Link
-        to={
-          token && userId !== null ? `users/${userId}/profile` : "/users/login"
-        }
-      >
-        <button type="button">
-          <BsPersonFill />
-          <span className="blind">마이페이지</span>
-        </button>
-      </Link>
+        <Link to={`/stores/${userId}`}>
+          <button type="button">
+            <IoIosDocument />
+            <span className="blind">주문내역</span>
+          </button>
+        </Link>
+        <Link
+          to={
+            token && userId !== null
+              ? `users/${userId}/profile`
+              : "/users/login"
+          }
+        >
+          <button type="button">
+            <BsPersonFill />
+            <span className="blind">마이페이지</span>
+          </button>
+        </Link>
+      </Container>
     </Wrapper>
   );
 };
