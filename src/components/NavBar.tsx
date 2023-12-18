@@ -1,11 +1,11 @@
-import styled from "styled-components";
-import { AiFillHome } from "react-icons/ai";
-import { IoSearch } from "react-icons/io5";
-import { IoIosDocument } from "react-icons/io";
-import { BsPersonFill } from "react-icons/bs";
-import { Link } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import { tokenState, userIdState } from "../store/atom/auth";
+import styled from 'styled-components';
+import { AiFillHome } from 'react-icons/ai';
+import { IoSearch } from 'react-icons/io5';
+import { IoIosDocument } from 'react-icons/io';
+import { BsPersonFill } from 'react-icons/bs';
+import { Link } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { tokenState, userIdState } from '../store/atom/auth';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -62,13 +62,13 @@ const NavBar = () => {
   return (
     <Wrapper>
       <Container>
-        <Link to={"/"}>
+        <Link to={'/'}>
           <button type="button">
             <AiFillHome />
             <span className="blind">홈</span>
           </button>
         </Link>
-        <Link to={"/search"}>
+        <Link to={'/search'}>
           <button type="button">
             <IoSearch />
             <span className="blind">검색</span>
@@ -82,7 +82,7 @@ const NavBar = () => {
           to={
             token && userId !== null
               ? `users/${userId}/profile`
-              : "/users/login"
+              : '/users/login'
           }
         >
           <button type="button">

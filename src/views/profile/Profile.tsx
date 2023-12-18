@@ -1,11 +1,12 @@
 import Header from '../../components/Header';
 import styled from 'styled-components';
 import NavBar from '../../components/NavBar';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useGetProfile } from '../../hooks/useGetProfile';
 
 export default function Profile() {
-  const { userId, username, loading } = useGetProfile();
+  const { userId } = useParams();
+  const { username, loading } = useGetProfile();
 
   if (loading) {
     return <div>로딩중...</div>;

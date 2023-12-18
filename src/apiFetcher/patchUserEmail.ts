@@ -1,4 +1,4 @@
-import axios from 'axios';
+import customAxios from './customAxios';
 
 interface IChangeEmail {
   userId: string;
@@ -16,7 +16,7 @@ export const changeEmail = async ({
   const data = { password, email };
 
   try {
-    const response = await axios.patch(`/users/${userId}/email`, data);
+    const response = await customAxios.patch(`/users/${userId}/email`, data);
 
     if (response.status === 204) {
       alert('이메일이 성공적으로 변경되었습니다.');

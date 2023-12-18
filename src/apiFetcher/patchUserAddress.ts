@@ -1,21 +1,26 @@
-import axios from 'axios';
-import { IAddressDto } from '../store/atom/userDataState';
+import customAxios from './customAxios';
 
 interface IChangeAddress {
   userId: string;
-  addressDto: IAddressDto;
+  city: string;
+  detailedAddress: string;
+  street: string;
+  zipcode: string;
   navigate: (path: string) => void;
 }
 
 export const changeAddress = async ({
   userId,
-  addressDto,
+  city,
+  detailedAddress,
+  street,
+  zipcode,
   navigate,
 }: IChangeAddress) => {
-  const data = { userId, addressDto, navigate };
+  const data = { userId, city, detailedAddress, street, zipcode, navigate };
 
   try {
-    const response = await axios.patch(`/users/${userId}/address`, data);
+    const response = await customAxios.patch(`/users/${userId}/address`, data);
     if (response.status === 204) {
       alert('주소가 성공적으로 변경되었습니다.');
       navigate(`/users/${userId}/profile`);

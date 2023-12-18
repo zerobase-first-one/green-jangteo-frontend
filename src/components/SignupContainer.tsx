@@ -41,7 +41,7 @@ export default function SignupContainer() {
           zipcode: data.addressDto.zipcode,
         },
         storeName: data.storeName,
-        roles: data.roles,
+        roles: [data.roles],
       };
 
       await postUserSignup(userData);

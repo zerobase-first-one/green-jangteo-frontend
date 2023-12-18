@@ -1,9 +1,7 @@
 import styled from 'styled-components';
-import axios from 'axios';
 import { useEffect } from 'react';
-import { tokenState } from '../store/atom/auth';
-import { useRecoilValue } from 'recoil';
 import { useParams } from 'react-router-dom';
+import customAxios from '../apiFetcher/customAxios';
 
 const Wrapper = styled.div`
   width: 90%;
@@ -14,17 +12,14 @@ const Wrapper = styled.div`
 `;
 
 export default function Description() {
-  const token = useRecoilValue(tokenState);
   const { productId } = useParams();
   console.log(productId);
 
   const getProductDetails = async () => {
     try {
-      const response = await axios.get(`/products/${productId}/description`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await customAxios.get(
+        `/products/${productId}/description`,
+      );
       console.log(response);
       const data = response.data;
 
