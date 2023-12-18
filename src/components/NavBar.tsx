@@ -1,11 +1,12 @@
-import styled from "styled-components";
-import { AiFillHome } from "react-icons/ai";
-import { IoSearch } from "react-icons/io5";
-import { IoIosDocument } from "react-icons/io";
-import { BsPersonFill } from "react-icons/bs";
-import { Link } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import { tokenState, userIdState } from "../store/atom/auth";
+import styled from 'styled-components';
+import { AiFillHome } from 'react-icons/ai';
+import { IoSearch } from 'react-icons/io5';
+import { IoIosDocument } from 'react-icons/io';
+import { BsPersonFill } from 'react-icons/bs';
+import { Link } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { tokenState, userIdState } from '../store/atom/auth';
+import { userDataState } from '../store/atom/userDataState';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -58,17 +59,20 @@ const Container = styled.div`
 const NavBar = () => {
   const token = useRecoilValue(tokenState);
   const userId = useRecoilValue(userIdState);
+  const userInfo = useRecoilValue(userDataState);
+  console.log(userInfo?.roles[0]);
+  const storeId = 11;
 
   return (
     <Wrapper>
       <Container>
-        <Link to={"/"}>
+        <Link to={'/'}>
           <button type="button">
             <AiFillHome />
             <span className="blind">홈</span>
           </button>
         </Link>
-        <Link to={"/search"}>
+        <Link to={'/search'}>
           <button type="button">
             <IoSearch />
             <span className="blind">검색</span>
@@ -80,9 +84,13 @@ const NavBar = () => {
         </button>
         <Link
           to={
-            token && userId !== null
-              ? `users/${userId}/profile`
-              : "/users/login"
+            token && userId && userInfo !== null
+              ? userInfo.roles[0] === 'ROLE_BUYER'
+                ? `/users/${userId}/profile`
+                : userInfo.roles[0] === 'ROLE_SELLER'
+                  ? `/store/${storeId}`
+                  : '/users/login'
+              : '/users/login'
           }
         >
           <button type="button">

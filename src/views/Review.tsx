@@ -1,21 +1,14 @@
 import { useParams } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { tokenState } from '../store/atom/auth';
 import { useEffect } from 'react';
-import axios from 'axios';
+import customAxios from '../apiFetcher/customAxios';
 
 export default function Review() {
   const { productId } = useParams();
-  const token = useRecoilValue(tokenState);
 
   const getProductReview = async () => {
     try {
-      const response = await axios.get(`/reviews/products/${productId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await customAxios.get(`/reviews/products/${productId}`);
       console.log(response);
     } catch (error) {
       console.error('Error fetching product reviews:');

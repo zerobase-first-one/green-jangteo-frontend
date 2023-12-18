@@ -1,4 +1,4 @@
-import axios from 'axios';
+import customAxios from './customAxios';
 
 interface IChangePassword {
   userId: string;
@@ -23,7 +23,7 @@ export const changePassword = async ({
       return;
     }
 
-    const response = await axios.patch(`/users/${userId}/password`, data);
+    const response = await customAxios.patch(`/users/${userId}/password`, data);
 
     if (response.status === 204) {
       alert('비밀번호가 성공적으로 변경되었습니다.');

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import customAxios from './customAxios';
 
 interface IDeleteAccount {
   userId: string;
@@ -14,7 +14,7 @@ export const deleteAccount = async ({
   navigate,
 }: IDeleteAccount) => {
   try {
-    const response = await axios.delete(`/users/${userId}`, {
+    const response = await customAxios.delete(`/users/${userId}`, {
       data: { password },
     });
     if (response.status === 204) {

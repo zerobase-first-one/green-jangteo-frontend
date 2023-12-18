@@ -1,11 +1,11 @@
-import styled from "styled-components";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { ImLeaf } from "react-icons/im";
-import Slick from "./slick";
-import ProductListItem from "./ProductListItem";
-import { useRecoilValue } from "recoil";
-import { tokenState } from "../store/atom/auth";
+import styled from 'styled-components';
+import { useEffect, useState } from 'react';
+import { ImLeaf } from 'react-icons/im';
+import Slick from './slick';
+import ProductListItem from './ProductListItem';
+import customAxios from '../apiFetcher/customAxios';
+// import { useRecoilValue } from 'recoil';
+// import { tokenState } from '../store/atom/auth';
 
 const Wrapper = styled.div`
   padding: 0 20px;
@@ -32,21 +32,17 @@ const ProductList = () => {
     //    membership: boolean,
     //  },
   ]);
-  const token = useRecoilValue(tokenState);
+  // const token = useRecoilValue(tokenState);
 
   useEffect(() => {
-    axios
-      .get("/products", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
+    customAxios
+      .get('/products')
+      .then(response => {
         setProducts(response.data);
         console.log(response);
       })
-      .catch((err) => console.log(err.message));
-  }, [token]);
+      .catch(err => console.log(err.message));
+  }, []);
 
   return (
     <Wrapper>
@@ -54,9 +50,9 @@ const ProductList = () => {
         멤버십 제품
         <ImLeaf
           style={{
-            marginLeft: "5px",
-            transform: "translateY(2px)",
-            color: "var(--maincolor)",
+            marginLeft: '5px',
+            transform: 'translateY(2px)',
+            color: 'var(--maincolor)',
           }}
         />
       </Title>
