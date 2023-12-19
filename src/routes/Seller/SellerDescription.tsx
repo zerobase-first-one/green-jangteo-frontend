@@ -1,7 +1,8 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import styled from "styled-components";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import styled from 'styled-components';
+import { BASE_URL } from '../../constant/union';
 
 const Wrapper = styled.div`
   padding: 20px;
@@ -10,17 +11,17 @@ const Wrapper = styled.div`
 const SellerDescription = () => {
   const { productId } = useParams();
   const [description, setDescription] = useState({
-    description: "",
+    description: '',
   });
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/post/${productId}`)
-      // .get(`${BASE_URL}products/${productId}/description,`)
-      .then((response) => {
+      // .get(`http://localhost:3000/post/${productId}`)
+      .get(`${BASE_URL}products/${productId}/description,`)
+      .then(response => {
         setDescription(response.data);
       })
-      .catch((err) => console.log(err.message));
+      .catch(err => console.log(err.message));
   }, [productId]);
 
   return <Wrapper>{description.description}</Wrapper>;

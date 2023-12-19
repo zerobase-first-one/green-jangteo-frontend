@@ -244,6 +244,91 @@
       "description": "1234",
       "inventory": "54555",
       "id": 2
+    },
+    {
+      "userId": "null",
+      "productName": "1231",
+      "price": "312",
+      "categories": [
+        {
+          "category": "의류"
+        },
+        {
+          "category": "음식"
+        }
+      ],
+      "productImage": {
+        "0": {}
+      },
+      "description": "1231231",
+      "inventory": "123",
+      "images": [
+        {
+          "url": "",
+          "position": 0
+        }
+      ],
+      "storeProductDtos": [
+        {
+          "averageScore": 2.5,
+          "createdAt": "2023-12-16T14:40:57.955Z",
+          "imageUrl": "",
+          "modifiedAt": "2023-12-16T14:40:57.955Z",
+          "price": 20200,
+          "productName": "string"
+        }
+      ],
+      "id": 6
+    },
+    {
+      "userId": "6",
+      "productName": "상품이다",
+      "count": 200,
+      "price": "11111111",
+      "categories": {
+        "category1": "음식",
+        "category2": "생필품"
+      },
+      "productImage": {},
+      "description": "1234",
+      "inventory": "54555",
+      "id": 2
+    },
+    {
+      "userId": 7,
+      "productName": "1231",
+      "price": "312",
+      "count": 200,
+      "categories": [
+        {
+          "category": "의류"
+        },
+        {
+          "category": "음식"
+        }
+      ],
+      "productImage": {
+        "0": {}
+      },
+      "description": "1231231",
+      "inventory": "123",
+      "images": [
+        {
+          "url": "https://greengangteo.s3.ap-northeast-2.amazonaws.com/product/get_product.png",
+          "position": 0
+        }
+      ],
+      "storeProductDtos": [
+        {
+          "averageScore": 2.5,
+          "createdAt": "2023-12-16T14:40:57.955Z",
+          "imageUrl": "https://greengangteo.s3.ap-northeast-2.amazonaws.com/product/get_product.png",
+          "modifiedAt": "2023-12-16T14:40:57.955Z",
+          "price": 20200,
+          "productName": "string"
+        }
+      ],
+      "id": 7
     }
   ]
 }

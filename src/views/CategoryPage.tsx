@@ -96,7 +96,7 @@ const CategoryPage = () => {
                   // membership={item.membership}
                   width={`50%`}
                 />
-              ),
+              )
         )}
       </Wrapper>
       <Footer />

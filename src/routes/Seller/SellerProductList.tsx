@@ -1,9 +1,10 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import styled from "styled-components";
-import addCommaPrice from "../../../public/module/addComma";
-import { Link, useParams } from "react-router-dom";
-import { BASE_URL } from "../../constant/union";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import addCommaPrice from '../../../public/module/addComma';
+import { Link, useParams } from 'react-router-dom';
+import { BASE_URL } from '../../constant/union';
+// import { BASE_URL } from "../../constant/union";
 
 const Wrapper = styled.div`
   width: 100%;
@@ -29,8 +30,12 @@ const ImgBox = styled.div`
   height: 120px;
   margin-right: 20px;
   background-color: #dedede;
+  overflow: hidden;
 `;
-// const Img = styled.img``
+const Img = styled.img`
+  width: 120px;
+  height: 120px;
+`;
 const InfoBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -62,9 +67,9 @@ const SellerProductList = () => {
       // storeProductDtos: [
       // {
       averageScore: 0,
-      imageUrl: "",
+      imageUrl: '',
       price: 0,
-      productName: "",
+      productName: '',
       // },
       // ],
     },
@@ -75,12 +80,12 @@ const SellerProductList = () => {
   console.log(products);
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/post/${userId}`)
-      // .get(`${BASE_URL}/stores/${userId}`)
-      .then((response) => {
+      // .get(`http://localhost:3000/post/${userId}`)
+      .get(`${BASE_URL}/stores/${userId}`)
+      .then(response => {
         setProducts(response.data.storeProductDtos);
       })
-      .catch((err) => console.log(err.message));
+      .catch(err => console.log(err.message));
   }, [userId]);
 
   return (
@@ -89,7 +94,9 @@ const SellerProductList = () => {
         {products.map((product: any, idx: number) => (
           <List key={idx}>
             <Link to={`/stores/:userId/products/${product.id}`}>
-              <ImgBox></ImgBox>
+              <ImgBox>
+                <Img src={product.imageUrl} />
+              </ImgBox>
               <InfoBox>
                 <ProductName>{product.productName}</ProductName>
                 <ProductRate>★★★★★({product.averageScore})</ProductRate>

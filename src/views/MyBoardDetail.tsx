@@ -1,32 +1,42 @@
-import axios from "axios";
-import styled from "styled-components";
-import { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
-import HeaderPrevPageBtn from "../components/HeaderPrevPageBtn";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import MyBoardDetailModal from "../components/modal/MyBoardDetailModal";
-import EditMyBoardDetail from "./EditMyBoardDetail";
-import { useRecoilValue } from "recoil";
-import { userIdState } from "../store/atom/auth";
+import axios from 'axios';
+import styled from 'styled-components';
+import { useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import HeaderPrevPageBtn from '../components/HeaderPrevPageBtn';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import MyBoardDetailModal from '../components/modal/MyBoardDetailModal';
+import EditMyBoardDetail from './EditMyBoardDetail';
+import { useRecoilValue } from 'recoil';
+import { userIdState } from '../store/atom/auth';
+
+interface IComment {
+  commentId: string;
+  createdAt: string;
+  user: {
+    userId: string;
+    username: string;
+  };
+  content: string;
+}
 
 export default function MyBoardDetail() {
-  const [subject, setSubject] = useState("");
-  const [content, setContent] = useState("");
-  const [username, setUsername] = useState("");
-  const [date, setDate] = useState("");
-  const [comment, setComment] = useState("");
-  const [comments, setComments] = useState([]);
+  const [subject, setSubject] = useState('');
+  const [content, setContent] = useState('');
+  const [username, setUsername] = useState('');
+  const [date, setDate] = useState('');
+  const [comment, setComment] = useState('');
+  const [comments, setComments] = useState<IComment[]>([]);
   const [clicked, setClicked] = useState(false);
   const [editing, setEditing] = useState(false);
   const { postId } = useParams();
-  const ref = useRef();
+  const ref = useRef<HTMLInputElement>(null);
   const userId = useRecoilValue(userIdState); // TODO: userId 쓰임 확인할 것
 
   const fetchData = async () => {
     try {
       const response = await axios.get(`/posts/${postId}`);
 
-      console.log("코멘츠", response.data.comments);
+      console.log('코멘츠', response.data.comments);
       setSubject(response.data.subject);
       setContent(response.data.content);
       setUsername(response.data.user.username);
@@ -41,14 +51,22 @@ export default function MyBoardDetail() {
     fetchData();
   }, []);
 
-  const onSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    if (!userId) return;
     e.preventDefault();
-    postComment({ userId, content });
-    setComment(ref.current.value);
-    ref.current.value = "";
+    const commentValue = ref.current?.value || '';
+    postComment({ userId, content: commentValue });
+    setComment(commentValue);
+    ref.current!.value = '';
   };
 
-  const postComment = async ({ userId, content }) => {
+  const postComment = async ({
+    userId,
+    content,
+  }: {
+    userId: string;
+    content: string;
+  }) => {
     const data = { userId, content };
     try {
       const response = await axios.post(`/posts/${postId}/comments`, data);
@@ -56,15 +74,15 @@ export default function MyBoardDetail() {
         commentId: response.data.commentId,
         createdAt: response.data.createdAt,
         user: {
-          userId: 2,
-          username: `${username}`,
+          userId,
+          username,
         },
         content: `${comment}`,
       };
       setComments([...comments, newComment]);
-      console.log("comment", response);
+      console.log('comment', response);
     } catch (e) {
-      console.error("Comment Error:", e);
+      console.error('Comment Error:', e);
       throw e;
     }
   };
@@ -73,8 +91,16 @@ export default function MyBoardDetail() {
     setEditing(false);
   };
 
-  const handleSaveEdit = (userId, editedSubject, editedContent) => {
-    console.log("업데이트된 게시물:", userId, editedSubject, editedContent);
+  const handleSaveEdit = ({
+    userId,
+    editedSubject,
+    editedContent,
+  }: {
+    userId: string;
+    editedSubject: string;
+    editedContent: string;
+  }) => {
+    console.log('업데이트된 게시물:', userId, editedSubject, editedContent);
     setEditing(false);
   };
 
@@ -87,8 +113,8 @@ export default function MyBoardDetail() {
             postId={postId}
             subject={subject}
             content={content}
-            onSave={handleSaveEdit}
-            onCancel={handleCancelEdit}
+            handleSaveEdit={handleSaveEdit}
+            handleCancelEdit={handleCancelEdit}
           />
         ) : (
           <>
@@ -100,7 +126,7 @@ export default function MyBoardDetail() {
             <CreatedAt>{date}</CreatedAt>
             <Content>{content}</Content>
             <hr />
-            {comments.map((comment) => (
+            {comments.map(comment => (
               <div>
                 {comment.user && (
                   <div>

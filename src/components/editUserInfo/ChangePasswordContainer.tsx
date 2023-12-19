@@ -1,23 +1,24 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { useNavigate, useParams } from "react-router-dom";
-import { changePassword } from "../../apiFetcher/patchUserPassword";
+import { useState } from 'react';
+import styled from 'styled-components';
+import { useNavigate, useParams } from 'react-router-dom';
+import { changePassword } from '../../apiFetcher/patchUserPassword';
 
 export default function ChangePasswordContainer() {
   const { userId } = useParams();
   const navigate = useNavigate();
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [passwordToChange, setPasswordToChange] = useState("");
-  const [passwordToChangeConfirm, setPasswordToChangeConfirm] = useState("");
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [passwordToChange, setPasswordToChange] = useState('');
+  const [passwordToChangeConfirm, setPasswordToChangeConfirm] = useState('');
 
   const onChangeBtnClick = () => {
-    changePassword(
+    if (!userId) return;
+    changePassword({
       userId,
       currentPassword,
       passwordToChange,
       passwordToChangeConfirm,
-      navigate
-    );
+      navigate,
+    });
   };
 
   return (
@@ -27,21 +28,21 @@ export default function ChangePasswordContainer() {
         type="password"
         placeholder="현재 비밀번호를 입력하세요"
         value={currentPassword}
-        onChange={(e) => setCurrentPassword(e.currentTarget.value)}
+        onChange={e => setCurrentPassword(e.currentTarget.value)}
       />
       <InputLabel>새로운 비밀번호</InputLabel>
       <InputField
         type="password"
         placeholder="새로운 비밀번호를 입력하세요"
         value={passwordToChange}
-        onChange={(e) => setPasswordToChange(e.currentTarget.value)}
+        onChange={e => setPasswordToChange(e.currentTarget.value)}
       />
       <InputLabel>비밀번호 확인</InputLabel>
       <InputField
         type="password"
         placeholder="새로운 비밀번호를 다시 입력하세요"
         value={passwordToChangeConfirm}
-        onChange={(e) => setPasswordToChangeConfirm(e.currentTarget.value)}
+        onChange={e => setPasswordToChangeConfirm(e.currentTarget.value)}
       />
       <ChangeButton onClick={onChangeBtnClick}>비밀번호 변경하기</ChangeButton>
     </ContentWrapper>

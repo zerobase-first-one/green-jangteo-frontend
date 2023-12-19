@@ -1,9 +1,9 @@
-import styled from "styled-components";
-import axios from "axios";
-import { useEffect } from "react";
-import { tokenState } from "../store/atom/auth";
-import { useRecoilValue } from "recoil";
-import { useParams } from "react-router-dom";
+import styled from 'styled-components';
+import axios from 'axios';
+import { useEffect } from 'react';
+import { tokenState } from '../store/atom/auth';
+import { useRecoilValue } from 'recoil';
+import { useParams } from 'react-router-dom';
 
 const Wrapper = styled.div`
   width: 90%;
@@ -28,18 +28,18 @@ export default function Description() {
       console.log(response);
       const data = response.data;
 
-      console.log("Categories:", data.categories);
-      console.log("Count:", data.count);
-      console.log("CreatedAt:", data.createdAt);
-      console.log("Description:", data.description);
-      console.log("Images:", data.images);
-      console.log("ModifiedAt:", data.modifiedAt);
-      console.log("Price:", data.price);
-      console.log("ProductName:", data.productName);
-      console.log("Review:", data.review);
-      console.log("ReviewCount:", data.reviewCount);
+      console.log('Categories:', data.categories);
+      console.log('Count:', data.count);
+      console.log('CreatedAt:', data.createdAt);
+      console.log('Description:', data.description);
+      console.log('Images:', data.images);
+      console.log('ModifiedAt:', data.modifiedAt);
+      console.log('Price:', data.price);
+      console.log('ProductName:', data.productName);
+      console.log('Review:', data.review);
+      console.log('ReviewCount:', data.reviewCount);
     } catch (error) {
-      console.error("Error fetching product details:", error.message);
+      console.error('Error fetching product details:');
     }
   };
 

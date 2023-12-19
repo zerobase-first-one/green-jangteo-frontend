@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import HeaderPrevPageBtn from "../components/HeaderPrevPageBtn";
-import { useState } from "react";
+import styled from 'styled-components';
+import HeaderPrevPageBtn from '../components/HeaderPrevPageBtn';
+import { useState } from 'react';
 
 const Wrapper = styled.div`
   min-height: inherit;
@@ -28,11 +28,11 @@ const Item = styled.li`
 `;
 
 const itemsData = [
-  { name: "감귤" },
-  { name: "감귤1" },
-  { name: "사과1" },
-  { name: "감귤1" },
-  { name: "감귤2" },
+  { name: '감귤' },
+  { name: '감귤1' },
+  { name: '사과1' },
+  { name: '감귤1' },
+  { name: '감귤2' },
 ];
 
 const Search = () => {
@@ -40,11 +40,11 @@ const Search = () => {
 
   const autoComplete = (e: any) => {
     const currentValue = e.target.value;
-    const filtered = itemsData.filter((item) =>
+    const filtered: any = itemsData.filter(item =>
       item.name.includes(currentValue),
     );
     {
-      currentValue !== "" ? setFilteredItem(filtered) : setFilteredItem([]);
+      currentValue !== '' ? setFilteredItem(filtered) : setFilteredItem([]);
     }
   };
 
@@ -55,7 +55,7 @@ const Search = () => {
         <Input
           placeholder="검색어를 입력해주세요"
           type="text"
-          onChange={(e) => autoComplete(e)}
+          onChange={e => autoComplete(e)}
         />
 
         <ItemList>

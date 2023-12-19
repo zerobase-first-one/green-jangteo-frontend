@@ -1,6 +1,9 @@
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import addCommaPrice from "../../../public/module/addComma";
+import { Link, useParams } from 'react-router-dom';
+import styled from 'styled-components';
+import addCommaPrice from '../../../public/module/addComma';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { BASE_URL } from '../../constant/union';
 // import { useEffect, useState } from "react";
 // import { BASE_URL } from "../../constant/union";
 // import axios from "axios";
@@ -31,7 +34,7 @@ const Title = styled.span`
 const OrderDate = styled.span`
   margin-bottom: 5px;
 `;
-const OrderProducdt = styled.span``;
+// const OrderProducdt = styled.span``;
 const OrderNumber = styled.span``;
 const Price = styled.span``;
 const OrderState = styled.span``;
@@ -45,53 +48,58 @@ const DetailBtn = styled.button`
   cursor: pointer;
 `;
 
-const SellerOrderList = () => {
-  // const [order, setOrder] = useState([]);
-  // useEffect(() => {
-  //   axios
-  //     .get(`${BASE_URL}/orders`, { params: { userId: userId } })
-  //     .then((response) => {
-  //       setOrder(response.data);
-  //     })
-  //     .catch((err) => console.log(err.message));
-  // }, []);
+interface Order {
+  createdAt: string;
+  orderId: number;
+  orderStatus: string;
+  totalOrderPrice: number;
+}
 
-  const order = [
+const SellerOrderList = () => {
+  const { userId } = useParams();
+  const [order, setOrder] = useState<Order[]>([
     {
-      orderDate: `2023.12.12`,
-      orderProduct: { product1: "상품명1", product2: "상품명11" },
-      totalOrderPrice: 20000,
-      orderStatus: `발송전`,
-      orderId: 1,
+      createdAt: '',
+      orderId: 0,
+      orderStatus: '',
+      totalOrderPrice: 0,
     },
-    {
-      orderDate: `2023.12.12`,
-      orderProduct: { product1: "상품명2" },
-      totalOrderPrice: 30330,
-      orderStatus: `발송전`,
-      orderId: 2,
-    },
-    {
-      orderDate: `2023.12.12`,
-      orderProduct: { product1: "상품명3" },
-      totalOrderPrice: 4444,
-      orderStatus: `발송완료`,
-      orderId: 3,
-    },
-  ];
+  ]);
+  useEffect(() => {
+    axios
+      .get(`${BASE_URL}/orders`, { params: { userId: userId } })
+      .then(response => {
+        setOrder(response.data);
+      })
+      .catch(err => console.log(err.message));
+  }, [userId]);
+
+  // const order = [
+  //   {
+  //     createdAt: '2023-12-19T07:10:20.683Z',
+  //     modifiedAt: '2023-12-19T07:10:20.683Z',
+  //     orderId: 0,
+  //     orderStatus: '발송전',
+  //     totalOrderPrice: 545150,
+  //   },
+  //   {
+  //     createdAt: '2023-12-19T07:10:20.683Z',
+  //     modifiedAt: '2023-12-19T07:10:20.683Z',
+  //     orderId: 1,
+  //     orderStatus: '발송전',
+  //     totalOrderPrice: 5450,
+  //   },
+  // ];
 
   return (
     <Wrapper>
       <Ul>
         {order.map((item: any, idx) => (
           <List key={idx}>
-            <OrderDate>{item.orderDate}</OrderDate>
-            <OrderProducdt>
-              <Title>상품명</Title>
-              {item.orderProduct.product1} 외
-            </OrderProducdt>
+            <OrderDate>{item.createdAt.slice(0, 10)}</OrderDate>
             <OrderNumber>
-              <Title>주문번호</Title>321231
+              <Title>주문번호</Title>
+              {item.orderId}
             </OrderNumber>
             <Price>
               <Title>결제금액</Title>
