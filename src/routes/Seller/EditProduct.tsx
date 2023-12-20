@@ -1,11 +1,13 @@
 import HeaderPrevPageBtn from '../../components/HeaderPrevPageBtn';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 // import { BASE_URL } from "../../constant/union";
 import { useEffect, useState } from 'react';
 import customAxios from '../../apiFetcher/customAxios';
 import AWS from 'aws-sdk';
+import { useRecoilValue } from 'recoil';
+import { userIdState } from '../../store/atom/auth';
 
 interface formValue {
   userId: number;
@@ -26,11 +28,12 @@ interface formValue {
       position: 0;
     },
   ];
+  productImage: '';
   description: string;
   inventory: number;
 }
 
-const UploadProduct = () => {
+const EditProduct = () => {
   const {
     register,
     handleSubmit,
@@ -39,7 +42,9 @@ const UploadProduct = () => {
     mode: 'onSubmit',
   });
 
-  const { userId } = useParams();
+  const userId = useRecoilValue(userIdState);
+
+  const { productId } = useParams();
   const navigate = useNavigate();
   const onReset = () => {
     navigate(-1);
@@ -48,11 +53,18 @@ const UploadProduct = () => {
   const [myBucket, setMyBucket] = useState(Object);
   const [selectedFile, setSelectedFile] = useState('');
   const [imgURL, setImgURL] = useState(``);
-  // console.log(myBucket);
+  console.log(myBucket);
+
+  const location = useLocation();
+  const value = [location.state];
+  // console.log(...value);
+
   const onSubmit = (data: formValue) => {
     uploadFile(selectedFile);
+    // axios.post(`http://localhost:3000/post`, {
     customAxios
-      .post(`/products`, {
+      .put(`/product/${productId}`, {
+        // axios.post(`${BASE_URL}/products`, {
         userId: userId,
         productName: data.productName,
         price: data.price,
@@ -64,25 +76,25 @@ const UploadProduct = () => {
             category: data.categories[1].category,
           },
         ],
+        productImage: data.productImage,
         description: data.description,
         inventory: data.inventory,
         images: [
           {
-            url: imgURL.slice(0, imgURL.indexOf('?')),
+            url: imgURL,
             position: 0,
           },
         ],
       })
       .then(response => {
         console.log(response);
+        alert(`수정이 완료되었습니다.`);
         navigate(-1);
       })
       .catch(error => {
         console.log(error.response);
       });
   };
-  const limit = imgURL.indexOf('?');
-  console.log(imgURL.slice(0, limit));
 
   useEffect(() => {
     AWS.config.update({
@@ -93,6 +105,7 @@ const UploadProduct = () => {
       params: { Bucket: `greengangteo` },
       region: import.meta.env.VITE_AWS_DEFAULT_REGION,
     });
+    console.log(myBucket);
 
     setMyBucket(myBucket);
   }, []);
@@ -132,99 +145,108 @@ const UploadProduct = () => {
             <Button type="reset" onClick={onReset}>
               취소
             </Button>
-            <Button type="submit">등록</Button>
+            <Button type="submit">수정완료</Button>
             {/* <Button type="submit">작성완료</Button> */}
           </BtnBox>
-          <Box>
-            <Label htmlFor="image">이미지</Label>
-            <Input
-              type="file"
-              id="image"
-              {...register('images', {
-                onChange: e => {
-                  handleFileInput(e);
-                  uploadFile(selectedFile);
-                },
-              })}
-            ></Input>
-          </Box>
-          <Box>
-            <Label htmlFor="firstCategories">분류1</Label>
-            <Select
-              id="firstCategories"
-              {...register('categories.0.category', {
-                required: '카테고리를 지정해주세요',
-              })}
-            >
-              <Option value="카테고리" disabled>
-                카테고리
-              </Option>
-              {firstCategory.map(category => (
-                <Option value={category} key={category}>
-                  {category}
-                </Option>
-              ))}
-            </Select>
-          </Box>
-          <Box className="category">
-            <Label htmlFor="SecondCategories">분류2</Label>
-            <Select
-              id="SecondCategories"
-              {...register('categories.1.category', {
-                required: '카테고리를 지정해주세요',
-              })}
-            >
-              <Option value="카테고리" disabled>
-                카테고리
-              </Option>
-              {firstCategory.map(category => (
-                <Option value={category} key={category}>
-                  {category}
-                </Option>
-              ))}
-            </Select>
-          </Box>
-          <Box>
-            <Label htmlFor="productName">상품명</Label>
-            <Input
-              type="text"
-              id="productName"
-              {...register('productName', {
-                required: '상품명을 입력해주세요',
-              })}
-            ></Input>
-          </Box>
-          <Box>
-            <Label htmlFor="price">가격</Label>
-            <Input
-              type="number"
-              id="price"
-              {...register('price', { required: '가격을 입력해주세요' })}
-            ></Input>
-          </Box>
-          <Box>
-            <Label htmlFor="inventory">수량</Label>
-            <Input
-              type="number"
-              id="produectQuantity"
-              {...register('inventory', {
-                required: '재고 수량을 입력해주세요',
-              })}
-            ></Input>
-          </Box>
-          <Textarea
-            rows={20}
-            placeholder="제품의 설명을 입력해주세요"
-            {...register('description', {
-              required: '제품의 설명을 입력해주세요',
-            })}
-          ></Textarea>
+          {value.map((val: any) => (
+            <>
+              <Box>
+                <Label htmlFor="image">이미지</Label>
+                <Input
+                  type="file"
+                  id="image"
+                  {...register('productImage', {
+                    onChange: e => {
+                      handleFileInput(e);
+                      // uploadFile(selectedFile);
+                    },
+                  })}
+                ></Input>
+              </Box>
+              <Box>
+                <Label htmlFor="firstCategories">분류1</Label>
+                <Select
+                  id="firstCategories"
+                  value={val.categories[0].category}
+                  {...register('categories.0.category', {
+                    required: '카테고리를 지정해주세요',
+                  })}
+                >
+                  <Option value="카테고리" disabled>
+                    카테고리
+                  </Option>
+                  {firstCategory.map(category => (
+                    <Option value={category} key={category}>
+                      {category}
+                    </Option>
+                  ))}
+                </Select>
+              </Box>
+              <Box className="category">
+                <Label htmlFor="SecondCategories">분류2</Label>
+                <Select
+                  id="SecondCategories"
+                  {...register('categories.1.category', {
+                    required: '카테고리를 지정해주세요',
+                  })}
+                >
+                  <Option value="카테고리" disabled>
+                    카테고리
+                  </Option>
+                  {firstCategory.map(category => (
+                    <Option value={category} key={category}>
+                      {category}
+                    </Option>
+                  ))}
+                </Select>
+              </Box>
+              <Box>
+                <Label htmlFor="productName">상품명</Label>
+                <Input
+                  type="text"
+                  id="productName"
+                  defaultValue={val.productName}
+                  {...register('productName', {
+                    required: '상품명을 입력해주세요',
+                  })}
+                ></Input>
+              </Box>
+              <Box>
+                <Label htmlFor="price">가격</Label>
+                <Input
+                  type="number"
+                  id="price"
+                  defaultValue={val.price}
+                  {...register('price', { required: '가격을 입력해주세요' })}
+                ></Input>
+              </Box>
+              <Box>
+                <Label htmlFor="inventory">수량</Label>
+                <Input
+                  type="number"
+                  id="produectQuantity"
+                  defaultValue={val.count}
+                  {...register('inventory', {
+                    required: '재고 수량을 입력해주세요',
+                  })}
+                ></Input>
+              </Box>
+              <Textarea
+                rows={20}
+                placeholder="제품의 설명을 입력해주세요"
+                defaultValue={val.description}
+                {...register('description', {
+                  required: '제품의 설명을 입력해주세요',
+                })}
+              ></Textarea>
+            </>
+          ))}
         </UploadForm>
       </Wrapper>
     </>
   );
 };
-export default UploadProduct;
+export default EditProduct;
 
 const Wrapper = styled.div`
   padding: 20px;

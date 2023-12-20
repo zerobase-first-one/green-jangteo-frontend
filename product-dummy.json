@@ -1,0 +1,1499 @@
+[
+  {
+    "categories": [{ "category": "완구 및 게임" }, { "category": "완구류" }],
+    "description": "이 제품은 11차 재활용하여 만든 제품입니다.",
+    "images": [
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/12/10/21/28/plums-1898196_1280.jpg",
+        "position": "0"
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/12/10/21/28/plums-1898196_1280.jpg",
+        "position": "1"
+      }
+    ],
+    "inventory": 10,
+    "price": 18000,
+    "productName": "업사이클링 제품 1번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "가구" }, { "category": "가구류" }],
+    "description": "이 제품은 31차 재활용하여 만든 제품입니다.",
+    "images": [
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/12/10/21/28/plums-1898196_1280.jpg",
+        "position": "0"
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/12/10/21/28/plums-1898196_1280.jpg",
+        "position": "1"
+      }
+    ],
+    "inventory": 29,
+    "price": 4000,
+    "productName": "업사이클링 제품 2번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "취미 및 수집품" },
+      { "category": "수집품류" }
+    ],
+    "description": "이 제품은 01차 재활용하여 만든 제품입니다.",
+    "images": [
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/12/10/21/28/plums-1898196_1280.jpg",
+        "position": "0"
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/12/10/21/28/plums-1898196_1280.jpg",
+        "position": "1"
+      }
+    ],
+    "inventory": 35,
+    "price": 7000,
+    "productName": "업사이클링 제품 3번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "가정용품" }, { "category": "가정용품류" }],
+    "description": "이 제품은 11차 재활용하여 만든 제품입니다.",
+    "images": [
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/12/10/21/28/plums-1898196_1280.jpg",
+        "position": "0"
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/12/10/21/28/plums-1898196_1280.jpg",
+        "position": "1"
+      }
+    ],
+    "inventory": 25,
+    "price": 14000,
+    "productName": "업사이클링 제품 4번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "음악 앨범" }, { "category": "앨범류" }],
+    "description": "이 제품은 11차 재활용하여 만든 제품입니다.",
+    "images": [
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/12/10/21/28/plums-1898196_1280.jpg",
+        "position": "0"
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/12/10/21/28/plums-1898196_1280.jpg",
+        "position": "1"
+      }
+    ],
+    "inventory": 35,
+    "price": 6000,
+    "productName": "업사이클링 제품 5번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "여행 및 여행 용품" },
+      { "category": "여행용품류" }
+    ],
+    "description": "이 제품은 51차 재활용하여 만든 제품입니다.",
+    "images": [
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/12/10/21/28/plums-1898196_1280.jpg",
+        "position": "0"
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/12/10/21/28/plums-1898196_1280.jpg",
+        "position": "1"
+      }
+    ],
+    "inventory": 12,
+    "price": 12000,
+    "productName": "업사이클링 제품 6번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "자동차 및 오토바이 부품" },
+      { "category": "자동차부품류" }
+    ],
+    "description": "이 제품은 81차 재활용하여 만든 제품입니다.",
+    "images": [
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/12/10/21/28/plums-1898196_1280.jpg",
+        "position": "0"
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/12/10/21/28/plums-1898196_1280.jpg",
+        "position": "1"
+      }
+    ],
+    "inventory": 33,
+    "price": 19000,
+    "productName": "업사이클링 제품 7번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "의류" }, { "category": "가방" }],
+    "description": "이 제품은 31차 재활용하여 만든 제품입니다.",
+    "images": [
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/12/10/21/28/plums-1898196_1280.jpg",
+        "position": "0"
+      },
+      {
+        "url": "https://cdn.pixabay.com/photo/2016/12/10/21/28/plums-1898196_1280.jpg",
+        "position": "1"
+      }
+    ],
+    "inventory": 14,
+    "price": 5000,
+    "productName": "업사이클링 제품 8번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "건강과 피트니스" },
+      { "category": "피트니스용품류" }
+    ],
+    "description": "이 제품은 31차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_10810", "position": "0" },
+      { "url": "url_58610", "position": "1" }
+    ],
+    "inventory": 16,
+    "price": 14000,
+    "productName": "업사이클링 제품 9번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "취미 및 수집품" },
+      { "category": "수집품류" }
+    ],
+    "description": "이 제품은 21차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_45610", "position": "0" },
+      { "url": "url_95810", "position": "1" }
+    ],
+    "inventory": 49,
+    "price": 18000,
+    "productName": "업사이클링 제품 10번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "스포츠 용품" },
+      { "category": "스포츠용품류" }
+    ],
+    "description": "이 제품은 41차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_47210", "position": "0" },
+      { "url": "url_15610", "position": "1" }
+    ],
+    "inventory": 49,
+    "price": 18000,
+    "productName": "업사이클링 제품 11번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "여행 및 여행 용품" },
+      { "category": "여행용품류" }
+    ],
+    "description": "이 제품은 81차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_43910", "position": "0" },
+      { "url": "url_19510", "position": "1" }
+    ],
+    "inventory": 12,
+    "price": 7000,
+    "productName": "업사이클링 제품 12번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "화장품" }, { "category": "화장품류" }],
+    "description": "이 제품은 51차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_89210", "position": "0" },
+      { "url": "url_46110", "position": "1" }
+    ],
+    "inventory": 31,
+    "price": 5000,
+    "productName": "업사이클링 제품 13번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "자동차 및 오토바이 부품" },
+      { "category": "자동차부품류" }
+    ],
+    "description": "이 제품은 31차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_54310", "position": "0" },
+      { "url": "url_33810", "position": "1" }
+    ],
+    "inventory": 23,
+    "price": 6000,
+    "productName": "업사이클링 제품 14번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "여행 및 여행 용품" },
+      { "category": "여행용품류" }
+    ],
+    "description": "이 제품은 21차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_72110", "position": "0" },
+      { "url": "url_14110", "position": "1" }
+    ],
+    "inventory": 11,
+    "price": 7000,
+    "productName": "업사이클링 제품 15번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "전자제품" }, { "category": "전자제품류" }],
+    "description": "이 제품은 41차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_95210", "position": "0" },
+      { "url": "url_98510", "position": "1" }
+    ],
+    "inventory": 25,
+    "price": 4000,
+    "productName": "업사이클링 제품 16번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "신발" }, { "category": "신발류" }],
+    "description": "이 제품은 21차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_64310", "position": "0" },
+      { "url": "url_46210", "position": "1" }
+    ],
+    "inventory": 14,
+    "price": 14000,
+    "productName": "업사이클링 제품 17번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "여행 및 여행 용품" },
+      { "category": "여행용품류" }
+    ],
+    "description": "이 제품은 71차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_68410", "position": "0" },
+      { "url": "url_73910", "position": "1" }
+    ],
+    "inventory": 13,
+    "price": 17000,
+    "productName": "업사이클링 제품 18번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "예술 및 공예품" },
+      { "category": "공예품류" }
+    ],
+    "description": "이 제품은 61차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_6610", "position": "0" },
+      { "url": "url_64610", "position": "1" }
+    ],
+    "inventory": 13,
+    "price": 4000,
+    "productName": "업사이클링 제품 19번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "취미 및 수집품" },
+      { "category": "수집품류" }
+    ],
+    "description": "이 제품은 31차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_66010", "position": "0" },
+      { "url": "url_26910", "position": "1" }
+    ],
+    "inventory": 19,
+    "price": 10000,
+    "productName": "업사이클링 제품 20번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "도서" }, { "category": "도서류" }],
+    "description": "이 제품은 11차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_77110", "position": "0" },
+      { "url": "url_83910", "position": "1" }
+    ],
+    "inventory": 47,
+    "price": 14000,
+    "productName": "업사이클링 제품 21번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "액세서리 및 보석" },
+      { "category": "액세서리류" }
+    ],
+    "description": "이 제품은 81차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_56910", "position": "0" },
+      { "url": "url_31110", "position": "1" }
+    ],
+    "inventory": 10,
+    "price": 15000,
+    "productName": "업사이클링 제품 22번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "전자제품" }, { "category": "전자제품류" }],
+    "description": "이 제품은 61차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_210", "position": "0" },
+      { "url": "url_710", "position": "1" }
+    ],
+    "inventory": 27,
+    "price": 6000,
+    "productName": "업사이클링 제품 23번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "가구" }, { "category": "가구류" }],
+    "description": "이 제품은 01차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_15910", "position": "0" },
+      { "url": "url_72310", "position": "1" }
+    ],
+    "inventory": 10,
+    "price": 13000,
+    "productName": "업사이클링 제품 24번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "가구" }, { "category": "가구류" }],
+    "description": "이 제품은 31차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_89810", "position": "0" },
+      { "url": "url_81110", "position": "1" }
+    ],
+    "inventory": 21,
+    "price": 10000,
+    "productName": "업사이클링 제품 25번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "도서" }, { "category": "도서류" }],
+    "description": "이 제품은 21차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_41910", "position": "0" },
+      { "url": "url_5810", "position": "1" }
+    ],
+    "inventory": 39,
+    "price": 19000,
+    "productName": "업사이클링 제품 26번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "신발" }, { "category": "신발류" }],
+    "description": "이 제품은 41차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_60410", "position": "0" },
+      { "url": "url_36310", "position": "1" }
+    ],
+    "inventory": 32,
+    "price": 8000,
+    "productName": "업사이클링 제품 27번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "스포츠 용품" },
+      { "category": "스포츠용품류" }
+    ],
+    "description": "이 제품은 81차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_92210", "position": "0" },
+      { "url": "url_13010", "position": "1" }
+    ],
+    "inventory": 17,
+    "price": 1000,
+    "productName": "업사이클링 제품 28번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "가구" }, { "category": "가구류" }],
+    "description": "이 제품은 11차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_6210", "position": "0" },
+      { "url": "url_28410", "position": "1" }
+    ],
+    "inventory": 30,
+    "price": 1000,
+    "productName": "업사이클링 제품 29번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "화장품" }, { "category": "화장품류" }],
+    "description": "이 제품은 81차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_51910", "position": "0" },
+      { "url": "url_26510", "position": "1" }
+    ],
+    "inventory": 48,
+    "price": 8000,
+    "productName": "업사이클링 제품 30번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "전자제품" }, { "category": "전자제품류" }],
+    "description": "이 제품은 21차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_47010", "position": "0" },
+      { "url": "url_58910", "position": "1" }
+    ],
+    "inventory": 19,
+    "price": 14000,
+    "productName": "업사이클링 제품 31번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "건강과 피트니스" },
+      { "category": "피트니스용품류" }
+    ],
+    "description": "이 제품은 01차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_42210", "position": "0" },
+      { "url": "url_81210", "position": "1" }
+    ],
+    "inventory": 13,
+    "price": 16000,
+    "productName": "업사이클링 제품 32번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "여행 및 여행 용품" },
+      { "category": "여행용품류" }
+    ],
+    "description": "이 제품은 41차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_61510", "position": "0" },
+      { "url": "url_2110", "position": "1" }
+    ],
+    "inventory": 16,
+    "price": 8000,
+    "productName": "업사이클링 제품 33번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "가구" }, { "category": "가구류" }],
+    "description": "이 제품은 11차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_89310", "position": "0" },
+      { "url": "url_33510", "position": "1" }
+    ],
+    "inventory": 12,
+    "price": 2000,
+    "productName": "업사이클링 제품 34번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "액세서리 및 보석" },
+      { "category": "액세서리류" }
+    ],
+    "description": "이 제품은 31차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_59610", "position": "0" },
+      { "url": "url_3810", "position": "1" }
+    ],
+    "inventory": 35,
+    "price": 16000,
+    "productName": "업사이클링 제품 35번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "가정용품" }, { "category": "가정용품류" }],
+    "description": "이 제품은 31차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_7710", "position": "0" },
+      { "url": "url_71510", "position": "1" }
+    ],
+    "inventory": 45,
+    "price": 18000,
+    "productName": "업사이클링 제품 36번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "화장품" }, { "category": "화장품류" }],
+    "description": "이 제품은 11차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_53010", "position": "0" },
+      { "url": "url_39310", "position": "1" }
+    ],
+    "inventory": 20,
+    "price": 10000,
+    "productName": "업사이클링 제품 37번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "예술 및 공예품" },
+      { "category": "공예품류" }
+    ],
+    "description": "이 제품은 31차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_61010", "position": "0" },
+      { "url": "url_54210", "position": "1" }
+    ],
+    "inventory": 17,
+    "price": 4000,
+    "productName": "업사이클링 제품 38번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "도서" }, { "category": "도서류" }],
+    "description": "이 제품은 81차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_12610", "position": "0" },
+      { "url": "url_97310", "position": "1" }
+    ],
+    "inventory": 27,
+    "price": 18000,
+    "productName": "업사이클링 제품 39번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "자동차 및 오토바이 부품" },
+      { "category": "자동차부품류" }
+    ],
+    "description": "이 제품은 11차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_26210", "position": "0" },
+      { "url": "url_67710", "position": "1" }
+    ],
+    "inventory": 25,
+    "price": 16000,
+    "productName": "업사이클링 제품 40번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "전자제품" }, { "category": "전자제품류" }],
+    "description": "이 제품은 31차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_51910", "position": "0" },
+      { "url": "url_5710", "position": "1" }
+    ],
+    "inventory": 23,
+    "price": 17000,
+    "productName": "업사이클링 제품 41번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "완구 및 게임" }, { "category": "완구류" }],
+    "description": "이 제품은 61차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_77810", "position": "0" },
+      { "url": "url_55610", "position": "1" }
+    ],
+    "inventory": 42,
+    "price": 10000,
+    "productName": "업사이클링 제품 42번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "예술 및 공예품" },
+      { "category": "공예품류" }
+    ],
+    "description": "이 제품은 71차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_90910", "position": "0" },
+      { "url": "url_63610", "position": "1" }
+    ],
+    "inventory": 48,
+    "price": 9000,
+    "productName": "업사이클링 제품 43번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "예술 및 공예품" },
+      { "category": "공예품류" }
+    ],
+    "description": "이 제품은 71차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_11510", "position": "0" },
+      { "url": "url_48910", "position": "1" }
+    ],
+    "inventory": 37,
+    "price": 7000,
+    "productName": "업사이클링 제품 44번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "전자제품" }, { "category": "전자제품류" }],
+    "description": "이 제품은 11차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_4510", "position": "0" },
+      { "url": "url_23510", "position": "1" }
+    ],
+    "inventory": 12,
+    "price": 4000,
+    "productName": "업사이클링 제품 45번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "전자제품" }, { "category": "전자제품류" }],
+    "description": "이 제품은 71차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_15910", "position": "0" },
+      { "url": "url_56310", "position": "1" }
+    ],
+    "inventory": 34,
+    "price": 6000,
+    "productName": "업사이클링 제품 46번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "도서" }, { "category": "도서류" }],
+    "description": "이 제품은 41차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_87410", "position": "0" },
+      { "url": "url_77610", "position": "1" }
+    ],
+    "inventory": 47,
+    "price": 3000,
+    "productName": "업사이클링 제품 47번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "의류" }, { "category": "가방" }],
+    "description": "이 제품은 21차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_94010", "position": "0" },
+      { "url": "url_34010", "position": "1" }
+    ],
+    "inventory": 12,
+    "price": 12000,
+    "productName": "업사이클링 제품 48번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "반려동물 용품" },
+      { "category": "반려동물 용품류" }
+    ],
+    "description": "이 제품은 11차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_41810", "position": "0" },
+      { "url": "url_68610", "position": "1" }
+    ],
+    "inventory": 35,
+    "price": 8000,
+    "productName": "업사이클링 제품 49번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "도서" }, { "category": "도서류" }],
+    "description": "이 제품은 11차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_3710", "position": "0" },
+      { "url": "url_16610", "position": "1" }
+    ],
+    "inventory": 23,
+    "price": 4000,
+    "productName": "업사이클링 제품 50번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "액세서리 및 보석" },
+      { "category": "액세서리류" }
+    ],
+    "description": "이 제품은 71차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_33210", "position": "0" },
+      { "url": "url_60110", "position": "1" }
+    ],
+    "inventory": 48,
+    "price": 1000,
+    "productName": "업사이클링 제품 51번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "반려동물 용품" },
+      { "category": "반려동물 용품류" }
+    ],
+    "description": "이 제품은 11차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_58910", "position": "0" },
+      { "url": "url_10610", "position": "1" }
+    ],
+    "inventory": 13,
+    "price": 9000,
+    "productName": "업사이클링 제품 52번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "전자제품" }, { "category": "전자제품류" }],
+    "description": "이 제품은 31차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_17510", "position": "0" },
+      { "url": "url_57210", "position": "1" }
+    ],
+    "inventory": 22,
+    "price": 18000,
+    "productName": "업사이클링 제품 53번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "의류" }, { "category": "가방" }],
+    "description": "이 제품은 51차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_49810", "position": "0" },
+      { "url": "url_24410", "position": "1" }
+    ],
+    "inventory": 16,
+    "price": 18000,
+    "productName": "업사이클링 제품 54번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "예술 및 공예품" },
+      { "category": "공예품류" }
+    ],
+    "description": "이 제품은 81차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_91410", "position": "0" },
+      { "url": "url_7710", "position": "1" }
+    ],
+    "inventory": 14,
+    "price": 11000,
+    "productName": "업사이클링 제품 55번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "신발" }, { "category": "신발류" }],
+    "description": "이 제품은 41차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_91910", "position": "0" },
+      { "url": "url_4310", "position": "1" }
+    ],
+    "inventory": 33,
+    "price": 15000,
+    "productName": "업사이클링 제품 56번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "의류" }, { "category": "가방" }],
+    "description": "이 제품은 31차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_12910", "position": "0" },
+      { "url": "url_54910", "position": "1" }
+    ],
+    "inventory": 40,
+    "price": 6000,
+    "productName": "업사이클링 제품 57번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "건강과 피트니스" },
+      { "category": "피트니스용품류" }
+    ],
+    "description": "이 제품은 01차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_23410", "position": "0" },
+      { "url": "url_33610", "position": "1" }
+    ],
+    "inventory": 31,
+    "price": 4000,
+    "productName": "업사이클링 제품 58번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "반려동물 용품" },
+      { "category": "반려동물 용품류" }
+    ],
+    "description": "이 제품은 51차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_59710", "position": "0" },
+      { "url": "url_68910", "position": "1" }
+    ],
+    "inventory": 45,
+    "price": 9000,
+    "productName": "업사이클링 제품 59번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "건강과 피트니스" },
+      { "category": "피트니스용품류" }
+    ],
+    "description": "이 제품은 21차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_80410", "position": "0" },
+      { "url": "url_89210", "position": "1" }
+    ],
+    "inventory": 19,
+    "price": 11000,
+    "productName": "업사이클링 제품 60번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "화장품" }, { "category": "화장품류" }],
+    "description": "이 제품은 01차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_88610", "position": "0" },
+      { "url": "url_8310", "position": "1" }
+    ],
+    "inventory": 21,
+    "price": 4000,
+    "productName": "업사이클링 제품 61번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "화장품" }, { "category": "화장품류" }],
+    "description": "이 제품은 51차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_5410", "position": "0" },
+      { "url": "url_77010", "position": "1" }
+    ],
+    "inventory": 48,
+    "price": 17000,
+    "productName": "업사이클링 제품 62번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "도서" }, { "category": "도서류" }],
+    "description": "이 제품은 51차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_69110", "position": "0" },
+      { "url": "url_36510", "position": "1" }
+    ],
+    "inventory": 35,
+    "price": 19000,
+    "productName": "업사이클링 제품 63번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "건축 및 건설 재료" },
+      { "category": "건축류" }
+    ],
+    "description": "이 제품은 61차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_79310", "position": "0" },
+      { "url": "url_30510", "position": "1" }
+    ],
+    "inventory": 48,
+    "price": 2000,
+    "productName": "업사이클링 제품 64번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "건강과 피트니스" },
+      { "category": "피트니스용품류" }
+    ],
+    "description": "이 제품은 81차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_92410", "position": "0" },
+      { "url": "url_10410", "position": "1" }
+    ],
+    "inventory": 37,
+    "price": 12000,
+    "productName": "업사이클링 제품 65번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "건축 및 건설 재료" },
+      { "category": "건축류" }
+    ],
+    "description": "이 제품은 81차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_94910", "position": "0" },
+      { "url": "url_47910", "position": "1" }
+    ],
+    "inventory": 33,
+    "price": 18000,
+    "productName": "업사이클링 제품 66번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "화장품" }, { "category": "화장품류" }],
+    "description": "이 제품은 51차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_38010", "position": "0" },
+      { "url": "url_45110", "position": "1" }
+    ],
+    "inventory": 17,
+    "price": 9000,
+    "productName": "업사이클링 제품 67번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "건강과 피트니스" },
+      { "category": "피트니스용품류" }
+    ],
+    "description": "이 제품은 21차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_83210", "position": "0" },
+      { "url": "url_54010", "position": "1" }
+    ],
+    "inventory": 30,
+    "price": 16000,
+    "productName": "업사이클링 제품 68번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "스포츠 용품" },
+      { "category": "스포츠용품류" }
+    ],
+    "description": "이 제품은 21차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_79310", "position": "0" },
+      { "url": "url_17210", "position": "1" }
+    ],
+    "inventory": 49,
+    "price": 4000,
+    "productName": "업사이클링 제품 69번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "건축 및 건설 재료" },
+      { "category": "건축류" }
+    ],
+    "description": "이 제품은 71차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_52110", "position": "0" },
+      { "url": "url_94510", "position": "1" }
+    ],
+    "inventory": 17,
+    "price": 16000,
+    "productName": "업사이클링 제품 70번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "액세서리 및 보석" },
+      { "category": "액세서리류" }
+    ],
+    "description": "이 제품은 51차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_19110", "position": "0" },
+      { "url": "url_77610", "position": "1" }
+    ],
+    "inventory": 47,
+    "price": 5000,
+    "productName": "업사이클링 제품 71번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "스포츠 용품" },
+      { "category": "스포츠용품류" }
+    ],
+    "description": "이 제품은 41차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_21010", "position": "0" },
+      { "url": "url_43010", "position": "1" }
+    ],
+    "inventory": 29,
+    "price": 14000,
+    "productName": "업사이클링 제품 72번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "전자제품" }, { "category": "전자제품류" }],
+    "description": "이 제품은 01차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_37810", "position": "0" },
+      { "url": "url_82010", "position": "1" }
+    ],
+    "inventory": 20,
+    "price": 14000,
+    "productName": "업사이클링 제품 73번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "액세서리 및 보석" },
+      { "category": "액세서리류" }
+    ],
+    "description": "이 제품은 51차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_1210", "position": "0" },
+      { "url": "url_83910", "position": "1" }
+    ],
+    "inventory": 26,
+    "price": 16000,
+    "productName": "업사이클링 제품 74번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "가정용품" }, { "category": "가정용품류" }],
+    "description": "이 제품은 31차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_25210", "position": "0" },
+      { "url": "url_90810", "position": "1" }
+    ],
+    "inventory": 12,
+    "price": 14000,
+    "productName": "업사이클링 제품 75번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "자동차 및 오토바이 부품" },
+      { "category": "자동차부품류" }
+    ],
+    "description": "이 제품은 51차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_27710", "position": "0" },
+      { "url": "url_58510", "position": "1" }
+    ],
+    "inventory": 25,
+    "price": 10000,
+    "productName": "업사이클링 제품 76번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "신발" }, { "category": "신발류" }],
+    "description": "이 제품은 21차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_69610", "position": "0" },
+      { "url": "url_33310", "position": "1" }
+    ],
+    "inventory": 28,
+    "price": 8000,
+    "productName": "업사이클링 제품 77번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "반려동물 용품" },
+      { "category": "반려동물 용품류" }
+    ],
+    "description": "이 제품은 41차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_34810", "position": "0" },
+      { "url": "url_8310", "position": "1" }
+    ],
+    "inventory": 23,
+    "price": 2000,
+    "productName": "업사이클링 제품 78번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "음악 앨범" }, { "category": "앨범류" }],
+    "description": "이 제품은 01차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_46710", "position": "0" },
+      { "url": "url_34810", "position": "1" }
+    ],
+    "inventory": 36,
+    "price": 1000,
+    "productName": "업사이클링 제품 79번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "건강과 피트니스" },
+      { "category": "피트니스용품류" }
+    ],
+    "description": "이 제품은 21차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_42310", "position": "0" },
+      { "url": "url_35910", "position": "1" }
+    ],
+    "inventory": 14,
+    "price": 3000,
+    "productName": "업사이클링 제품 80번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "가구" }, { "category": "가구류" }],
+    "description": "이 제품은 11차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_95310", "position": "0" },
+      { "url": "url_29710", "position": "1" }
+    ],
+    "inventory": 40,
+    "price": 19000,
+    "productName": "업사이클링 제품 81번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "전자제품" }, { "category": "전자제품류" }],
+    "description": "이 제품은 11차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_9410", "position": "0" },
+      { "url": "url_24810", "position": "1" }
+    ],
+    "inventory": 23,
+    "price": 13000,
+    "productName": "업사이클링 제품 82번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "스포츠 용품" },
+      { "category": "스포츠용품류" }
+    ],
+    "description": "이 제품은 51차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_58810", "position": "0" },
+      { "url": "url_56610", "position": "1" }
+    ],
+    "inventory": 48,
+    "price": 3000,
+    "productName": "업사이클링 제품 83번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "건강과 피트니스" },
+      { "category": "피트니스용품류" }
+    ],
+    "description": "이 제품은 11차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_76710", "position": "0" },
+      { "url": "url_60810", "position": "1" }
+    ],
+    "inventory": 43,
+    "price": 3000,
+    "productName": "업사이클링 제품 84번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "도서" }, { "category": "도서류" }],
+    "description": "이 제품은 41차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_42610", "position": "0" },
+      { "url": "url_94410", "position": "1" }
+    ],
+    "inventory": 32,
+    "price": 10000,
+    "productName": "업사이클링 제품 85번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "음악 앨범" }, { "category": "앨범류" }],
+    "description": "이 제품은 71차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_10610", "position": "0" },
+      { "url": "url_17210", "position": "1" }
+    ],
+    "inventory": 24,
+    "price": 16000,
+    "productName": "업사이클링 제품 86번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "의류" }, { "category": "가방" }],
+    "description": "이 제품은 31차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_51110", "position": "0" },
+      { "url": "url_26310", "position": "1" }
+    ],
+    "inventory": 19,
+    "price": 8000,
+    "productName": "업사이클링 제품 87번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "자동차 및 오토바이 부품" },
+      { "category": "자동차부품류" }
+    ],
+    "description": "이 제품은 71차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_84810", "position": "0" },
+      { "url": "url_65110", "position": "1" }
+    ],
+    "inventory": 33,
+    "price": 8000,
+    "productName": "업사이클링 제품 88번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "가정용품" }, { "category": "가정용품류" }],
+    "description": "이 제품은 31차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_58910", "position": "0" },
+      { "url": "url_32310", "position": "1" }
+    ],
+    "inventory": 49,
+    "price": 18000,
+    "productName": "업사이클링 제품 89번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "가구" }, { "category": "가구류" }],
+    "description": "이 제품은 21차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_54610", "position": "0" },
+      { "url": "url_92810", "position": "1" }
+    ],
+    "inventory": 22,
+    "price": 1000,
+    "productName": "업사이클링 제품 90번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "신발" }, { "category": "신발류" }],
+    "description": "이 제품은 81차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_21410", "position": "0" },
+      { "url": "url_3110", "position": "1" }
+    ],
+    "inventory": 40,
+    "price": 6000,
+    "productName": "업사이클링 제품 91번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "전자제품" }, { "category": "전자제품류" }],
+    "description": "이 제품은 41차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_14610", "position": "0" },
+      { "url": "url_77910", "position": "1" }
+    ],
+    "inventory": 26,
+    "price": 16000,
+    "productName": "업사이클링 제품 92번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "액세서리 및 보석" },
+      { "category": "액세서리류" }
+    ],
+    "description": "이 제품은 11차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_87610", "position": "0" },
+      { "url": "url_71410", "position": "1" }
+    ],
+    "inventory": 23,
+    "price": 3000,
+    "productName": "업사이클링 제품 93번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "건축 및 건설 재료" },
+      { "category": "건축류" }
+    ],
+    "description": "이 제품은 31차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_19810", "position": "0" },
+      { "url": "url_18510", "position": "1" }
+    ],
+    "inventory": 34,
+    "price": 9000,
+    "productName": "업사이클링 제품 94번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "취미 및 수집품" },
+      { "category": "수집품류" }
+    ],
+    "description": "이 제품은 11차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_69310", "position": "0" },
+      { "url": "url_30810", "position": "1" }
+    ],
+    "inventory": 29,
+    "price": 1000,
+    "productName": "업사이클링 제품 95번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "건축 및 건설 재료" },
+      { "category": "건축류" }
+    ],
+    "description": "이 제품은 81차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_15110", "position": "0" },
+      { "url": "url_26410", "position": "1" }
+    ],
+    "inventory": 11,
+    "price": 2000,
+    "productName": "업사이클링 제품 96번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "건축 및 건설 재료" },
+      { "category": "건축류" }
+    ],
+    "description": "이 제품은 01차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_110", "position": "0" },
+      { "url": "url_18210", "position": "1" }
+    ],
+    "inventory": 49,
+    "price": 12000,
+    "productName": "업사이클링 제품 97번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "스포츠 용품" },
+      { "category": "스포츠용품류" }
+    ],
+    "description": "이 제품은 01차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_67310", "position": "0" },
+      { "url": "url_85010", "position": "1" }
+    ],
+    "inventory": 28,
+    "price": 9000,
+    "productName": "업사이클링 제품 98번",
+    "userId": 1
+  },
+
+  {
+    "categories": [
+      { "category": "스포츠 용품" },
+      { "category": "스포츠용품류" }
+    ],
+    "description": "이 제품은 41차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_29910", "position": "0" },
+      { "url": "url_45010", "position": "1" }
+    ],
+    "inventory": 19,
+    "price": 1000,
+    "productName": "업사이클링 제품 99번",
+    "userId": 1
+  },
+
+  {
+    "categories": [{ "category": "전자제품" }, { "category": "전자제품류" }],
+    "description": "이 제품은 31차 재활용하여 만든 제품입니다.",
+    "images": [
+      { "url": "url_82210", "position": "0" },
+      { "url": "url_86510", "position": "1" }
+    ],
+    "inventory": 34,
+    "price": 7000,
+    "productName": "업사이클링 제품 100번",
+    "userId": 1
+  }
+]
