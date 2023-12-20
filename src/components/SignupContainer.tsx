@@ -43,9 +43,10 @@ export default function SignupContainer() {
           zipcode: data.addressDto.zipcode,
         },
         storeName: data.storeName,
-        roles: [data.roles],
+        roles: ['ROLE_BUYER' || 'ROLE_SELLER'],
       };
 
+      console.log(userData);
       await postUserSignup(userData);
       alert('회원가입이 완료되었습니다.');
       setUserInfo(userData);
