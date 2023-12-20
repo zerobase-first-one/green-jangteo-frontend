@@ -36,7 +36,6 @@ const CartItem = ({ item, checkedItemHandler, checked }: any) => {
   const userId = useSetRecoilState(userIdState);
 
   const updateQuantity = (productId: number, quantity: number) => {
-    // return axios.patch(`http://localhost:3000/products/${id}`, {
     return customAxios.put(`/carts/cart-products/{cartProductId}`, {
       cartProduct: {
         productId: productId,

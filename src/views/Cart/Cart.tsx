@@ -6,7 +6,6 @@ import HeaderBackPageBtn from '../../components/HeaderPrevPageBtn';
 import { Link } from 'react-router-dom';
 import customAxios from '../../apiFetcher/customAxios';
 
-// .slice(0, 4) 삭제
 interface Cart {
   productId: number;
   quantity: number;
@@ -27,8 +26,6 @@ const Cart = () => {
       // axios
       //   .get('http://localhost:3000/cart')
       .then(response => {
-        // const arr = response.data.map((item: any) => item);
-        // setCartList(...arr);
         setCartList(response.data);
       })
       .catch(err => console.log(err.message));
