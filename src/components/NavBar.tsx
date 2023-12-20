@@ -5,8 +5,7 @@ import { IoIosDocument } from 'react-icons/io';
 import { BsPersonFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { tokenState, userIdState } from '../store/atom/auth';
-import { userDataState } from '../store/atom/userDataState';
+import { roleState, tokenState, userIdState } from '../store/atom/auth';
 
 const Wrapper = styled.div`
   position: fixed;
@@ -59,9 +58,7 @@ const Container = styled.div`
 const NavBar = () => {
   const token = useRecoilValue(tokenState);
   const userId = useRecoilValue(userIdState);
-  const userInfo = useRecoilValue(userDataState);
-  console.log(userInfo?.roles[0]);
-  const storeId = 11;
+  const roles = useRecoilValue(roleState);
 
   return (
     <Wrapper>
@@ -84,11 +81,11 @@ const NavBar = () => {
         </button>
         <Link
           to={
-            token && userId && userInfo !== null
-              ? userInfo.roles[0] === 'ROLE_BUYER'
-                ? `/users/${userId}/profile`
-                : userInfo.roles[0] === 'ROLE_SELLER'
-                  ? `/store/${storeId}`
+            token && userId !== null
+              ? roles[0] === '구매자'
+                ? `users/${userId}/profile`
+                : roles[0] === '판매자'
+                  ? `stores/${userId}`
                   : '/users/login'
               : '/users/login'
           }
