@@ -15,7 +15,7 @@
     "@mui/icons-material": "^5.14.19",
     "@mui/material": "^5.14.20",
     "@types/react-slick": "^0.23.12",
-    "aws-sdk": "^2.1520.0",
+    "aws-sdk": "^2.1521.0",
     "axios": "^1.6.2",
     "dotenv": "^16.3.1",
     "framer-motion": "^10.16.12",
@@ -27,6 +27,7 @@
     "react-router-dom": "^6.20.1",
     "react-slick": "^0.29.0",
     "recoil": "^0.7.7",
+    "recoil-persist": "^5.1.0",
     "slick-carousel": "^1.8.1",
     "styled-components": "^6.1.1",
     "styled-reset": "^4.5.1"

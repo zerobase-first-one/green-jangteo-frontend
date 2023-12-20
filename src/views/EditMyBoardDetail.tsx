@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { userIdState } from '../store/atom/auth';
+import customAxios from '../apiFetcher/customAxios';
 
 interface IEditMyBoardDetail {
   postId?: string;
@@ -37,7 +37,7 @@ const EditMyBoardDetail = ({
 
   const handleSave = async () => {
     try {
-      await axios.put(`/posts/${postId}`, {
+      await customAxios.put(`/posts/${postId}`, {
         userId,
         subject: editedSubject,
         content: editedContent,

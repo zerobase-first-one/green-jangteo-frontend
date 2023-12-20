@@ -1,10 +1,10 @@
 // import styled from "styled-components";
 import { useState } from 'react';
 import { useEffect } from 'react';
-import axios from 'axios';
 import { useRecoilState } from 'recoil';
 import { IBoardListForm, postState } from '../../store/atom/postState';
 import BoardListForm from './BoardListForm';
+import customAxios from '../../apiFetcher/customAxios';
 
 export default function AllBoardList() {
   const [isLoading, setLoading] = useState(false);
@@ -15,7 +15,7 @@ export default function AllBoardList() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`/posts`);
+        const response = await customAxios.get(`/posts`);
         const postData = response.data.content || [];
         setPost({ content: postData });
       } catch (error) {

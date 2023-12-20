@@ -22,16 +22,11 @@ export interface IForm {
 export const userDataState = atom<IForm | null>({
   key: 'userDataState',
   default: null,
+  effects: [
+    ({ onSet }) => {
+      onSet(newValue => {
+        localStorage.setItem('userData', JSON.stringify(newValue));
+      });
+    },
+  ],
 });
-
-// export const userDataState = atom({
-//   key: "userDataState",
-//   default: JSON.parse(localStorage.getItem("userData") || "{}") || {},
-//   effects_UNSTABLE: [
-//     ({ onSet }) => {
-//       onSet((newValue) => {
-//         localStorage.setItem("userData", JSON.stringify(newValue));
-//       });
-//     },
-//   ],
-// });

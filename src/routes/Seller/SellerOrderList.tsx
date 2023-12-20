@@ -8,46 +8,6 @@ import { BASE_URL } from '../../constant/union';
 // import { BASE_URL } from "../../constant/union";
 // import axios from "axios";
 
-const Wrapper = styled.div`
-  // background-color: #dedede;
-`;
-const Ul = styled.ul``;
-const List = styled.li`
-  position: relative;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  border-bottom: 1px solid #dedede;
-
-  &:last-child {
-    border-bottom: none;
-  }
-
-  span {
-    padding: 5px 0;
-  }
-`;
-const Title = styled.span`
-  display: inline-block;
-  width: 120px;
-`;
-const OrderDate = styled.span`
-  margin-bottom: 5px;
-`;
-// const OrderProducdt = styled.span``;
-const OrderNumber = styled.span``;
-const Price = styled.span``;
-const OrderState = styled.span``;
-const DetailBtn = styled.button`
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  border: none;
-  background-color: inherit;
-  color: #b0b0b0;
-  cursor: pointer;
-`;
-
 interface Order {
   createdAt: string;
   orderId: number;
@@ -125,3 +85,43 @@ const SellerOrderList = () => {
 };
 
 export default SellerOrderList;
+
+const Wrapper = styled.div`
+  // background-color: #dedede;
+`;
+const Ul = styled.ul``;
+const List = styled.li`
+  position: relative;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #dedede;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  span {
+    padding: 5px 0;
+  }
+`;
+const Title = styled.span`
+  display: inline-block;
+  width: 120px;
+`;
+const OrderDate = styled.span`
+  margin-bottom: 5px;
+`;
+// const OrderProducdt = styled.span``;
+const OrderNumber = styled.span``;
+const Price = styled.span``;
+const OrderState = styled.span``;
+const DetailBtn = styled.button`
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  border: none;
+  background-color: inherit;
+  color: #b0b0b0;
+  cursor: pointer;
+`;

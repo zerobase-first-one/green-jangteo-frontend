@@ -1,13 +1,115 @@
-import styled from "styled-components";
-import HeaderPrevPageBtn from "../../components/HeaderPrevPageBtn";
-import addCommaPrice from "../../../public/module/addComma";
-import { userIdState } from "../../store/atom/auth";
-import { useRecoilValue } from "recoil";
+import styled from 'styled-components';
+import HeaderPrevPageBtn from '../../components/HeaderPrevPageBtn';
+import addCommaPrice from '../../../public/module/addComma';
+import { useEffect } from 'react';
+import customAxios from '../../apiFetcher/customAxios';
+
+interface OrderInfo {
+  buyerId: number;
+  orderProductRequestDtos: [
+    {
+      productId: number;
+      quantity: number;
+    },
+  ];
+  sellerId: 1;
+  shippingAddressDto: {
+    city: string;
+    detailedAddress: string;
+    street: string;
+    zipcode: number;
+  };
+}
+
+const Order = () => {
+  useEffect(() => {
+    customAxios.get;
+  });
+  return (
+    <>
+      <HeaderPrevPageBtn />
+      <Wrapper>
+        <Container>
+          <Title>배송지</Title>
+          <TextBox>
+            <OrderName>
+              이름
+              <OrderInfo>@주문자</OrderInfo>
+            </OrderName>
+            <OrderName>
+              연락처
+              <OrderInfo>@전화번호</OrderInfo>
+            </OrderName>
+            <OrderName>
+              배송지
+              <OrderInfo>@도로명주소</OrderInfo>
+            </OrderName>
+          </TextBox>
+        </Container>
+        <Container>
+          <Title>주문 상품</Title>
+          <OrderList>
+            <OrderListItem>
+              <ProductImgBox></ProductImgBox>
+              <ProductInfoBox>
+                <ProductName>{`상품명`}</ProductName>
+                <ProductQuantity>주문 수량: {}개</ProductQuantity>
+                <ProductPrice>{addCommaPrice(100000)} 원</ProductPrice>
+              </ProductInfoBox>
+            </OrderListItem>
+          </OrderList>
+        </Container>
+        <Container>
+          <Title>최종 결제금액 확인</Title>
+          <TextBox>
+            <OrderName>
+              총 상품금액
+              <OrderInfo>{addCommaPrice(10000)} 원</OrderInfo>
+            </OrderName>
+            <OrderName>
+              멤버십 할인
+              <OrderInfo>{addCommaPrice(10000)} 원</OrderInfo>
+            </OrderName>
+            <OrderName>
+              쿠폰 할인
+              <OrderInfo>{addCommaPrice(10000)} 원</OrderInfo>
+            </OrderName>
+          </TextBox>
+          <TextBox>
+            <OrderName>
+              주문 금액
+              <OrderInfo>{addCommaPrice(10000)} 원</OrderInfo>
+            </OrderName>
+            <OrderName>
+              배송비
+              <OrderInfo>{addCommaPrice(10000)} 원</OrderInfo>
+            </OrderName>
+            <OrderName>
+              적립금 사용
+              <OrderInfo>{addCommaPrice(10000)} 원</OrderInfo>
+            </OrderName>
+          </TextBox>
+          <TextBox style={{ border: `none` }}>
+            <OrderName>
+              결제하실 금액
+              <OrderInfo className="orderPrice">
+                {addCommaPrice(10000)} 원
+              </OrderInfo>
+            </OrderName>
+          </TextBox>
+          <OrderBtn>주문하기</OrderBtn>
+        </Container>
+      </Wrapper>
+    </>
+  );
+};
+
+export default Order;
 
 const Wrapper = styled.div`
   background-color: #f1f1f1;
   &::after {
-    content: "";
+    content: '';
     display: block;
     clear: both;
   }
@@ -100,87 +202,3 @@ const OrderBtn = styled.button`
   padding: 0;
   width: 100%;
 `;
-
-const Order = () => {
-  const token = useRecoilValue(userIdState);
-  console.log(token);
-  return (
-    <>
-      <HeaderPrevPageBtn />
-      <Wrapper>
-        <Container>
-          <Title>배송지</Title>
-          <TextBox>
-            <OrderName>
-              이름
-              <OrderInfo>@주문자</OrderInfo>
-            </OrderName>
-            <OrderName>
-              연락처
-              <OrderInfo>@전화번호</OrderInfo>
-            </OrderName>
-            <OrderName>
-              배송지
-              <OrderInfo>@도로명주소</OrderInfo>
-            </OrderName>
-          </TextBox>
-        </Container>
-        <Container>
-          <Title>주문 상품</Title>
-          <OrderList>
-            <OrderListItem>
-              <ProductImgBox></ProductImgBox>
-              <ProductInfoBox>
-                <ProductName>{`상품명`}</ProductName>
-                <ProductQuantity>주문 수량: {}개</ProductQuantity>
-                <ProductPrice>{addCommaPrice(100000)} 원</ProductPrice>
-              </ProductInfoBox>
-            </OrderListItem>
-          </OrderList>
-        </Container>
-        <Container>
-          <Title>최종 결제금액 확인</Title>
-          <TextBox>
-            <OrderName>
-              총 상품금액
-              <OrderInfo>{addCommaPrice(10000)} 원</OrderInfo>
-            </OrderName>
-            <OrderName>
-              멤버십 할인
-              <OrderInfo>{addCommaPrice(10000)} 원</OrderInfo>
-            </OrderName>
-            <OrderName>
-              쿠폰 할인
-              <OrderInfo>{addCommaPrice(10000)} 원</OrderInfo>
-            </OrderName>
-          </TextBox>
-          <TextBox>
-            <OrderName>
-              주문 금액
-              <OrderInfo>{addCommaPrice(10000)} 원</OrderInfo>
-            </OrderName>
-            <OrderName>
-              배송비
-              <OrderInfo>{addCommaPrice(10000)} 원</OrderInfo>
-            </OrderName>
-            <OrderName>
-              적립금 사용
-              <OrderInfo>{addCommaPrice(10000)} 원</OrderInfo>
-            </OrderName>
-          </TextBox>
-          <TextBox style={{ border: `none` }}>
-            <OrderName>
-              결제하실 금액
-              <OrderInfo className="orderPrice">
-                {addCommaPrice(10000)} 원
-              </OrderInfo>
-            </OrderName>
-          </TextBox>
-          <OrderBtn>주문하기</OrderBtn>
-        </Container>
-      </Wrapper>
-    </>
-  );
-};
-
-export default Order;

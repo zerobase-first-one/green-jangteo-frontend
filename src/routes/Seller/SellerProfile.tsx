@@ -1,11 +1,96 @@
-import styled from "styled-components";
-import { Link, NavLink, Outlet, useMatch } from "react-router-dom";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { BASE_URL } from "../../constant/union";
-import { useRecoilValue } from "recoil";
-import { tokenState, userIdState } from "../../store/atom/auth";
-import HeaderPrevPageBtn from "../../components/HeaderPrevPageBtn";
+import styled from 'styled-components';
+import { Link, NavLink, Outlet, useMatch } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+// import axios from 'axios';
+// import { BASE_URL } from '../../constant/union';
+import { useRecoilValue } from 'recoil';
+import { tokenState, userIdState } from '../../store/atom/auth';
+import HeaderPrevPageBtn from '../../components/HeaderPrevPageBtn';
+import customAxios from '../../apiFetcher/customAxios';
+
+interface Info {
+  storeName: string;
+  description: string;
+  imageUrl: string;
+}
+
+const SellerProfile = () => {
+  // const profile = {
+  //   "createdAt": "2023-12-16T14:40:57.955Z",
+  //   "description": "string",
+  //   "imageUrl": "string",
+  //   "modifiedAt": "2023-12-16T14:40:57.955Z",
+  //   "storeName": "string",
+  //   "storeProductDtos": [
+  //     {
+  //       "averageScore": 0,
+  //       "createdAt": "2023-12-16T14:40:57.955Z",
+  //       "imageUrl": "string",
+  //       "modifiedAt": "2023-12-16T14:40:57.955Z",
+  //       "price": 0,
+  //       "productName": "string"
+  //     }
+  //   ]
+  // }
+  // const { userId } = useParams();
+  const [profile, setProfile] = useState<Info>({
+    storeName: '',
+    description: '',
+    imageUrl: '',
+  });
+  const token = useRecoilValue(tokenState);
+  const userId = useRecoilValue(userIdState);
+
+  const orderMatch = useMatch('stores/:userId/order');
+  console.log(profile);
+  console.log(userId);
+
+  useEffect(() => {
+    customAxios
+      .get(`/stores/${userId}`, {
+        // axios
+        //   .get(`${BASE_URL}/stores/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(response => {
+        setProfile(response.data);
+      })
+      .catch(error => console.log('Error fetching data:', error));
+  }, [userId, token]);
+
+  return (
+    <Wrapper>
+      <HeaderPrevPageBtn />
+      <Profile>
+        <ProfileImgBox></ProfileImgBox>
+        <ProfileTextBox>
+          <StoreName>{profile.storeName}</StoreName>
+          <StoreDescription>
+            description: {profile.description}
+          </StoreDescription>
+        </ProfileTextBox>
+      </Profile>
+      <Link to={`/stores/${userId}/upload`}>
+        <Button>물품등록</Button>
+      </Link>
+      <Tabs>
+        <NavLink to={''} end={orderMatch !== null ? true : false}>
+          <Tab>물품 리스트</Tab>
+        </NavLink>
+        <NavLink to={'order'}>
+          <Tab>주문 리스트</Tab>
+        </NavLink>
+      </Tabs>
+      <Div>
+        <Outlet />
+      </Div>
+    </Wrapper>
+  );
+};
+
+export default SellerProfile;
 
 const Wrapper = styled.div`
   // padding: 0 20px;
@@ -89,85 +174,3 @@ const Tab = styled.div`
   border: none;
 `;
 const Div = styled.div``;
-
-interface Info {
-  storeName: string;
-  description: string;
-  imageUrl: string;
-}
-
-const SellerProfile = () => {
-  // const profile = {
-  //   "createdAt": "2023-12-16T14:40:57.955Z",
-  //   "description": "string",
-  //   "imageUrl": "string",
-  //   "modifiedAt": "2023-12-16T14:40:57.955Z",
-  //   "storeName": "string",
-  //   "storeProductDtos": [
-  //     {
-  //       "averageScore": 0,
-  //       "createdAt": "2023-12-16T14:40:57.955Z",
-  //       "imageUrl": "string",
-  //       "modifiedAt": "2023-12-16T14:40:57.955Z",
-  //       "price": 0,
-  //       "productName": "string"
-  //     }
-  //   ]
-  // }
-  // const { userId } = useParams();
-  const [profile, setProfile] = useState<Info>({
-    storeName: "",
-    description: "",
-    imageUrl: "",
-  });
-  const token = useRecoilValue(tokenState);
-  const userId = useRecoilValue(userIdState);
-
-  const orderMatch = useMatch("stores/:userId/order");
-  console.log(profile);
-  console.log(userId);
-
-  useEffect(() => {
-    axios
-      .get(`${BASE_URL}/stores/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        setProfile(response.data);
-      })
-      .catch((error) => console.log("Error fetching data:", error));
-  }, [userId, token]);
-
-  return (
-    <Wrapper>
-      <HeaderPrevPageBtn />
-      <Profile>
-        <ProfileImgBox></ProfileImgBox>
-        <ProfileTextBox>
-          <StoreName>{profile.storeName}</StoreName>
-          <StoreDescription>
-            description: {profile.description}
-          </StoreDescription>
-        </ProfileTextBox>
-      </Profile>
-      <Link to={`/stores/${userId}/upload`}>
-        <Button>물품등록</Button>
-      </Link>
-      <Tabs>
-        <NavLink to={""} end={orderMatch !== null ? true : false}>
-          <Tab>물품 리스트</Tab>
-        </NavLink>
-        <NavLink to={"order"}>
-          <Tab>주문 리스트</Tab>
-        </NavLink>
-      </Tabs>
-      <Div>
-        <Outlet />
-      </Div>
-    </Wrapper>
-  );
-};
-
-export default SellerProfile;

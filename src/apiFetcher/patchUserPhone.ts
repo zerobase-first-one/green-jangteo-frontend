@@ -1,4 +1,4 @@
-import axios from 'axios';
+import customAxios from './customAxios';
 
 interface IChangePhone {
   userId: string;
@@ -16,7 +16,7 @@ export const changePhone = async ({
   const data = { password, phone };
 
   try {
-    const response = await axios.patch(`/users/${userId}/phone`, data);
+    const response = await customAxios.patch(`/users/${userId}/phone`, data);
 
     if (response.status === 204) {
       alert('전화번호가 성공적으로 변경되었습니다.');

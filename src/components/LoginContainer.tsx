@@ -1,22 +1,24 @@
-import styled from "styled-components";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
-import { tokenState, userIdState } from "../store/atom/auth";
-import { postUserLogin } from "../apiFetcher/user/postUserLogin";
+import styled from 'styled-components';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { tokenState, userIdState } from '../store/atom/auth';
+import { postUserLogin } from '../apiFetcher/user/postUserLogin';
+import { userDataState } from '../store/atom/userDataState';
 
 export default function LoginContainer() {
   const navigate = useNavigate();
   const [isLoading, setLoading] = useState(false);
-  const [emailOrUsername, setEmailOrUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [emailOrUsername, setEmailOrUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
   const setUserId = useSetRecoilState(userIdState);
   const setToken = useSetRecoilState(tokenState);
+  const [userInfo, setUserInfo] = useRecoilState(userDataState);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (isLoading || emailOrUsername === "" || password === "") return;
+    if (isLoading || emailOrUsername === '' || password === '') return;
     try {
       const { token, userId } = await postUserLogin({
         emailOrUsername,
@@ -24,9 +26,10 @@ export default function LoginContainer() {
       });
       setUserId(userId);
       setToken(token);
-      navigate("/");
+      setUserInfo(userInfo);
+      navigate('/');
     } catch (e) {
-      setError("입력하신 정보가 일치하지 않습니다.");
+      setError('입력하신 정보가 일치하지 않습니다.');
     } finally {
       setLoading(false);
     }
@@ -36,9 +39,9 @@ export default function LoginContainer() {
     const {
       target: { name, value },
     } = e;
-    if (name === "emailOrUsername") {
+    if (name === 'emailOrUsername') {
       setEmailOrUsername(value);
-    } else if (name === "password") {
+    } else if (name === 'password') {
       setPassword(value);
     }
   };
@@ -51,7 +54,7 @@ export default function LoginContainer() {
 
   return (
     <Form onSubmit={onSubmit}>
-      {error !== "" ? <Error>{error}</Error> : null}
+      {error !== '' ? <Error>{error}</Error> : null}
       <Input
         onChange={onChange}
         value={emailOrUsername}
@@ -72,10 +75,10 @@ export default function LoginContainer() {
       <Input
         className="login-btn"
         type="submit"
-        value={isLoading ? "로그인 중..." : "로그인하기"}
+        value={isLoading ? '로그인 중...' : '로그인하기'}
       />
       <CreateAccount>
-        <Link to={"/users/signup"}>
+        <Link to={'/users/signup'}>
           <div>그린장터 가입하기 &rarr;</div>
         </Link>
       </CreateAccount>

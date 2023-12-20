@@ -1,10 +1,123 @@
 import styled from 'styled-components';
 import HeaderPrevPageBtn from '../../components/HeaderPrevPageBtn';
-import { NavLink, Outlet, useMatch, useParams } from 'react-router-dom';
+import {
+  Link,
+  NavLink,
+  Outlet,
+  useMatch,
+  useNavigate,
+  useParams,
+} from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import addCommaPrice from '../../../public/module/addComma';
-import { BASE_URL } from '../../constant/union';
+import customAxios from '../../apiFetcher/customAxios';
+// import axios from 'axios';
+// import { BASE_URL } from '../../constant/union';
+
+interface Info {
+  categories: [
+    {
+      category: string;
+    },
+    {
+      category: string;
+    },
+  ];
+  productName: string;
+  price: number;
+  description: string;
+  count: number; //inventory
+  images: [
+    {
+      position: number;
+      url: string;
+    },
+  ];
+}
+
+const SellerProductDetail = () => {
+  const [product, setProduct] = useState<Info>({
+    categories: [
+      {
+        category: '음식',
+      },
+      {
+        category: '의류',
+      },
+    ],
+    productName: '상품명입니다',
+    price: 20000,
+    description: '이것은 설명입니다',
+    count: 20, //inventory
+    images: [
+      {
+        position: 0,
+        url: ``,
+      },
+    ],
+  });
+  // const { userId } = useParams();
+  const { productId } = useParams();
+  console.log(product);
+  useEffect(() => {
+    customAxios
+      .get(`/products/${productId}/description`)
+      // axios
+      //   .get(`${BASE_URL}products/${productId}/description,`)
+      .then(response => {
+        setProduct(response.data);
+      })
+      .catch(err => console.log(err.message));
+  }, [productId]);
+
+  const orderMatch = useMatch(`/stores/:userId/products/${productId}/review`);
+
+  const navigate = useNavigate();
+  const deleteProduct = () => {
+    customAxios.delete(`/products/${productId}`);
+    alert('삭제되었습니다.');
+    navigate(-1);
+  };
+
+  return (
+    <>
+      <HeaderPrevPageBtn />
+      <Wrapper>
+        <BtnBox>
+          <Link to={`/stores/products/${productId}`} state={product}>
+            <Button>수정</Button>
+          </Link>
+          <Button onClick={deleteProduct}>삭제</Button>
+        </BtnBox>
+        <Box>
+          <ImageBox>
+            <Image src={product.images[0].url} />
+          </ImageBox>
+          <TextBox>
+            <Text className="productName">{product.productName}</Text>
+            <Text>{addCommaPrice(product.price)} 원</Text>
+            <Text className="inventory">
+              재고 : {addCommaPrice(product.count)} 개
+            </Text>
+          </TextBox>
+        </Box>
+        <Tabs>
+          <NavLink to={''} end={orderMatch !== null ? true : false}>
+            <Tab>상품설명</Tab>
+          </NavLink>
+          <NavLink to={'review'}>
+            <Tab>리뷰</Tab>
+          </NavLink>
+        </Tabs>
+        <Div>
+          <Outlet />
+        </Div>
+      </Wrapper>
+    </>
+  );
+};
+
+export default SellerProductDetail;
 
 const Wrapper = styled.div`
   padding: 20px;
@@ -42,6 +155,7 @@ const ImageBox = styled.div`
   margin-right: 30px;
   background-color: #dedede;
   position: relative;
+  overflow: hidden;
 
   @media screen and (max-width: 768px) {
     width: 100%;
@@ -50,9 +164,11 @@ const ImageBox = styled.div`
   }
 `;
 const Image = styled.img`
-  width: 100%;
-  height: 100%;
   position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
 `;
 const TextBox = styled.div`
   text-align: left;
@@ -104,99 +220,3 @@ const Tab = styled.div`
   border: none;
 `;
 const Div = styled.div``;
-
-interface Info {
-  categories: [
-    {
-      category: string;
-    },
-    {
-      category: string;
-    },
-  ];
-  productName: string;
-  price: number;
-  description: string;
-  count: number; //inventory
-  id: number;
-  images: [
-    {
-      position: number;
-      url: '';
-    },
-  ];
-}
-
-const SellerProductDetail = () => {
-  const [product, setProduct] = useState<Info>({
-    categories: [
-      {
-        category: '',
-      },
-      {
-        category: '',
-      },
-    ],
-    productName: '',
-    price: 0,
-    description: '',
-    count: 0, //inventory
-    id: 0,
-    images: [
-      {
-        position: 0,
-        url: '',
-      },
-    ],
-  });
-  const { productId } = useParams();
-  console.log(product);
-  useEffect(() => {
-    axios
-      // .get(`http://localhost:3000/post/${productId}`)
-      .get(`${BASE_URL}products/${productId}/description,`)
-      .then(response => {
-        setProduct(response.data);
-      })
-      .catch(err => console.log(err.message));
-  }, [productId]);
-
-  const orderMatch = useMatch('/stores/:userId/products/:productId/review');
-
-  return (
-    <>
-      <HeaderPrevPageBtn />
-      <Wrapper>
-        <BtnBox>
-          <Button>수정</Button>
-          <Button>삭제</Button>
-        </BtnBox>
-        <Box>
-          <ImageBox>
-            <Image src={product.images[0].url} />
-          </ImageBox>
-          <TextBox>
-            <Text className="productName">{product.productName}하이</Text>
-            <Text>{addCommaPrice(product.price)} 원</Text>
-            <Text className="inventory">
-              재고 : {addCommaPrice(product.count)} 개
-            </Text>
-          </TextBox>
-        </Box>
-        <Tabs>
-          <NavLink to={''} end={orderMatch !== null ? true : false}>
-            <Tab>상품설명</Tab>
-          </NavLink>
-          <NavLink to={'review'}>
-            <Tab>리뷰</Tab>
-          </NavLink>
-        </Tabs>
-        <Div>
-          <Outlet />
-        </Div>
-      </Wrapper>
-    </>
-  );
-};
-
-export default SellerProductDetail;

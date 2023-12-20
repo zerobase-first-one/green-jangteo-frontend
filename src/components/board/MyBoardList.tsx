@@ -1,25 +1,20 @@
 // import styled from "styled-components";
 import { useState } from 'react';
 import { useEffect } from 'react';
-import axios from 'axios';
 import { useRecoilState } from 'recoil';
 import { postState } from '../../store/atom/postState';
 import BoardListForm from './BoardListForm';
+import customAxios from '../../apiFetcher/customAxios';
 
 export default function MyBoardList() {
   const [isLoading, setLoading] = useState(false);
   const [posts, setPost] = useRecoilState(postState);
-  console.log('리스트목록', posts);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`/posts/my`, {
-          // headers: {
-          //   Authorization: `Bearer ${token}`,
-          // },
-        });
+        const response = await customAxios.get(`/posts/my`);
         const postData = response.data.content;
         console.log(postData);
         setPost({ content: postData });
