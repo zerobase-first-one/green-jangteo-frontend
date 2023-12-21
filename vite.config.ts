@@ -27,9 +27,6 @@ export default defineConfig({
   build: {
     target: 'esnext',
   },
-  optimizeDeps: {
-    exclude: ['js-big-decimal'],
-  },
   server: {
     proxy: {
       '/api': {
