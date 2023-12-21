@@ -29,7 +29,10 @@ import UploadProduct from './routes/Seller/UploadProduct';
 import SellerProductDetail from './routes/Seller/SellerProductDetail';
 import SellerDescription from './routes/Seller/SellerDescription';
 import SellerReview from './routes/Seller/SellerReview';
+import CreateReview from './views/CreateReview';
+import MyReviews from './views/MyReviews';
 import EditProduct from './routes/Seller/EditProduct';
+
 
 const GlobalStyle = createGlobalStyle`
   ${reset};
@@ -90,7 +93,7 @@ function App() {
         <Route path="/create-post" element={<CreatePostForm />} />
         <Route path="/products/:productId" element={<Detail />}>
           <Route path="description" element={<Description />} />
-          {/* <Route path="review" element={<Review />} /> */}
+          <Route path="review" element={<Review />} />
         </Route>
         <Route path="/reviews/products/:productId" element={<Review />} />
         <Route path="/search" element={<Search />}></Route>
@@ -100,6 +103,8 @@ function App() {
           <Route path="" element={<SellerProductList />}></Route>
           <Route path="order" element={<SellerOrderList />}></Route>
         </Route>
+        <Route path="/reviews/users/:userId" element={<MyReviews />} />
+        <Route path="/reviews" element={<CreateReview />} />
         <Route
           path="/stores/:userId/products/:productId"
           element={<SellerProductDetail />}

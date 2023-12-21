@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { tokenState, userIdState } from '../store/atom/auth';
+import { roleState, tokenState, userIdState } from '../store/atom/auth';
 import { postUserLogin } from '../apiFetcher/user/postUserLogin';
 import { userDataState } from '../store/atom/userDataState';
 
@@ -14,18 +14,20 @@ export default function LoginContainer() {
   const [error, setError] = useState('');
   const setUserId = useSetRecoilState(userIdState);
   const setToken = useSetRecoilState(tokenState);
+  const setRoles = useSetRecoilState(roleState);
   const [userInfo, setUserInfo] = useRecoilState(userDataState);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (isLoading || emailOrUsername === '' || password === '') return;
     try {
-      const { token, userId } = await postUserLogin({
+      const { token, userId, roleDescriptions } = await postUserLogin({
         emailOrUsername,
         password,
       });
       setUserId(userId);
       setToken(token);
+      setRoles(roleDescriptions);
       setUserInfo(userInfo);
       navigate('/');
     } catch (e) {
