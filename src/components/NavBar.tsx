@@ -59,7 +59,6 @@ const NavBar = () => {
   const token = useRecoilValue(tokenState);
   const userId = useRecoilValue(userIdState);
   const roles = useRecoilValue(roleState);
-  console.log(roles);
 
   return (
     <Wrapper>

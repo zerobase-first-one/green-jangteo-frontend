@@ -10,7 +10,7 @@ export default function Profile() {
   const { userId } = useParams();
   const { username, loading } = useGetProfile();
   const userInfo = useRecoilValue(userDataState);
-  console.log(userInfo?.roles);
+  console.log(userInfo);
 
   if (loading) {
     return <div>로딩중...</div>;
@@ -34,8 +34,8 @@ export default function Profile() {
       <Button to={`/users/${userId}/email`}>이메일 변경하기</Button>
       <Button to={`/users/${userId}/phone`}>전화번호 변경하기</Button>
       <Button to={`/users/${userId}/address`}>주소 변경하기</Button>
-      {/* <Button>구매후기</Button>
-      <Button>로그아웃</Button> */}
+      <Button to={`/reviews/users/${userId}`}>구매후기</Button>
+      {/* <Button>로그아웃</Button> */}
       <Button to={`/users/${userId}`}>회원탈퇴</Button>
       <NavBar />
     </Wrapper>

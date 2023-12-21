@@ -29,7 +29,10 @@ import UploadProduct from './routes/Seller/UploadProduct';
 import SellerProductDetail from './routes/Seller/SellerProductDetail';
 import SellerDescription from './routes/Seller/SellerDescription';
 import SellerReview from './routes/Seller/SellerReview';
+import CreateReview from './views/CreateReview';
+import MyReviews from './views/MyReviews';
 import EditProduct from './routes/Seller/EditProduct';
+
 
 const GlobalStyle = createGlobalStyle`
   ${reset};
@@ -99,6 +102,8 @@ function App() {
           <Route path="" element={<SellerProductList />}></Route>
           <Route path="order" element={<SellerOrderList />}></Route>
         </Route>
+        <Route path="/reviews/users/:userId" element={<MyReviews />} />
+        <Route path="/reviews" element={<CreateReview />} />
         <Route
           path="/stores/:userId/products/:productId"
           element={<SellerProductDetail />}
