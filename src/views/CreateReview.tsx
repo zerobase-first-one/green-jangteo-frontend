@@ -9,7 +9,7 @@ export default function CreateReview() {
   const [content, setContent] = useState('');
   const userId = useRecoilValue(userIdState);
   console.log(userId);
-  const productId = '1';
+  const productId = '8';
 
   const onContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.currentTarget.value);

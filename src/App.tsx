@@ -33,7 +33,6 @@ import CreateReview from './views/CreateReview';
 import MyReviews from './views/MyReviews';
 import EditProduct from './routes/Seller/EditProduct';
 
-
 const GlobalStyle = createGlobalStyle`
   ${reset};
   :root {
@@ -95,7 +94,6 @@ function App() {
           <Route path="description" element={<Description />} />
           <Route path="review" element={<Review />} />
         </Route>
-        <Route path="/reviews/products/:productId" element={<Review />} />
         <Route path="/search" element={<Search />}></Route>
         <Route path="/carts" element={<Cart />}></Route>
         <Route path="/orders" element={<Order />}></Route>

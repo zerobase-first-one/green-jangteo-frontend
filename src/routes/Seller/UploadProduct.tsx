@@ -49,9 +49,10 @@ const UploadProduct = () => {
   const [selectedFile, setSelectedFile] = useState('');
   const [imgURL, setImgURL] = useState(``);
   // console.log(myBucket);
-  const onSubmit = (data: formValue) => {
+  const onSubmit = async (data: formValue) => {
     uploadFile(selectedFile);
-    customAxios
+    console.log('selectedFile', selectedFile);
+    await customAxios
       .post(`/products`, {
         userId: userId,
         productName: data.productName,
@@ -206,7 +207,7 @@ const UploadProduct = () => {
             <Label htmlFor="inventory">수량</Label>
             <Input
               type="number"
-              id="produectQuantity"
+              id="productQuantity"
               {...register('inventory', {
                 required: '재고 수량을 입력해주세요',
               })}
@@ -271,7 +272,7 @@ const Select = styled.select`
   // margin: 20px 0;
   flex: auto;
   padding: 5px;
-  fon-tsize: 16px;
+  font-size: 16px;
 `;
 const Option = styled.option`
   text-align: center;

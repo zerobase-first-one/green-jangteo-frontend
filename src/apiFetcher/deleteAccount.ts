@@ -2,7 +2,7 @@ import customAxios from './customAxios';
 
 interface IDeleteAccount {
   userId: string;
-  setUserId: React.Dispatch<React.SetStateAction<null>>;
+  setUserId: (value: React.SetStateAction<string | null>) => void;
   password: string;
   navigate: (path: string) => void;
 }

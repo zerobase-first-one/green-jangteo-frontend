@@ -19,11 +19,32 @@ const Wrapper = styled.div`
   height: 100vh;
 `;
 
-const Image = styled.div`
-  width: 390px;
-  height: 195px;
-  background-color: #d1d1d1;
-  margin: 20px;
+// const Image = styled.img`
+//   width: 390px;
+//   height: 195px;
+//   margin: 20px;
+// `;
+
+const ImageBox = styled.div`
+  width: 40%;
+  padding-bottom: 40%;
+  margin-right: 30px;
+  background-color: #dedede;
+  position: relative;
+  overflow: hidden;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    padding-bottom: 100%;
+    margin-right: 0;
+  }
+`;
+const Image = styled.img`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
 `;
 
 const ProductName = styled.p`
@@ -72,15 +93,78 @@ const OrderBtn = styled.button`
   cursor: pointer;
 `;
 
-interface ProductType {
+export interface ProductType {
+  categories: [
+    {
+      category: string;
+    },
+    {
+      category: string;
+    },
+  ];
+  count: number;
+  createdAt: string;
+  modifiedAt: string;
   productName: string;
   price: number;
+  description: string;
+  images: [
+    {
+      url: string;
+      position: number;
+    },
+  ];
+  review: [
+    {
+      content: string;
+      createdAt: string;
+      imageUrl: string;
+      modifiedAt: string;
+      productId: number;
+      score: number;
+      userId: number;
+    },
+  ];
+  reviewCount: number;
 }
 
 export default function Detail() {
   const { productId } = useParams();
   const navigate = useNavigate();
-  const [product, setProduct] = useState<ProductType>();
+  const [product, setProduct] = useState<ProductType>({
+    categories: [
+      {
+        category: '음식',
+      },
+      {
+        category: '의류',
+      },
+    ],
+    count: 0,
+    createdAt: 'string',
+    description: 'description string',
+    images: [
+      {
+        position: 0,
+        url: 'string',
+      },
+    ],
+    modifiedAt: 'string',
+    price: 0,
+    productName: 'string',
+    review: [
+      {
+        content: 'review string',
+        createdAt: '2023-12-21T10:06:54.200Z',
+        imageUrl: 'string',
+        modifiedAt: '2023-12-21T10:06:54.200Z',
+        productId: 0,
+        score: 0,
+        userId: 0,
+      },
+    ],
+    reviewCount: 0,
+  });
   const descriptionMatch = useMatch('products/:productId/description');
   const reviewMatch = useMatch('products/:productId/review');
   const [clicked, setClicked] = useState(false);
@@ -89,10 +173,11 @@ export default function Detail() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await customAxios.get(`/products/${productId}`).then(response => {
-          console.log(response);
-          setProduct(response.data.product);
-        });
+        await customAxios
+          .get(`/products/${productId}/description`)
+          .then(response => {
+            setProduct(response.data);
+          });
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -113,9 +198,11 @@ export default function Detail() {
   return (
     <Wrapper>
       <Header />
-      <Image></Image>
+      <ImageBox>
+        <Image src={product?.images[0].url} />
+      </ImageBox>
       <ProductName>{product?.productName}</ProductName>
-      <Star>⭐︎⭐︎⭐︎⭐︎⭐︎</Star>
+      <Star>{product?.description}</Star>
       <Price>{product?.price}원</Price>
       <Tabs>
         <Tab isActive={descriptionMatch !== null}>
@@ -125,7 +212,7 @@ export default function Detail() {
           <Link to="review">리뷰(1,792)</Link>
         </Tab>
       </Tabs>
-      <Outlet />
+      <Outlet context={product} />
       <hr />
       <BottomActionBar>
         <IoChatbubbleEllipsesOutline
