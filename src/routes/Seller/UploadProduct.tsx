@@ -206,7 +206,7 @@ const UploadProduct = () => {
             <Label htmlFor="inventory">수량</Label>
             <Input
               type="number"
-              id="produectQuantity"
+              id="productQuantity"
               {...register('inventory', {
                 required: '재고 수량을 입력해주세요',
               })}
@@ -271,7 +271,7 @@ const Select = styled.select`
   // margin: 20px 0;
   flex: auto;
   padding: 5px;
-  fon-tsize: 16px;
+  font-size: 16px;
 `;
 const Option = styled.option`
   text-align: center;

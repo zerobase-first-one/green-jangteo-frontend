@@ -14,7 +14,7 @@ interface Info {
 
 const ProductListItem = (props: Info) => {
   return (
-    <Link to={`/products/${props.productId}`}>
+    <Link to={`/products/${props.productId}/description`}>
       <Wrapper style={{ width: props.width }}>
         <ImgContainer>
           <Image src={props.image} alt="" />

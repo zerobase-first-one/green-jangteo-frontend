@@ -72,9 +72,9 @@ const SellerProfile = () => {
           </StoreDescription>
         </ProfileTextBox>
       </Profile>
-      <Link to={`/stores/${userId}/upload`}>
-        <Button>물품등록</Button>
-      </Link>
+      <Button className="upload">
+        <Link to={`/stores/${userId}/upload`}>물품등록</Link>
+      </Button>
       <Tabs>
         <NavLink to={''} end={orderMatch !== null ? true : false}>
           <Tab>물품 리스트</Tab>

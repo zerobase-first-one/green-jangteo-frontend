@@ -3,107 +3,11 @@ import HeaderPrevPageBtn from '../../components/HeaderPrevPageBtn';
 import styled from 'styled-components';
 import addCommaPrice from '../../../public/module/addComma';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { BASE_URL } from '../../constant/union';
+import customAxios from '../../apiFetcher/customAxios';
 // import { useEffect, useState } from "react";
 // import axios from "axios";
 // import { BASE_URL } from "../../constant/union";
 
-const Wrapper = styled.div`
-  background-color: #f1f1f1;
-`;
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 0 20px;
-  padding: 30px;
-  margin-bottom: 30px;
-  background-color: #ffffff;
-  border-top: 1px solid #b0b0b0;
-  border-bottom: 1px solid #b0b0b0;
-  &:first-child {
-    // margin-bottom: 0;
-    border-top: none;
-  }
-  &:last-child {
-    margin-bottom: 0;
-    border-bottom: none;
-  }
-`;
-const OrderDate = styled.span`
-  margin-bottom: 20px;
-`;
-const OrderNumber = styled.span`
-  margin-bottom: 20px;
-`;
-
-const OrderProductBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 20px;
-
-  &:last-child {
-    margin-bottom: 0;
-  }
-`;
-const ProductImgBox = styled.div`
-  width: 150px;
-  height: 150px;
-  margin-right: 30px;
-  overflow: hidden;
-  @media screen and (max-width: 768px) {
-    width: 120px;
-    height: 120px;
-    margin-right: 20px;
-  }
-`;
-const Image = styled.img`
-  width: 100%;
-  height: 100%;
-`;
-const ProductInfoBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-`;
-const ProductName = styled.span``;
-const ProductQuantity = styled.span`
-  color: #b0b0b0;
-  font-size: 14px;
-`;
-const ProductPrice = styled.span``;
-
-const Title = styled.div`
-  font-weight: bold;
-  border-bottom: 1px solid #909090;
-  padding: 20px 0;
-  font-size: 18px;
-`;
-const TextBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 10px 0;
-`;
-const OrderTitle = styled.div`
-  padding: 10px 0;
-  display: flex;
-  justify-content: space-aroud;
-`;
-const OrderInfo = styled.span`
-  margin-left: auto;
-
-  &.shippingInfo {
-    display: flex;
-    flex-direction: column;
-    text-align: right;
-    line-height: 1.5em;
-  }
-
-  &.totalPrice {
-    font-weight: bold;
-  }
-`;
-const Box = styled.div``;
 interface OrderDetail {
   amountToPay: number;
   buyerResponseDto: {
@@ -211,8 +115,8 @@ const SellerOrderDetail = () => {
     createdAt: '',
   });
   useEffect(() => {
-    axios
-      .get(`${BASE_URL}/orders/${orderId}`, { params: { userId: userId } })
+    customAxios
+      .get(`/orders/${orderId}`, { params: { userId: userId } })
       .then(response => {
         setOrder(response.data);
       })
@@ -281,3 +185,97 @@ const SellerOrderDetail = () => {
 };
 
 export default SellerOrderDetail;
+
+const Wrapper = styled.div`
+  background-color: #f1f1f1;
+`;
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+  padding: 30px;
+  margin-bottom: 30px;
+  background-color: #ffffff;
+  border-top: 1px solid #b0b0b0;
+  border-bottom: 1px solid #b0b0b0;
+  &:first-child {
+    // margin-bottom: 0;
+    border-top: none;
+  }
+  &:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+  }
+`;
+const OrderDate = styled.span`
+  margin-bottom: 20px;
+`;
+const OrderNumber = styled.span`
+  margin-bottom: 20px;
+`;
+const OrderProductBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+`;
+const ProductImgBox = styled.div`
+  width: 150px;
+  height: 150px;
+  margin-right: 30px;
+  overflow: hidden;
+  @media screen and (max-width: 768px) {
+    width: 120px;
+    height: 120px;
+    margin-right: 20px;
+  }
+`;
+const Image = styled.img`
+  width: 100%;
+  height: 100%;
+`;
+const ProductInfoBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+`;
+const ProductName = styled.span``;
+const ProductQuantity = styled.span`
+  color: #b0b0b0;
+  font-size: 14px;
+`;
+const ProductPrice = styled.span``;
+const Title = styled.div`
+  font-weight: bold;
+  border-bottom: 1px solid #909090;
+  padding: 20px 0;
+  font-size: 18px;
+`;
+const TextBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0;
+`;
+const OrderTitle = styled.div`
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-aroud;
+`;
+const OrderInfo = styled.span`
+  margin-left: auto;
+
+  &.shippingInfo {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    line-height: 1.5em;
+  }
+
+  &.totalPrice {
+    font-weight: bold;
+  }
+`;
+const Box = styled.div``;
