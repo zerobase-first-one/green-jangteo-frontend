@@ -90,9 +90,8 @@ function App() {
         <Route path="/create-post" element={<CreatePostForm />} />
         <Route path="/products/:productId" element={<Detail />}>
           <Route path="description" element={<Description />} />
-          {/* <Route path="review" element={<Review />} /> */}
+          <Route path="review" element={<Review />} />
         </Route>
-        <Route path="/reviews/products/:productId" element={<Review />} />
         <Route path="/search" element={<Search />}></Route>
         <Route path="/carts" element={<Cart />}></Route>
         <Route path="/orders" element={<Order />}></Route>
@@ -104,7 +103,7 @@ function App() {
           path="/stores/:userId/products/:productId"
           element={<SellerProductDetail />}
         >
-          <Route path="" element={<SellerDescription />}></Route>
+          <Route path="description" element={<SellerDescription />}></Route>
           <Route path="review" element={<SellerReview />}></Route>
         </Route>
         <Route

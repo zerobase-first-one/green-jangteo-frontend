@@ -52,7 +52,9 @@ const SellerProductList = () => {
       <Ul>
         {products.map((product: any, idx: number) => (
           <List key={idx}>
-            <Link to={`/stores/${userId}/products/${product.productId}`}>
+            <Link
+              to={`/stores/${userId}/products/${product.productId}/description`}
+            >
               <ImgBox>
                 <Img src={product.imageUrl} />
               </ImgBox>

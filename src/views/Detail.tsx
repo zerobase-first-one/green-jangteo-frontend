@@ -13,38 +13,50 @@ import DetailPageModal from '../components/modal/DetailPageModal';
 import { useRecoilValue } from 'recoil';
 import { tokenState } from '../store/atom/auth';
 import customAxios from '../apiFetcher/customAxios';
-
 const Wrapper = styled.div`
   background-color: white;
   height: 100vh;
 `;
-
-const Image = styled.div`
-  width: 390px;
-  height: 195px;
-  background-color: #d1d1d1;
-  margin: 20px;
+// const Image = styled.img`
+//   width: 390px;
+//   height: 195px;
+//   margin: 20px;
+// `;
+const ImageBox = styled.div`
+  width: 40%;
+  padding-bottom: 40%;
+  margin-right: 30px;
+  background-color: #dedede;
+  position: relative;
+  overflow: hidden;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    padding-bottom: 100%;
+    margin-right: 0;
+  }
 `;
-
+const Image = styled.img`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+`;
 const ProductName = styled.p`
   margin-left: 20px;
 `;
-
 const Star = styled.p`
   margin-left: 20px;
 `;
-
 const Price = styled.span`
   margin-left: 20px;
 `;
-
 const Tabs = styled.div`
   width: 90%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   margin: 0 auto;
 `;
-
 const Tab = styled.span<{ isActive: boolean }>`
   text-align: center;
   border: 1px solid black;
@@ -53,13 +65,11 @@ const Tab = styled.span<{ isActive: boolean }>`
   background-color: ${props => (props.isActive ? '#149211' : '#E0E0E0')};
   color: ${props => (props.isActive ? '#FFFFFF' : '#AAAAAA')};
 `;
-
 const BottomActionBar = styled.div`
   display: flex;
   align-items: center;
   margin-top: 15px;
 `;
-
 const OrderBtn = styled.button`
   width: 70%;
   height: 50px;
@@ -71,36 +81,96 @@ const OrderBtn = styled.button`
   margin-left: 30px;
   cursor: pointer;
 `;
-
-interface ProductType {
-  productName: string;
+export interface ProductType {
+  categories: [
+    {
+      category: string;
+    },
+    {
+      category: string;
+    },
+  ];
+  count: number;
+  createdAt: string;
+  description: string;
+  images: [
+    {
+      position: number;
+      url: string;
+    },
+  ];
+  modifiedAt: string;
   price: number;
+  productName: string;
+  review: [
+    {
+      content: string;
+      createdAt: string;
+      imageUrl: string;
+      modifiedAt: string;
+      productId: number;
+      score: number;
+      userId: number;
+    },
+  ];
+  reviewCount: number;
 }
 
 export default function Detail() {
   const { productId } = useParams();
   const navigate = useNavigate();
-  const [product, setProduct] = useState<ProductType>();
+  const [product, setProduct] = useState<ProductType>({
+    categories: [
+      {
+        category: '음식',
+      },
+      {
+        category: '의류',
+      },
+    ],
+    count: 0,
+    createdAt: 'string',
+    description: 'string',
+    images: [
+      {
+        position: 0,
+        url: 'string',
+      },
+    ],
+    modifiedAt: 'string',
+    price: 0,
+    productName: 'string',
+    review: [
+      {
+        content: 'string',
+        createdAt: '2023-12-21T10:06:54.200Z',
+        imageUrl: 'string',
+        modifiedAt: '2023-12-21T10:06:54.200Z',
+        productId: 0,
+        score: 0,
+        userId: 0,
+      },
+    ],
+    reviewCount: 0,
+  });
   const descriptionMatch = useMatch('products/:productId/description');
   const reviewMatch = useMatch('products/:productId/review');
   const [clicked, setClicked] = useState(false);
   const token = useRecoilValue(tokenState);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await customAxios.get(`/products/${productId}`).then(response => {
-          console.log(response);
-          setProduct(response.data.product);
-        });
+        await customAxios
+          .get(`/products/${productId}/description`)
+          .then(response => {
+            setProduct(response.data);
+          });
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
-
     fetchData();
   }, []);
-
   const onOrderBtnClick = () => {
     if (token === null) {
       alert('로그인 화면으로 이동합니다.');
@@ -109,23 +179,24 @@ export default function Detail() {
       setClicked(true);
     }
   };
-
   return (
     <Wrapper>
       <Header />
-      <Image></Image>
+      <ImageBox>
+        <Image src={product?.images[0].url} />
+      </ImageBox>
       <ProductName>{product?.productName}</ProductName>
-      <Star>⭐︎⭐︎⭐︎⭐︎⭐︎</Star>
+      <Star>{product?.description}</Star>
       <Price>{product?.price}원</Price>
       <Tabs>
         <Tab isActive={descriptionMatch !== null}>
-          <Link to="description">상품설명</Link>
+          <Link to={`description`}>상품설명</Link>
         </Tab>
         <Tab isActive={reviewMatch !== null}>
-          <Link to="review">리뷰(1,792)</Link>
+          <Link to={`review`}>리뷰(1,792)</Link>
         </Tab>
       </Tabs>
-      <Outlet />
+      <Outlet context={product} />
       <hr />
       <BottomActionBar>
         <IoChatbubbleEllipsesOutline

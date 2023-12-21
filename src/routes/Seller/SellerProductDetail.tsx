@@ -33,6 +33,17 @@ interface Info {
       url: string;
     },
   ];
+  review: [
+    {
+      content: string;
+      createdAt: string;
+      imageUrl: string;
+      modifiedAt: string;
+      productId: number;
+      score: number;
+      userId: number;
+    },
+  ];
 }
 
 const SellerProductDetail = () => {
@@ -55,17 +66,31 @@ const SellerProductDetail = () => {
         url: ``,
       },
     ],
+    review: [
+      {
+        content: '와우',
+        createdAt: '2023-12-19T18:22:27.989Z',
+        imageUrl:
+          'https://cdn.pixabay.com/photo/2016/12/10/21/28/plums-1898196_1280.jpg',
+        modifiedAt: '',
+        productId: 0,
+        score: 0,
+        userId: 0,
+      },
+    ],
   });
   // const { userId } = useParams();
   const { productId } = useParams();
   console.log(product);
   useEffect(() => {
     customAxios
+      // .get(`/products/${productId}/review`)
       .get(`/products/${productId}/description`)
       // axios
       //   .get(`${BASE_URL}products/${productId}/description,`)
       .then(response => {
         setProduct(response.data);
+        console.log(response.data);
       })
       .catch(err => console.log(err.message));
   }, [productId]);
@@ -102,7 +127,11 @@ const SellerProductDetail = () => {
           </TextBox>
         </Box>
         <Tabs>
-          <NavLink to={''} end={orderMatch !== null ? true : false}>
+          <NavLink
+            to={'descrip'}
+            end={orderMatch !== null ? true : false}
+            state={product}
+          >
             <Tab>상품설명</Tab>
           </NavLink>
           <NavLink to={'review'}>
@@ -110,7 +139,7 @@ const SellerProductDetail = () => {
           </NavLink>
         </Tabs>
         <Div>
-          <Outlet />
+          <Outlet context={product} />
         </Div>
       </Wrapper>
     </>
