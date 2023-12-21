@@ -33,11 +33,11 @@ export default function Review() {
   }, []);
 
   return (
-    <Wrapper>
+    <>
       {reviews.map((review: any) => (
         <Wrapper>{review.content}</Wrapper>
       ))}
-    </Wrapper>
+    </>
   );
 }
 

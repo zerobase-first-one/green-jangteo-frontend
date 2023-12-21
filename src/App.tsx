@@ -33,7 +33,6 @@ import CreateReview from './views/CreateReview';
 import MyReviews from './views/MyReviews';
 import EditProduct from './routes/Seller/EditProduct';
 
-
 const GlobalStyle = createGlobalStyle`
   ${reset};
   :root {

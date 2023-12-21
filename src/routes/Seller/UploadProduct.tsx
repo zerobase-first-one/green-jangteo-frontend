@@ -49,9 +49,10 @@ const UploadProduct = () => {
   const [selectedFile, setSelectedFile] = useState('');
   const [imgURL, setImgURL] = useState(``);
   // console.log(myBucket);
-  const onSubmit = (data: formValue) => {
+  const onSubmit = async (data: formValue) => {
     uploadFile(selectedFile);
-    customAxios
+    console.log('selectedFile', selectedFile);
+    await customAxios
       .post(`/products`, {
         userId: userId,
         productName: data.productName,
