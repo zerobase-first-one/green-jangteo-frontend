@@ -2,8 +2,7 @@ import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import addCommaPrice from '../../../public/module/addComma';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { BASE_URL } from '../../constant/union';
+import customAxios from '../../apiFetcher/customAxios';
 // import { useEffect, useState } from "react";
 // import { BASE_URL } from "../../constant/union";
 // import axios from "axios";
@@ -26,8 +25,8 @@ const SellerOrderList = () => {
     },
   ]);
   useEffect(() => {
-    axios
-      .get(`${BASE_URL}/orders`, { params: { userId: userId } })
+    customAxios
+      .get(`/orders`, { params: { userId: userId } })
       .then(response => {
         setOrder(response.data);
       })

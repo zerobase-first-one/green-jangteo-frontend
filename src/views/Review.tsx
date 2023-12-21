@@ -26,6 +26,7 @@ export default function Review() {
       console.error('Error fetching product reviews:');
     }
   };
+  console.log(reviews);
 
   useEffect(() => {
     getProductReview();

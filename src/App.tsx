@@ -107,7 +107,7 @@ function App() {
           path="/stores/:userId/products/:productId"
           element={<SellerProductDetail />}
         >
-          <Route path="" element={<SellerDescription />}></Route>
+          <Route path="description" element={<SellerDescription />}></Route>
           <Route path="review" element={<SellerReview />}></Route>
         </Route>
         <Route

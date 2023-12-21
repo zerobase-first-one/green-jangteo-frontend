@@ -14,16 +14,114 @@ import { useRecoilValue } from 'recoil';
 import { tokenState } from '../store/atom/auth';
 import customAxios from '../apiFetcher/customAxios';
 
+export interface ProductType {
+  categories: [
+    {
+      category: string;
+    },
+    {
+      category: string;
+    },
+  ];
+  count: number;
+  createdAt: string;
+  modifiedAt: string;
+  productName: string;
+  price: number;
+  description: string;
+  images: [
+    {
+      url: string;
+      position: number;
+    },
+  ];
+  review: [
+    {
+      content: string;
+      createdAt: string;
+      imageUrl: string;
+      modifiedAt: string;
+      productId: number;
+      score: number;
+      userId: number;
+    },
+  ];
+  reviewCount: number;
+}
+
+export default function Detail() {
+  const { productId } = useParams();
+  const navigate = useNavigate();
+  const [product, setProduct] = useState<ProductType>();
+  const descriptionMatch = useMatch('products/:productId/description');
+  const reviewMatch = useMatch('products/:productId/review');
+  const [clicked, setClicked] = useState(false);
+  const token = useRecoilValue(tokenState);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await customAxios
+          .get(`/products/${productId}/description`)
+          .then(response => {
+            setProduct(response.data);
+          });
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const onOrderBtnClick = () => {
+    if (token === null) {
+      alert('로그인 화면으로 이동합니다.');
+      navigate('/users/login');
+    } else {
+      setClicked(true);
+    }
+  };
+
+  return (
+    <Wrapper>
+      <Header />
+      <ImageBox>
+        <Image src={product?.images[0].url} />
+      </ImageBox>
+      <ProductName>{product?.productName}</ProductName>
+      <Star>{product?.description}</Star>
+      <Price>{product?.price}원</Price>
+      <Tabs>
+        <Tab isActive={descriptionMatch !== null}>
+          <Link to="description">상품설명</Link>
+        </Tab>
+        <Tab isActive={reviewMatch !== null}>
+          <Link to="review">리뷰(1,792)</Link>
+        </Tab>
+      </Tabs>
+      <Outlet context={product} />
+      <hr />
+      <BottomActionBar>
+        <IoChatbubbleEllipsesOutline
+          style={{
+            width: '30%',
+            height: '40px',
+            marginLeft: '40px',
+            cursor: 'pointer',
+          }}
+        />
+        <OrderBtn onClick={onOrderBtnClick}>주문하기</OrderBtn>
+      </BottomActionBar>
+      {clicked ? <DetailPageModal setClicked={setClicked} /> : null}
+    </Wrapper>
+  );
+}
+
 const Wrapper = styled.div`
   background-color: white;
   height: 100vh;
 `;
-
-// const Image = styled.img`
-//   width: 390px;
-//   height: 195px;
-//   margin: 20px;
-// `;
 
 const ImageBox = styled.div`
   width: 40%;
@@ -92,140 +190,3 @@ const OrderBtn = styled.button`
   margin-left: 30px;
   cursor: pointer;
 `;
-
-export interface ProductType {
-  categories: [
-    {
-      category: string;
-    },
-    {
-      category: string;
-    },
-  ];
-  count: number;
-  createdAt: string;
-  modifiedAt: string;
-  productName: string;
-  price: number;
-  description: string;
-  images: [
-    {
-      url: string;
-      position: number;
-    },
-  ];
-  review: [
-    {
-      content: string;
-      createdAt: string;
-      imageUrl: string;
-      modifiedAt: string;
-      productId: number;
-      score: number;
-      userId: number;
-    },
-  ];
-  reviewCount: number;
-}
-
-export default function Detail() {
-  const { productId } = useParams();
-  const navigate = useNavigate();
-  const [product, setProduct] = useState<ProductType>({
-    categories: [
-      {
-        category: '음식',
-      },
-      {
-        category: '의류',
-      },
-    ],
-    count: 0,
-    createdAt: 'string',
-    description: 'description string',
-    images: [
-      {
-        position: 0,
-        url: 'string',
-      },
-    ],
-    modifiedAt: 'string',
-    price: 0,
-    productName: 'string',
-    review: [
-      {
-        content: 'review string',
-        createdAt: '2023-12-21T10:06:54.200Z',
-        imageUrl: 'string',
-        modifiedAt: '2023-12-21T10:06:54.200Z',
-        productId: 0,
-        score: 0,
-        userId: 0,
-      },
-    ],
-    reviewCount: 0,
-  });
-  const descriptionMatch = useMatch('products/:productId/description');
-  const reviewMatch = useMatch('products/:productId/review');
-  const [clicked, setClicked] = useState(false);
-  const token = useRecoilValue(tokenState);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await customAxios
-          .get(`/products/${productId}/description`)
-          .then(response => {
-            setProduct(response.data);
-          });
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  const onOrderBtnClick = () => {
-    if (token === null) {
-      alert('로그인 화면으로 이동합니다.');
-      navigate('/users/login');
-    } else {
-      setClicked(true);
-    }
-  };
-
-  return (
-    <Wrapper>
-      <Header />
-      <ImageBox>
-        <Image src={product?.images[0].url} />
-      </ImageBox>
-      <ProductName>{product?.productName}</ProductName>
-      <Star>{product?.description}</Star>
-      <Price>{product?.price}원</Price>
-      <Tabs>
-        <Tab isActive={descriptionMatch !== null}>
-          <Link to="description">상품설명</Link>
-        </Tab>
-        <Tab isActive={reviewMatch !== null}>
-          <Link to="review">리뷰(1,792)</Link>
-        </Tab>
-      </Tabs>
-      <Outlet context={product} />
-      <hr />
-      <BottomActionBar>
-        <IoChatbubbleEllipsesOutline
-          style={{
-            width: '30%',
-            height: '40px',
-            marginLeft: '40px',
-            cursor: 'pointer',
-          }}
-        />
-        <OrderBtn onClick={onOrderBtnClick}>주문하기</OrderBtn>
-      </BottomActionBar>
-      {clicked ? <DetailPageModal setClicked={setClicked} /> : null}
-    </Wrapper>
-  );
-}

@@ -5,6 +5,8 @@ import { useParams } from 'react-router-dom';
 // import addCommaPrice from '../../../public/module/addComma';
 
 interface Review {
+  // review: [
+  // {
   content: string;
   createdAt: string;
   imageUrl: string;
@@ -12,6 +14,8 @@ interface Review {
   productId: number;
   score: number;
   userId: number;
+  // },
+  // ];
 }
 
 const SellerReview = () => {
@@ -45,7 +49,9 @@ const SellerReview = () => {
         setReviews(response.data);
       })
       .catch(err => console.log(err.message));
-  });
+  }, [productId]);
+  // const reviews = useOutletContext<Review>();
+  // console.log(reviews);
 
   return (
     <Wrapper>
