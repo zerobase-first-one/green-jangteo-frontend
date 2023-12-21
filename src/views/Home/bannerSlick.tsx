@@ -11,11 +11,11 @@ interface sliderProps {
   loop?: boolean;
 }
 
-const Slick = ({
+const BannerSlick = ({
   children,
-  autoplay = false,
-  speed = 300,
-  loop = false,
+  autoplay = true,
+  speed = 600,
+  loop = true,
 }: sliderProps) => {
   const settings = useMemo<Settings>(
     () => ({
@@ -24,23 +24,15 @@ const Slick = ({
 
       infinite: loop,
       speed: speed,
-      slidesToShow: 3.2,
+      slidesToShow: 1,
       slidesToScroll: 1,
       autoplay: Boolean(autoplay),
       autoplaySpeed: typeof autoplay === 'boolean' ? 3000 : autoplay,
-      responsive: [
-        {
-          breakpoint: 1024,
-          settings: {
-            slidesToShow: 2.2,
-            slidesToScroll: 3,
-          },
-        },
-      ],
+      responsive: [],
     }),
     [autoplay, loop, speed],
   );
   return <Slider {...settings}>{children}</Slider>;
 };
 
-export default Slick;
+export default BannerSlick;
