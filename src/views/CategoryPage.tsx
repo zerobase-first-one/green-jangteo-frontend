@@ -50,7 +50,7 @@ const CategoryPage = () => {
   useEffect(() => {
     // axios.get("https://d53733be-f889-423d-81e7-e8f003a8ebae.mock.pstmn.io/products")
     customAxios
-      .get('http://localhost:3000/products')
+      .get('/products')
       .then(response => {
         setProducts(response.data);
       })
@@ -79,6 +79,7 @@ const CategoryPage = () => {
           secondCategory !== undefined
             ? secondCategory == item.categories.secondCategory && (
                 <ProductListItem
+                  productId={item.productId}
                   image={item.image}
                   title={item.productName}
                   price={item.price}
@@ -89,6 +90,7 @@ const CategoryPage = () => {
               )
             : firstCategory == item.categories.firstCategory && (
                 <ProductListItem
+                  productId={item.productId}
                   image={item.image}
                   title={item.productName}
                   price={item.price}

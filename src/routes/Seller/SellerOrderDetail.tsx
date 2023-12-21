@@ -1,10 +1,190 @@
-import { useParams } from "react-router-dom";
-import HeaderPrevPageBtn from "../../components/HeaderPrevPageBtn";
-import styled from "styled-components";
-import addCommaPrice from "../../../public/module/addComma";
+import { useParams } from 'react-router-dom';
+import HeaderPrevPageBtn from '../../components/HeaderPrevPageBtn';
+import styled from 'styled-components';
+import addCommaPrice from '../../../public/module/addComma';
+import { useEffect, useState } from 'react';
+import customAxios from '../../apiFetcher/customAxios';
 // import { useEffect, useState } from "react";
 // import axios from "axios";
 // import { BASE_URL } from "../../constant/union";
+
+interface OrderDetail {
+  amountToPay: number;
+  buyerResponseDto: {
+    buyerName: string;
+    buyerPhone: number;
+    shippingAddress: {
+      city: string;
+      street: string;
+      zipcode: number;
+      detailedAddress: string;
+    };
+  };
+  orderId: number;
+  orderProductResponseDtos: [
+    {
+      orderPrice: number;
+      orderProductId: number;
+      productToOrderResponseDto: {
+        productId: number;
+        name: string;
+        imageUrl: `https://cdn.pixabay.com/photo/2017/01/20/15/12/oranges-1995079_1280.jpg`;
+      };
+      quantity: number;
+    },
+  ];
+  orderStatus: string;
+  storeName: string;
+  totalOrderPrice: number;
+  createdAt: string;
+}
+
+const SellerOrderDetail = () => {
+  const { orderId } = useParams();
+
+  // const order = {
+  //   amountToPay: 216510,
+  //   buyerResponseDto: {
+  //     buyerName: `구매자이름1`,
+  //     buyerPhone: 11111111,
+  //     shippingAddress: {
+  //       city: `서울시`,
+  //       street: `테헤란로`,
+  //       zipcode: 65489,
+  //       detailedAddress: `1450호`,
+  //     },
+  //   },
+  //   orderId: orderId,
+  //   orderProductResponseDtos: [
+  //     {
+  //       orderPrice: 10000,
+  //       orderProductId: 1,
+  //       productToOrderResponseDto: {
+  //         productId: 1,
+  //         name: `아이템1`,
+  //         imageUrl: `https://cdn.pixabay.com/photo/2017/01/20/15/12/oranges-1995079_1280.jpg`,
+  //       },
+  //       quantity: 1,
+  //     },
+  //     {
+  //       orderPrice: 10000,
+  //       orderProductId: 1,
+  //       productToOrderResponseDto: {
+  //         productId: 1,
+  //         name: `아이템1`,
+  //         imageUrl: `https://cdn.pixabay.com/photo/2017/01/20/15/12/oranges-1995079_1280.jpg`,
+  //       },
+  //       quantity: 1,
+  //     },
+  //   ],
+  //   orderStatus: '배송전',
+  //   storeName: `상점1`,
+  //   totalOrderPrice: 205454,
+  //   createdAt: '2023-12-19T07:19:54.195Z',
+  // };
+
+  const { userId } = useParams();
+  const [order, setOrder] = useState<OrderDetail>({
+    amountToPay: 0,
+    buyerResponseDto: {
+      buyerName: '',
+      buyerPhone: 0,
+      shippingAddress: {
+        city: '',
+        street: '',
+        zipcode: 0,
+        detailedAddress: '',
+      },
+    },
+    orderId: 0,
+    orderProductResponseDtos: [
+      {
+        orderPrice: 0,
+        orderProductId: 0,
+        productToOrderResponseDto: {
+          productId: 0,
+          name: '',
+          imageUrl: `https://cdn.pixabay.com/photo/2017/01/20/15/12/oranges-1995079_1280.jpg`,
+        },
+        quantity: 0,
+      },
+    ],
+    orderStatus: '',
+    storeName: '',
+    totalOrderPrice: 0,
+    createdAt: '',
+  });
+  useEffect(() => {
+    customAxios
+      .get(`/orders/${orderId}`, { params: { userId: userId } })
+      .then(response => {
+        setOrder(response.data);
+      })
+      .catch(err => console.log(err.message));
+  }, [orderId, userId]);
+
+  return (
+    <>
+      <HeaderPrevPageBtn />
+      <Wrapper>
+        <Container>
+          <OrderDate>{order.createdAt.slice(0, 10)}</OrderDate>
+          <OrderNumber>주문번호: {orderId}</OrderNumber>
+          {order.orderProductResponseDtos.map((item, idx) => (
+            <OrderProductBox key={idx}>
+              <ProductImgBox>
+                <Image src={item.productToOrderResponseDto.imageUrl}></Image>
+              </ProductImgBox>
+              <ProductInfoBox>
+                <ProductName>{item.productToOrderResponseDto.name}</ProductName>
+                <ProductQuantity>수량: {item.quantity}</ProductQuantity>
+                <ProductPrice>{addCommaPrice(item.orderPrice)} 원</ProductPrice>
+              </ProductInfoBox>
+            </OrderProductBox>
+          ))}
+        </Container>
+        <Container>
+          <Title>배송 정보</Title>
+          <TextBox>
+            <OrderTitle>
+              이름
+              <OrderInfo>{order.buyerResponseDto.buyerName}</OrderInfo>
+            </OrderTitle>
+            <OrderTitle>
+              연락처
+              <OrderInfo>{order.buyerResponseDto.buyerPhone}</OrderInfo>
+            </OrderTitle>
+            <OrderTitle>
+              주소
+              <OrderInfo className="shippingInfo">
+                {order.buyerResponseDto.shippingAddress.zipcode}
+
+                <Box>
+                  {order.buyerResponseDto.shippingAddress.city}{' '}
+                  {order.buyerResponseDto.shippingAddress.street}
+                </Box>
+                {order.buyerResponseDto.shippingAddress.detailedAddress}
+              </OrderInfo>
+            </OrderTitle>
+          </TextBox>
+        </Container>
+        <Container>
+          <Title>결제 정보</Title>
+          <TextBox>
+            <OrderTitle>
+              결제 금액
+              <OrderInfo className="totalPrice">
+                {addCommaPrice(order.totalOrderPrice)}
+              </OrderInfo>
+            </OrderTitle>
+          </TextBox>
+        </Container>
+      </Wrapper>
+    </>
+  );
+};
+
+export default SellerOrderDetail;
 
 const Wrapper = styled.div`
   background-color: #f1f1f1;
@@ -33,7 +213,6 @@ const OrderDate = styled.span`
 const OrderNumber = styled.span`
   margin-bottom: 20px;
 `;
-
 const OrderProductBox = styled.div`
   display: flex;
   flex-direction: row;
@@ -69,7 +248,6 @@ const ProductQuantity = styled.span`
   font-size: 14px;
 `;
 const ProductPrice = styled.span``;
-
 const Title = styled.div`
   font-weight: bold;
   border-bottom: 1px solid #909090;
@@ -101,144 +279,3 @@ const OrderInfo = styled.span`
   }
 `;
 const Box = styled.div``;
-
-const SellerOrderDetail = () => {
-  const order = {
-    orderId: 1,
-    buyer: {
-      buyerName: `구매자이름1`,
-      buyerPhone: 11111111,
-      shippingAddress: {
-        city: `서울시`,
-        street: `테헤란로`,
-        zipcode: 65489,
-        detailedAddress: `1450호`,
-      },
-    },
-    storeName: `상점1`,
-    orderProducts: [
-      {
-        orderProductId: 1,
-        productToOrder: {
-          productId: 1,
-          name: `아이템1`,
-          imageUrl: `https://cdn.pixabay.com/photo/2017/01/20/15/12/oranges-1995079_1280.jpg`,
-        },
-        quantity: 1,
-        orderPrice: 10000,
-      },
-      {
-        orderProductId: 2,
-        productToOrder: {
-          productId: 2,
-          name: `아이템2`,
-          imageUrl: `https://cdn.pixabay.com/photo/2017/01/20/15/12/oranges-1995079_1280.jpg`,
-        },
-        quantity: 2,
-        orderPrice: 20000,
-      },
-    ],
-    //   usedCoupons: [
-    //     {
-    //       couponId: Long,
-    //       couponName: String,
-    //       amount: int,
-    //     },
-    //     {
-    //       couponId: Long,
-    //       couponName: String,
-    //       amount: int,
-    //     },
-    //   ],
-    totalOrderPrice: 205454,
-    //   membershipDiscount: int,
-    //   totalCouponDiscount: int,
-    //   totalOrderPriceAfterDiscountAndCoupons: int,
-    //   deliveryFee: int,
-    //   amountToPay: int,
-    //   usedReserve: int,
-    //   orderStatus: String,
-    //   delivery: {
-    //     invoiceNumber: String,
-    //   },
-    createdAt: `2013.12.13`,
-    //   modifiedAt: LocalDateTime,
-  };
-
-  // const location = useLocation();
-  // console.log(location.state);
-  // const product = location.state.item;
-
-  const { orderId } = useParams();
-  // const [order, setOrder] = useState(api);
-  // useEffect(() => {
-  //   axios
-  //     .get(`${BASE_URL}/orders/${orderId}`)
-  //     .then((response) => {
-  //       setOrder(response.data);
-  //     })
-  //     .catch((err) => console.log(err.message));
-  // }, []);
-
-  return (
-    <>
-      <HeaderPrevPageBtn />
-      <Wrapper>
-        <Container>
-          <OrderDate>{order.createdAt}</OrderDate>
-          <OrderNumber>주문번호: {orderId}</OrderNumber>
-          {order.orderProducts.map((item) => (
-            <OrderProductBox key={item.orderProductId}>
-              <ProductImgBox>
-                <Image src={item.productToOrder.imageUrl}></Image>
-              </ProductImgBox>
-              <ProductInfoBox>
-                <ProductName>{item.productToOrder.name}</ProductName>
-                <ProductQuantity>수량: {item.quantity}</ProductQuantity>
-                <ProductPrice>{addCommaPrice(item.orderPrice)} 원</ProductPrice>
-              </ProductInfoBox>
-            </OrderProductBox>
-          ))}
-        </Container>
-        <Container>
-          <Title>배송 정보</Title>
-          <TextBox>
-            <OrderTitle>
-              이름
-              <OrderInfo>{order.buyer.buyerName}</OrderInfo>
-            </OrderTitle>
-            <OrderTitle>
-              연락처
-              <OrderInfo>{order.buyer.buyerPhone}</OrderInfo>
-            </OrderTitle>
-            <OrderTitle>
-              주소
-              <OrderInfo className="shippingInfo">
-                {order.buyer.shippingAddress.zipcode}
-
-                <Box>
-                  {order.buyer.shippingAddress.city}{" "}
-                  {order.buyer.shippingAddress.street}
-                </Box>
-                {order.buyer.shippingAddress.detailedAddress}
-              </OrderInfo>
-            </OrderTitle>
-          </TextBox>
-        </Container>
-        <Container>
-          <Title>결제 정보</Title>
-          <TextBox>
-            <OrderTitle>
-              결제 금액
-              <OrderInfo className="totalPrice">
-                {addCommaPrice(order.totalOrderPrice)}
-              </OrderInfo>
-            </OrderTitle>
-          </TextBox>
-        </Container>
-      </Wrapper>
-    </>
-  );
-};
-
-export default SellerOrderDetail;

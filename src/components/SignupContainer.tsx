@@ -4,9 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { postUserSignup } from '../apiFetcher/user/postUserSignup';
 import { IForm, userDataState } from '../store/atom/userDataState';
 import { useSetRecoilState } from 'recoil';
+import React from 'react';
 
 export default function SignupContainer() {
   const navigate = useNavigate();
+  const [selectedRole, setSelectedRole] = React.useState<string>('ROLE_BUYER');
   const setUserInfo = useSetRecoilState(userDataState);
   const {
     register,
@@ -43,7 +45,7 @@ export default function SignupContainer() {
           zipcode: data.addressDto.zipcode,
         },
         storeName: data.storeName,
-        roles: ['ROLE_BUYER' || 'ROLE_SELLER'],
+        roles: [selectedRole],
       };
 
       console.log(userData);
@@ -65,6 +67,8 @@ export default function SignupContainer() {
             {...register('roles', { required: '가입유형을 선택해주세요' })}
             value="ROLE_BUYER"
             name="roles"
+            checked={selectedRole === 'ROLE_BUYER'}
+            onChange={() => setSelectedRole('ROLE_BUYER')}
           />
           구매자
         </label>
@@ -74,6 +78,8 @@ export default function SignupContainer() {
             {...register('roles', { required: '가입유형을 선택해주세요' })}
             value="ROLE_SELLER"
             name="roles"
+            checked={selectedRole === 'ROLE_SELLER'}
+            onChange={() => setSelectedRole('ROLE_SELLER')}
           />
           판매자
         </label>
