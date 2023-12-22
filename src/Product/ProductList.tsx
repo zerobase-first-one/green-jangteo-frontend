@@ -14,20 +14,57 @@ const Title = styled.h2`
   font-weight: bold;
   margin: 50px 0 20px;
 `;
+interface List {
+  productName: string;
+  price: number;
+  productId: number;
+  categories: [{ category: string }, { category: string }];
+  image: string;
+}
 
 const ProductList = () => {
-  const [products, setProducts] = useState([
+  const [products, setProducts] = useState<List[]>([
     {
       productId: 0,
       productName: '',
       price: 0,
       categories: [{ category: '' }, { category: '' }],
-      images:
+      image:
         'https://cdn.pixabay.com/photo/2016/12/10/21/28/plums-1898196_1280.jpg',
     },
   ]);
-  // console.log(products.slice(0, 4));
+  useEffect(() => {
+    setProducts([
+      {
+        productId: 0,
+        productName: '',
+        price: 0,
+        categories: [{ category: '' }, { category: '' }],
+        image:
+          'https://cdn.pixabay.com/photo/2016/12/10/21/28/plums-1898196_1280.jpg',
+      },
+      {
+        productId: 0,
+        productName: '',
+        price: 0,
+        categories: [{ category: '' }, { category: '' }],
+        image:
+          'https://cdn.pixabay.com/photo/2016/12/10/21/28/plums-1898196_1280.jpg',
+      },
+    ]);
+  }, []);
 
+  const [api, setApi] = useState<List[]>([
+    {
+      productId: 0,
+      productName: '',
+      price: 0,
+      categories: [{ category: '' }, { category: '' }],
+      image:
+        'https://cdn.pixabay.com/photo/2016/12/10/21/28/plums-1898196_1280.jpg',
+    },
+  ]);
+  console.log(api);
   useEffect(() => {
     // axios;
     // .get(`../product-dummy.json`)
@@ -35,7 +72,7 @@ const ProductList = () => {
     customAxios
       .get('/products')
       .then(response => {
-        setProducts(response.data);
+        setApi(response.data);
         console.log(response.data);
       })
       .catch(err => console.log(err.message));
@@ -67,54 +104,57 @@ const ProductList = () => {
       </Slick> */}
       <Title>음식</Title>
       <Slick>
-        {products.slice(0, 5).map(
-          (item: any) => (
-            // item.category == `women's clothing` && (
-            <ProductListItem
-              image={item.image}
-              title={item.productName}
-              price={item.price}
-              productId={item.productId}
-              key={item.productId}
-              width={`100%`}
-            />
-          ),
-          // ),
-        )}
+        {products &&
+          products.map(
+            (item: any) => (
+              // item.category == `women's clothing` && (
+              <ProductListItem
+                image={item.image}
+                title={item.productName}
+                price={item.price}
+                productId={item.productId}
+                key={item.productId}
+                width={`100%`}
+              />
+            ),
+            // ),
+          )}
       </Slick>
       <Title>의류</Title>
       <Slick>
-        {products.map(
-          (item: any) => (
-            // item.categories.firstCategory == `의류` && (
-            <ProductListItem
-              image={item.image}
-              title={item.productName}
-              price={item.price}
-              productId={item.productId}
-              key={item.productId}
-              width={`100%`}
-            />
-          ),
-          // ),
-        )}
+        {products &&
+          products.map(
+            (item: any) => (
+              // item.categories.firstCategory == `의류` && (
+              <ProductListItem
+                image={item.image}
+                title={item.productName}
+                price={item.price}
+                productId={item.productId}
+                key={item.productId}
+                width={`100%`}
+              />
+            ),
+            // ),
+          )}
       </Slick>
       <Title>하의</Title>
       <Slick>
-        {products.map(
-          (item: any) => (
-            // item.categories.secondCategory == `하의` && (
-            <ProductListItem
-              image={item.image}
-              title={item.productName}
-              price={item.price}
-              productId={item.productId}
-              key={item.productId}
-              width={`100%`}
-            />
-          ),
-          // ),
-        )}
+        {products &&
+          products.map(
+            (item: any) => (
+              // item.categories.secondCategory == `하의` && (
+              <ProductListItem
+                image={item.image}
+                title={item.productName}
+                price={item.price}
+                productId={item.productId}
+                key={item.productId}
+                width={`100%`}
+              />
+            ),
+            // ),
+          )}
       </Slick>
     </Wrapper>
   );
