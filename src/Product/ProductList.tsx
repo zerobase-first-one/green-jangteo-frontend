@@ -67,7 +67,7 @@ const ProductList = () => {
       </Slick> */}
       <Title>음식</Title>
       <Slick>
-        {products.slice(0, 5).map(
+        {products.map(
           (item: any) => (
             // item.category == `women's clothing` && (
             <ProductListItem
