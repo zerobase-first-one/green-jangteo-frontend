@@ -19,7 +19,7 @@ interface List {
   price: number;
   productId: number;
   categories: [{ category: string }, { category: string }];
-  images: string;
+  image: string;
 }
 
 const ProductList = () => {
@@ -29,11 +29,42 @@ const ProductList = () => {
       productName: '',
       price: 0,
       categories: [{ category: '' }, { category: '' }],
-      images:
+      image:
         'https://cdn.pixabay.com/photo/2016/12/10/21/28/plums-1898196_1280.jpg',
     },
   ]);
+  useEffect(() => {
+    setProducts([
+      {
+        productId: 0,
+        productName: '',
+        price: 0,
+        categories: [{ category: '' }, { category: '' }],
+        image:
+          'https://cdn.pixabay.com/photo/2016/12/10/21/28/plums-1898196_1280.jpg',
+      },
+      {
+        productId: 0,
+        productName: '',
+        price: 0,
+        categories: [{ category: '' }, { category: '' }],
+        image:
+          'https://cdn.pixabay.com/photo/2016/12/10/21/28/plums-1898196_1280.jpg',
+      },
+    ]);
+  }, []);
 
+  const [api, setApi] = useState<List[]>([
+    {
+      productId: 0,
+      productName: '',
+      price: 0,
+      categories: [{ category: '' }, { category: '' }],
+      image:
+        'https://cdn.pixabay.com/photo/2016/12/10/21/28/plums-1898196_1280.jpg',
+    },
+  ]);
+  console.log(api);
   useEffect(() => {
     // axios;
     // .get(`../product-dummy.json`)
@@ -41,7 +72,7 @@ const ProductList = () => {
     customAxios
       .get('/products')
       .then(response => {
-        setProducts(response.data);
+        setApi(response.data);
         console.log(response.data);
       })
       .catch(err => console.log(err.message));

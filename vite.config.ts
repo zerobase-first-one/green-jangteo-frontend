@@ -38,7 +38,7 @@ export default defineConfig({
       },
     },
   },
-  // define: {
-  //   global: {},
-  // },
+  define: {
+    global: {},
+  },
 });
