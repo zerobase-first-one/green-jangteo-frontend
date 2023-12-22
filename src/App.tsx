@@ -25,7 +25,7 @@ import SellerProfile from './routes/Seller/SellerProfile';
 import SellerProductList from './routes/Seller/SellerProductList';
 import SellerOrderList from './routes/Seller/SellerOrderList';
 import SellerOrderDetail from './routes/Seller/SellerOrderDetail';
-import UploadProduct from './routes/Seller/UploadProduct';
+// import UploadProduct from './routes/Seller/UploadProduct';
 import SellerProductDetail from './routes/Seller/SellerProductDetail';
 import SellerDescription from './routes/Seller/SellerDescription';
 import SellerReview from './routes/Seller/SellerReview';
@@ -113,10 +113,10 @@ function App() {
           path="/stores/:userId/order/:orderId"
           element={<SellerOrderDetail />}
         ></Route>
-        <Route
+        {/* <Route
           path="/stores/:userId/upload"
           element={<UploadProduct />}
-        ></Route>
+        ></Route> */}
         {/* <Route
           path="/stores/products/:productId"
           element={<EditProduct />}
