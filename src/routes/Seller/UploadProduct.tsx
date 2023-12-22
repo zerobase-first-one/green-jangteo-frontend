@@ -2,7 +2,10 @@ import HeaderPrevPageBtn from '../../components/HeaderPrevPageBtn';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
+// import { BASE_URL } from "../../constant/union";
+import { useEffect, useState } from 'react';
 import customAxios from '../../apiFetcher/customAxios';
+import AWS from 'aws-sdk';
 
 interface formValue {
   userId: number;
@@ -42,13 +45,13 @@ const UploadProduct = () => {
     navigate(-1);
   };
 
-  // const [myBucket, setMyBucket] = useState(Object);
-  // const [selectedFile, setSelectedFile] = useState('');
-  // const [imgURL, setImgURL] = useState(``);
+  const [myBucket, setMyBucket] = useState(Object);
+  const [selectedFile, setSelectedFile] = useState('');
+  const [imgURL, setImgURL] = useState(``);
   // console.log(myBucket);
   const onSubmit = async (data: formValue) => {
-    // uploadFile(selectedFile);
-    // console.log('selectedFile', selectedFile);
+    uploadFile(selectedFile);
+    console.log('selectedFile', selectedFile);
     await customAxios
       .post(`/products`, {
         userId: userId,
@@ -66,8 +69,7 @@ const UploadProduct = () => {
         inventory: data.inventory,
         images: [
           {
-            // url: imgURL.slice(0, imgURL.indexOf('?')),
-            url: data.inventory,
+            url: imgURL.slice(0, imgURL.indexOf('?')),
             position: 0,
           },
         ],
@@ -80,45 +82,45 @@ const UploadProduct = () => {
         console.log(error.response);
       });
   };
-  // const limit = imgURL.indexOf('?');
-  // console.log(imgURL.slice(0, limit));
+  const limit = imgURL.indexOf('?');
+  console.log(imgURL.slice(0, limit));
 
-  // useEffect(() => {
-  //   AWS.config.update({
-  //     accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
-  //     secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
-  //   });
-  //   const myBucket = new AWS.S3({
-  //     params: { Bucket: `greengangteo` },
-  //     region: import.meta.env.VITE_AWS_DEFAULT_REGION,
-  //   });
+  useEffect(() => {
+    AWS.config.update({
+      accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
+      secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
+    });
+    const myBucket = new AWS.S3({
+      params: { Bucket: `greengangteo` },
+      region: import.meta.env.VITE_AWS_DEFAULT_REGION,
+    });
 
-  //   setMyBucket(myBucket);
-  // }, []);
+    setMyBucket(myBucket);
+  }, []);
 
-  // const handleFileInput = (e: any) => {
-  //   setSelectedFile(e.target.files[0]);
-  //   console.log('e', e);
-  // };
-  // const uploadFile = (file: any) => {
-  //   const param = {
-  //     ACL: 'public-read',
-  //     ContentType: `image/*`,
-  //     Body: file,
-  //     Bucket: `greengangteo`,
-  //     Key: `product/${file.name}`,
-  //   };
+  const handleFileInput = (e: any) => {
+    setSelectedFile(e.target.files[0]);
+    console.log('e', e);
+  };
+  const uploadFile = (file: any) => {
+    const param = {
+      ACL: 'public-read',
+      ContentType: `image/*`,
+      Body: file,
+      Bucket: `greengangteo`,
+      Key: `product/${file.name}`,
+    };
 
-  //   myBucket.putObject(param).send((err: any) => {
-  //     if (err) {
-  //       console.log(err);
-  //     } else {
-  //       const url = myBucket.getSignedUrl('getObject', { Key: param.Key });
-  //       console.log(url, 'url');
-  //       setImgURL(url);
-  //     }
-  //   });
-  // };
+    myBucket.putObject(param).send((err: any) => {
+      if (err) {
+        console.log(err);
+      } else {
+        const url = myBucket.getSignedUrl('getObject', { Key: param.Key });
+        console.log(url, 'url');
+        setImgURL(url);
+      }
+    });
+  };
 
   const firstCategory = ['음식', '의류', '생필품'];
   // const secondCategory = ["음식", "의류", "생필품"];
@@ -140,10 +142,10 @@ const UploadProduct = () => {
               type="file"
               id="image"
               {...register('images', {
-                // onChange: e => {
-                // handleFileInput(e);
-                // uploadFile(selectedFile);
-                // },
+                onChange: e => {
+                  handleFileInput(e);
+                  uploadFile(selectedFile);
+                },
               })}
             ></Input>
           </Box>
