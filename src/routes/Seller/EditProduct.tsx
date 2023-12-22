@@ -9,7 +9,7 @@ import AWS from 'aws-sdk';
 import { useRecoilValue } from 'recoil';
 import { userIdState } from '../../store/atom/auth';
 
-interface formValue {
+interface FormValue {
   userId: number;
   productName: string;
   price: number;
@@ -38,7 +38,7 @@ const EditProduct = () => {
     register,
     handleSubmit,
     // formState: { errors },
-  } = useForm<formValue>({
+  } = useForm<FormValue>({
     mode: 'onSubmit',
   });
 
@@ -59,7 +59,7 @@ const EditProduct = () => {
   const value = [location.state];
   // console.log(...value);
 
-  const onSubmit = (data: formValue) => {
+  const onSubmit = (data: FormValue) => {
     uploadFile(selectedFile);
     // axios.post(`http://localhost:3000/post`, {
     customAxios
@@ -134,6 +134,17 @@ const EditProduct = () => {
     });
   };
 
+  const [board, setBoard] = useState<FormValue[]>([...value]);
+  console.log(board);
+
+  const onChange = (e: any) => {
+    const { value, name } = e.target; //event.target에서 name과 value만 가져오기
+    setBoard({
+      ...board,
+      [name]: value,
+    });
+  };
+
   const firstCategory = ['음식', '의류', '생필품'];
   // const secondCategory = ["음식", "의류", "생필품"];
   return (
@@ -170,6 +181,7 @@ const EditProduct = () => {
                   value={val.categories[0].category}
                   {...register('categories.0.category', {
                     required: '카테고리를 지정해주세요',
+                    onChange: onChange,
                   })}
                 >
                   <Option value="카테고리" disabled>
@@ -188,6 +200,7 @@ const EditProduct = () => {
                   id="SecondCategories"
                   {...register('categories.1.category', {
                     required: '카테고리를 지정해주세요',
+                    onChange: onChange,
                   })}
                 >
                   <Option value="카테고리" disabled>
@@ -208,6 +221,7 @@ const EditProduct = () => {
                   defaultValue={val.productName}
                   {...register('productName', {
                     required: '상품명을 입력해주세요',
+                    onChange: onChange,
                   })}
                 ></Input>
               </Box>
@@ -217,7 +231,10 @@ const EditProduct = () => {
                   type="number"
                   id="price"
                   defaultValue={val.price}
-                  {...register('price', { required: '가격을 입력해주세요' })}
+                  {...register('price', {
+                    required: '가격을 입력해주세요',
+                    onChange: onChange,
+                  })}
                 ></Input>
               </Box>
               <Box>
@@ -228,6 +245,7 @@ const EditProduct = () => {
                   defaultValue={val.count}
                   {...register('inventory', {
                     required: '재고 수량을 입력해주세요',
+                    onChange: onChange,
                   })}
                 ></Input>
               </Box>
@@ -237,6 +255,7 @@ const EditProduct = () => {
                 defaultValue={val.description}
                 {...register('description', {
                   required: '제품의 설명을 입력해주세요',
+                  onChange: onChange,
                 })}
               ></Textarea>
             </>

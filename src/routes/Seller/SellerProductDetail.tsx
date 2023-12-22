@@ -128,7 +128,7 @@ const SellerProductDetail = () => {
         </Box>
         <Tabs>
           <NavLink
-            to={'descrip'}
+            to={'description'}
             end={orderMatch !== null ? true : false}
             state={product}
           >
