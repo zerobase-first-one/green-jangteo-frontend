@@ -20,7 +20,6 @@ export default function Review() {
   const getProductReview = async () => {
     try {
       const response = await customAxios.get(`/reviews/products/${productId}`);
-      console.log(response.data);
       setReviews(response.data);
     } catch (error) {
       console.error('Error fetching product reviews:');
@@ -34,7 +33,7 @@ export default function Review() {
 
   return (
     <>
-      {reviews.map((review: any) => (
+      {reviews.map(review => (
         <Wrapper>{review.content}</Wrapper>
       ))}
     </>
