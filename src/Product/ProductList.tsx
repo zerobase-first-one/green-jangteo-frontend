@@ -14,9 +14,16 @@ const Title = styled.h2`
   font-weight: bold;
   margin: 50px 0 20px;
 `;
+interface List {
+  productName: string;
+  price: number;
+  productId: number;
+  categories: [{ category: string }, { category: string }];
+  images: string;
+}
 
 const ProductList = () => {
-  const [products, setProducts] = useState([
+  const [products, setProducts] = useState<List[]>([
     {
       productId: 0,
       productName: '',
@@ -26,7 +33,6 @@ const ProductList = () => {
         'https://cdn.pixabay.com/photo/2016/12/10/21/28/plums-1898196_1280.jpg',
     },
   ]);
-  // console.log(products.slice(0, 4));
 
   useEffect(() => {
     // axios;
@@ -67,54 +73,57 @@ const ProductList = () => {
       </Slick> */}
       <Title>음식</Title>
       <Slick>
-        {products.map(
-          (item: any) => (
-            // item.category == `women's clothing` && (
-            <ProductListItem
-              image={item.image}
-              title={item.productName}
-              price={item.price}
-              productId={item.productId}
-              key={item.productId}
-              width={`100%`}
-            />
-          ),
-          // ),
-        )}
+        {products &&
+          products.map(
+            (item: any) => (
+              // item.category == `women's clothing` && (
+              <ProductListItem
+                image={item.image}
+                title={item.productName}
+                price={item.price}
+                productId={item.productId}
+                key={item.productId}
+                width={`100%`}
+              />
+            ),
+            // ),
+          )}
       </Slick>
       <Title>의류</Title>
       <Slick>
-        {products.map(
-          (item: any) => (
-            // item.categories.firstCategory == `의류` && (
-            <ProductListItem
-              image={item.image}
-              title={item.productName}
-              price={item.price}
-              productId={item.productId}
-              key={item.productId}
-              width={`100%`}
-            />
-          ),
-          // ),
-        )}
+        {products &&
+          products.map(
+            (item: any) => (
+              // item.categories.firstCategory == `의류` && (
+              <ProductListItem
+                image={item.image}
+                title={item.productName}
+                price={item.price}
+                productId={item.productId}
+                key={item.productId}
+                width={`100%`}
+              />
+            ),
+            // ),
+          )}
       </Slick>
       <Title>하의</Title>
       <Slick>
-        {products.map(
-          (item: any) => (
-            // item.categories.secondCategory == `하의` && (
-            <ProductListItem
-              image={item.image}
-              title={item.productName}
-              price={item.price}
-              productId={item.productId}
-              key={item.productId}
-              width={`100%`}
-            />
-          ),
-          // ),
-        )}
+        {products &&
+          products.map(
+            (item: any) => (
+              // item.categories.secondCategory == `하의` && (
+              <ProductListItem
+                image={item.image}
+                title={item.productName}
+                price={item.price}
+                productId={item.productId}
+                key={item.productId}
+                width={`100%`}
+              />
+            ),
+            // ),
+          )}
       </Slick>
     </Wrapper>
   );
