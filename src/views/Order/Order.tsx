@@ -97,7 +97,7 @@ const Order = () => {
               </OrderInfo>
             </OrderName>
           </TextBox>
-          <OrderBtn>주문하기</OrderBtn>
+          <OrderBtn>결제하기</OrderBtn>
         </Container>
       </Wrapper>
     </>

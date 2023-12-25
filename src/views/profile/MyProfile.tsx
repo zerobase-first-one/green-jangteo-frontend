@@ -2,17 +2,13 @@ import Header from '../../components/Header';
 import styled from 'styled-components';
 import NavBar from '../../components/NavBar';
 import { Link, useParams } from 'react-router-dom';
-import { useGetProfile } from '../../hooks/useGetProfile';
-import { useRecoilValue } from 'recoil';
-import { userDataState } from '../../store/atom/userDataState';
+import { useGetMyProfile } from '../../hooks/useGetMyProfile';
 
-export default function Profile() {
+export default function MyProfile() {
   const { userId } = useParams();
-  const { username, loading } = useGetProfile();
-  const userInfo = useRecoilValue(userDataState);
-  console.log(userInfo);
+  const { myInfo } = useGetMyProfile();
 
-  if (loading) {
+  if (myInfo.loading) {
     return <div>로딩중...</div>;
   }
 
@@ -20,7 +16,7 @@ export default function Profile() {
     <Wrapper>
       <Header />
       <TopWrapper>
-        <Username>{username}님</Username>
+        <Username>{myInfo.username}님</Username>
         <hr />
         <RatingWrapper>
           <Rating>화이트</Rating>
@@ -28,15 +24,15 @@ export default function Profile() {
         </RatingWrapper>
       </TopWrapper>
       {/* <Button>적립금</Button>
-      <Button>쿠폰</Button>
-      <Button>주문 내역</Button> */}
+      <Button>쿠폰</Button> */}
       <Button to={`/users/${userId}/password`}>비밀번호 변경하기</Button>
       <Button to={`/users/${userId}/email`}>이메일 변경하기</Button>
       <Button to={`/users/${userId}/phone`}>전화번호 변경하기</Button>
       <Button to={`/users/${userId}/address`}>주소 변경하기</Button>
-      <Button to={`/reviews/users/${userId}`}>구매후기</Button>
+      {/* <Button>주문 내역</Button> */}
+      <Button to={`/reviews/users/${userId}`}>리뷰관리</Button>
       {/* <Button>로그아웃</Button> */}
-      <Button to={`/users/${userId}`}>회원탈퇴</Button>
+      <Button to={`/users/${userId}/delete-account`}>회원탈퇴</Button>
       <NavBar />
     </Wrapper>
   );

@@ -2,10 +2,7 @@ import { atom } from 'recoil';
 
 export const tokenState = atom({
   key: 'tokenState',
-  default: (() => {
-    const storedToken = localStorage.getItem('token');
-    return storedToken ? JSON.parse(storedToken) : null;
-  })(),
+  default: localStorage.getItem('token') ?? null,
   effects_UNSTABLE: [
     ({ onSet }) => {
       onSet(newValue => {
@@ -17,7 +14,7 @@ export const tokenState = atom({
 
 export const userIdState = atom({
   key: 'userIdState',
-  default: localStorage.getItem('userId'),
+  default: localStorage.getItem('userId') ?? null,
   effects_UNSTABLE: [
     ({ onSet }) => {
       onSet(newValue => {

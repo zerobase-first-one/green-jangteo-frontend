@@ -1,37 +1,30 @@
+import { useParams } from 'react-router-dom';
+import HeaderPrevPageBtn from './HeaderPrevPageBtn';
 import styled from 'styled-components';
-import HeaderPrevPageBtn from '../components/HeaderPrevPageBtn';
-import React, { useState } from 'react';
-import { postReview } from '../apiFetcher/postReview';
-import { useRecoilValue } from 'recoil';
-import { userIdState } from '../store/atom/auth';
+import { useState } from 'react';
+import customAxios from '../apiFetcher/customAxios';
 
-export default function CreateReview() {
-  const [content, setContent] = useState('');
-  const userId = useRecoilValue(userIdState);
-  console.log(userId);
-  const productId = '8';
+export default function EditReview() {
+  const { reviewId } = useParams();
+  const [editedContent, setEditedContent] = useState('');
 
   const onContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setContent(e.currentTarget.value);
+    setEditedContent(e.currentTarget.value);
   };
+
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!userId) return;
-    await postReview({ content, userId, productId });
+    const data = { content: editedContent, reviewId };
+    const response = await customAxios.put(`reviews/${reviewId}`, data);
+    console.log(response);
   };
 
   return (
     <Wrapper>
       <HeaderPrevPageBtn />
       <Form onSubmit={onSubmit}>
-        <TextArea
-          placeholder="상품 후기를 작성해주세요. (10자 이상)"
-          onChange={onContentChange}
-          minLength={10}
-          value={content}
-          required
-        />
-        <SubmitBtn type="submit">작성하기</SubmitBtn>
+        <TextArea value={editedContent} onChange={onContentChange} />
+        <SubmitBtn type="submit">수정하기</SubmitBtn>
       </Form>
       <Image />
     </Wrapper>

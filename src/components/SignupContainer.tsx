@@ -4,11 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import { postUserSignup } from '../apiFetcher/user/postUserSignup';
 import { IForm, userDataState } from '../store/atom/userDataState';
 import { useSetRecoilState } from 'recoil';
-import React from 'react';
+import React, { useState } from 'react';
+import { AxiosError } from 'axios';
 
 export default function SignupContainer() {
   const navigate = useNavigate();
   const [selectedRole, setSelectedRole] = React.useState<string>('ROLE_BUYER');
+  const [err, setErr] = useState('');
   const setUserInfo = useSetRecoilState(userDataState);
   const {
     register,
@@ -54,7 +56,9 @@ export default function SignupContainer() {
       setUserInfo(userData);
       navigate('/users/login');
     } catch (error) {
-      console.error('에러가 발생했습니다:', error);
+      if (error instanceof AxiosError) {
+        setErr(error.response?.data.message);
+      }
     }
   };
 
@@ -84,7 +88,6 @@ export default function SignupContainer() {
           판매자
         </label>
       </Tabs>
-      <Error>{errors?.roles?.message}</Error>
       <Input
         {...register('fullName', { required: '성명을 입력해주세요' })}
         placeholder="성명"
@@ -164,6 +167,7 @@ export default function SignupContainer() {
         placeholder="상점명 (판매자로 가입할 경우 필수 입력)"
       />
       <Error>{errors?.storeName?.message}</Error>
+      {err !== '' ? <Error>{err}</Error> : null}
       <Input className="signup-btn" type="submit" value="회원가입하기" />
     </Form>
   );

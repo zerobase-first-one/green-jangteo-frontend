@@ -1,61 +1,7 @@
-import styled from "styled-components";
-import { CiSquareMinus, CiSquarePlus } from "react-icons/ci";
-import { AnimatePresence, motion } from "framer-motion";
-
-const Overlay = styled(motion.div)`
-  background-color: rgba(0, 0, 0, 0.5);
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-`;
-
-const Wrapper = styled(motion.div)`
-  background-color: #ffffff;
-  padding: 20px;
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-`;
-
-const CountTab = styled.div`
-  display: flex;
-  width: 100%;
-  height: 65px;
-  margin-top: 15px;
-`;
-
-const Price = styled.p`
-  width: 100%;
-  margin-bottom: 15px;
-`;
-
-const Btns = styled.div`
-  text-align: center;
-  display: flex;
-  justify-content: center;
-`;
-
-const ToCartBtn = styled.button`
-  flex: 1;
-  height: 50px;
-  background-color: #d1d1d1;
-  color: #000000;
-  border: none;
-  border-radius: 10px;
-  margin-right: 10px;
-`;
-
-const OrderBtn = styled.button`
-  flex: 1;
-  height: 50px;
-  background-color: #16a113;
-  color: #ffffff;
-  border: none;
-  border-radius: 10px;
-  margin-left: 10px;
-`;
+import styled from 'styled-components';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const variants = {
   hidden: {
@@ -74,9 +20,16 @@ const variants = {
 
 interface DetailPageModalProps {
   setClicked: (value: boolean) => void;
+  price: number;
 }
 
-export default function DetailPageModal({ setClicked }: DetailPageModalProps) {
+export default function DetailPageModal({
+  setClicked,
+  price,
+}: DetailPageModalProps) {
+  const [count, setCount] = useState(1);
+  const [totalPrice] = useState(price);
+
   return (
     <AnimatePresence>
       <Overlay onClick={() => setClicked(false)}>
@@ -85,22 +38,121 @@ export default function DetailPageModal({ setClicked }: DetailPageModalProps) {
           initial="hidden"
           animate="visible"
           exit="exit"
-          transition={{ type: "tween", duration: 0.3 }}
-          onClick={(e) => e.stopPropagation()}
+          transition={{ type: 'tween', duration: 0.3 }}
+          onClick={e => e.stopPropagation()}
         >
           <CountTab>
             <p>수량 선택</p>
-            <CiSquareMinus />
-            <div>1</div>
-            <CiSquarePlus />
+            <QuantityContainer>
+              <QuantityButton onClick={() => setCount(count - 1)}>
+                -
+              </QuantityButton>
+              <QuantityDisplay>{count}</QuantityDisplay>
+              <QuantityButton onClick={() => setCount(count + 1)}>
+                +
+              </QuantityButton>
+            </QuantityContainer>
           </CountTab>
-          <Price>10,000</Price>
+          <Price>{totalPrice * count}원</Price>
           <Btns>
             <ToCartBtn>장바구니에 담기</ToCartBtn>
-            <OrderBtn>주문하기</OrderBtn>
+            <Link to={'/orders'}>
+              <OrderBtn>주문하기</OrderBtn>
+            </Link>
           </Btns>
         </Wrapper>
       </Overlay>
     </AnimatePresence>
   );
 }
+
+const Overlay = styled(motion.div)`
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+`;
+
+const Wrapper = styled(motion.div)`
+  background-color: #ffffff;
+  padding: 20px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+`;
+
+const CountTab = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 65px;
+  margin-top: 15px;
+  padding: 0 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+`;
+
+const QuantityContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const QuantityButton = styled.div`
+  width: 40px;
+  height: 40px;
+  background-color: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+`;
+
+const QuantityDisplay = styled.div`
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0 10px;
+`;
+
+const Price = styled.p`
+  width: 100%;
+  margin-top: 35px;
+  font-size: 20px;
+  font-weight: bold;
+`;
+
+const Btns = styled.div`
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 35px;
+`;
+
+const ToCartBtn = styled.button`
+  flex: 1;
+  height: 50px;
+  background-color: #d1d1d1;
+  color: #000000;
+  border: none;
+  border-radius: 10px;
+  margin-right: 10px;
+  cursor: pointer;
+`;
+
+const OrderBtn = styled.button`
+  flex: 1;
+  height: 50px;
+  background-color: #16a113;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  margin-left: 10px;
+  cursor: pointer;
+`;
