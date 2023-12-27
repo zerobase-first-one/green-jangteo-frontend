@@ -36,10 +36,7 @@ const SellerProductList = () => {
   console.log(products);
   useEffect(() => {
     customAxios
-      .get(`/stores/${userId}`)
-      // axios
-      //   .get(`${BASE_URL}/stores/${userId}`)
-      // .get(`http://localhost:3000/post/${userId}`)
+      .get(`/stores/${userId}`, { params: { userId } })
       .then(response => {
         setProducts(response.data.storeProductDtos);
         console.log(response.data);
@@ -50,7 +47,7 @@ const SellerProductList = () => {
   return (
     <Wrapper>
       <Ul>
-        {products.map((product: any, idx: number) => (
+        {products.reverse().map((product: any, idx: number) => (
           <List key={idx}>
             <Link
               to={`/stores/${userId}/products/${product.productId}/description`}

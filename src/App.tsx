@@ -31,6 +31,7 @@ import SellerDescription from './routes/Seller/SellerDescription';
 import SellerReview from './routes/Seller/SellerReview';
 import CreateReview from './views/CreateReview';
 import MyReviews from './views/MyReviews';
+import EditProduct from './routes/Seller/EditProduct';
 
 const GlobalStyle = createGlobalStyle`
   ${reset};
@@ -117,10 +118,10 @@ function App() {
           path="/stores/:userId/upload"
           element={<UploadProduct />}
         ></Route> */}
-        {/* <Route
+        <Route
           path="/stores/products/:productId"
           element={<EditProduct />}
-        ></Route> */}
+        ></Route>
       </Routes>
     </BrowserRouter>
   );

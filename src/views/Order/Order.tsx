@@ -2,7 +2,12 @@ import styled from 'styled-components';
 import HeaderPrevPageBtn from '../../components/HeaderPrevPageBtn';
 import addCommaPrice from '../../../public/module/addComma';
 import { useEffect } from 'react';
+// import customAxios from '../../apiFetcher/customAxios';
+import { useLocation } from 'react-router-dom';
+import { useGetProfile } from '../../hooks/useGetProfile';
 import customAxios from '../../apiFetcher/customAxios';
+import { useRecoilValue } from 'recoil';
+import { userIdState } from '../../store/atom/auth';
 
 interface OrderInfo {
   buyerId: number;
@@ -19,12 +24,66 @@ interface OrderInfo {
     street: string;
     zipcode: number;
   };
+  // {
+  //   amountToPay: 0,
+  //   buyerResponseDto: {
+  //     buyerName: string,
+  //     buyerPhone: string,
+  //     shippingAddressDto: {
+  //       city: 서울,
+  //       detailedAddress: 길동아파트 101동 102호,
+  //       street: 테헤란로 231,
+  //       zipcode: 06142
+  //     }
+  //   },
+  //   createdAt: 2023-12-22T14:30:09.375Z,
+  //   modifiedAt: 2023-12-22T14:30:09.375Z,
+  //   orderId: 0,
+  //   orderProductResponseDtos: [
+  //     {
+  //       orderPrice: 0,
+  //       orderProductId: 0,
+  //       productToOrderResponseDto: {
+  //         imageUrl: string,
+  //         name: string,
+  //         productId: 0
+  //       },
+  //       quantity: 0
+  //     }
+  //   ],
+  //   orderStatus: string,
+  //   storeName: string,
+  //   totalOrderPrice: 0
+  // }
 }
 
 const Order = () => {
-  useEffect(() => {
-    customAxios.get;
-  });
+  const userId = useRecoilValue(userIdState);
+  const { fullName, phone, address } = useGetProfile();
+  const location = useLocation();
+  const products = location.state;
+  console.log(products);
+  useEffect(() => {});
+  const orderPost = () => {
+    customAxios
+      .post(`/orders`, {
+        buyerId: userId,
+        orderProductRequestDtos: products,
+        sellerId: 2,
+        shippingAddressDto: {
+          city: address.city,
+          detailedAddress: address.detailedAddress,
+          street: address.street,
+          zipcode: address.zipcode,
+        },
+      })
+      .then(response => {
+        console.log(`성공`, response);
+        // navigate('/orders');
+      })
+      .catch(err => console.log(`실패`, err));
+  };
+
   return (
     <>
       <HeaderPrevPageBtn />
@@ -34,29 +93,39 @@ const Order = () => {
           <TextBox>
             <OrderName>
               이름
-              <OrderInfo>@주문자</OrderInfo>
+              <OrderInfo>{fullName}</OrderInfo>
             </OrderName>
             <OrderName>
               연락처
-              <OrderInfo>@전화번호</OrderInfo>
+              <OrderInfo>{phone}</OrderInfo>
             </OrderName>
             <OrderName>
               배송지
-              <OrderInfo>@도로명주소</OrderInfo>
+              <OrderInfo className="shippingInfo">
+                {address.zipcode}
+                <Box>
+                  {address.city} {address.street}
+                </Box>
+                {address.detailedAddress}
+              </OrderInfo>
             </OrderName>
           </TextBox>
         </Container>
         <Container>
           <Title>주문 상품</Title>
           <OrderList>
-            <OrderListItem>
-              <ProductImgBox></ProductImgBox>
-              <ProductInfoBox>
-                <ProductName>{`상품명`}</ProductName>
-                <ProductQuantity>주문 수량: {}개</ProductQuantity>
-                <ProductPrice>{addCommaPrice(100000)} 원</ProductPrice>
-              </ProductInfoBox>
-            </OrderListItem>
+            {products.map((product: any) => (
+              <OrderListItem key={product.productId}>
+                <ProductImgBox></ProductImgBox>
+                <ProductInfoBox>
+                  <ProductName>{product.productId}</ProductName>
+                  <ProductQuantity>
+                    주문 수량: {product.quantity}개
+                  </ProductQuantity>
+                  <ProductPrice>{addCommaPrice(100000)} 원</ProductPrice>
+                </ProductInfoBox>
+              </OrderListItem>
+            ))}
           </OrderList>
         </Container>
         <Container>
@@ -97,7 +166,7 @@ const Order = () => {
               </OrderInfo>
             </OrderName>
           </TextBox>
-          <OrderBtn>주문하기</OrderBtn>
+          <OrderBtn onClick={orderPost}>주문하기</OrderBtn>
         </Container>
       </Wrapper>
     </>
@@ -132,7 +201,7 @@ const Container = styled.div`
 `;
 const Title = styled.div`
   font-weight: bold;
-  border-bottom: 1px solid #909090;
+  border-bottom: 1px solid #b0b0b0;
   padding: 20px 0;
   font-size: 18px;
 `;
@@ -154,17 +223,20 @@ const OrderInfo = styled.span`
     font-weight: bold;
     color: var(--maincolor);
   }
+  &.shippingInfo {
+    text-align: right;
+  }
 `;
 const OrderList = styled.ul`
-  padding: 20px 10px;
+  padding: 5px 10px;
   border-bottom: 1px solid #b0b0b0;
 `;
 const OrderListItem = styled.li`
   display: flex;
   padding: 10px 0;
-  border-bottom: 1px solid #b0b0b0;
+  border-bottom: 1px solid #cccccc;
   &:first-child {
-    padding: 0;
+    // padding: 0;
   }
   &:last-child {
     border: none;
@@ -201,4 +273,7 @@ const OrderBtn = styled.button`
   margin-top: 30px;
   padding: 0;
   width: 100%;
+`;
+const Box = styled.div`
+  margin: 7px 0;
 `;

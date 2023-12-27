@@ -24,11 +24,13 @@ const SellerOrderList = () => {
       totalOrderPrice: 0,
     },
   ]);
+
   useEffect(() => {
     customAxios
-      .get(`/orders`, { params: { userId: userId } })
+      .get(`/orders`, { data: { userId: `${userId}` } })
       .then(response => {
         setOrder(response.data);
+        console.log(response.data);
       })
       .catch(err => console.log(err.message));
   }, [userId]);

@@ -48,8 +48,6 @@ const SellerProfile = () => {
   useEffect(() => {
     customAxios
       .get(`/stores/${userId}`, {
-        // axios
-        //   .get(`${BASE_URL}/stores/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

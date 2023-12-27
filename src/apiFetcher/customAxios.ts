@@ -2,7 +2,7 @@ import axios, { AxiosError, AxiosInstance } from 'axios';
 
 const customAxios: AxiosInstance = axios.create({
   withCredentials: true,
-  baseURL: '/api',
+  baseURL: 'https://green-jangteo.duckdns.org:8443/',
   headers: {
     'Content-Type': 'application/json',
   },

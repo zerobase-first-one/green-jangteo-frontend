@@ -3,46 +3,69 @@ import { LuPlus } from 'react-icons/lu';
 import { LuMinus } from 'react-icons/lu';
 import addCommaPrice from '../../../public/module/addComma';
 import { useState } from 'react';
-// import axios from 'axios';
 import customAxios from '../../apiFetcher/customAxios';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { userIdState } from '../../store/atom/auth';
+import { IoClose } from 'react-icons/io5';
 
 const CartItem = ({ item, checkedItemHandler, checked }: any) => {
   const [isChecked, setIsChecked] = useState(false);
   const checkHandler = ({ target }: any) => {
     setIsChecked(!isChecked);
     const { checked } = target;
-    checkedItemHandler(item.productId, checked, price);
+    checkedItemHandler(item.productId, item.quantity, checked, price);
   };
 
+  const userId = useRecoilValue(userIdState);
+  // const token = useRecoilValue(tokenState);
   const [quantity, setQuantity] = useState(item.quantity);
   const [price, setPrice] = useState(item.price * quantity);
 
   const quantityMinus = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
-      updateQuantity(item.id, quantity - 1);
+      updateQuantity(item.productId, quantity - 1);
       setPrice(item.price * (quantity - 1));
     }
   };
 
   const quantityPlus = () => {
     setQuantity(quantity + 1);
-    updateQuantity(item.id, quantity + 1);
+    updateQuantity(item.productId, quantity + 1);
     setPrice(item.price * (quantity + 1));
   };
 
-  const userId = useSetRecoilState(userIdState);
-
+  console.log(userId);
   const updateQuantity = (productId: number, quantity: number) => {
-    return customAxios.put(`/carts/cart-products/{cartProductId}`, {
-      cartProduct: {
-        productId: productId,
-        quantity: quantity,
-      },
-      userId: userId,
-    });
+    customAxios
+      .put(`/carts/cart-products/${item.productId}`, {
+        cartProduct: {
+          productId: productId,
+          quantity: quantity,
+        },
+        userId: userId,
+      })
+      .then(res => console.log(res));
+  };
+  // const token = useRecoilValue(tokenState);
+  const deleteCart = () => {
+    customAxios
+      .delete(`/carts/cart-products/${item.productId}`, {
+        // headers: {
+        //   Authorization: `Bearer ${token}`,
+        // },
+        // params: {
+        //   cartProductId: item.productId,
+        //   userId: userId,
+        // },
+        data: {
+          cartProductId: item.productId,
+          userId: userId,
+        },
+      })
+      .then(response => console.log('삭제 성공', response))
+      .catch(error => console.log('실패', error.message));
+    // alert('상품이 삭제되었습니다.');
   };
 
   return (
@@ -80,6 +103,9 @@ const CartItem = ({ item, checkedItemHandler, checked }: any) => {
             </ButtonBox>
           </ItemCntBox>
         </InfoBox>
+        <ProdcutDeleteButton onClick={deleteCart}>
+          <IoClose />
+        </ProdcutDeleteButton>
       </ItemInfoBox>
     </Wrapper>
   );
@@ -92,11 +118,12 @@ const Wrapper = styled.div`
   grid-template-columns: 30px 1fr;
   grid-template-areas: 'checkbox info';
   flex-direction: row;
-  padding: 10px 0;
+  padding: 20px 0;
   border-bottom: 1px solid #dedede;
   &:last-child {
     border: none;
   }
+  position: relative;
 `;
 const Label = styled.label`
   grid-area: checkbox;
@@ -165,3 +192,14 @@ const Quantity = styled.span`
   justify-content: center;
 `;
 const Price = styled.span``;
+
+const ProdcutDeleteButton = styled.button`
+  position: absolute;
+  right: 0;
+  top: 10px;
+  color: #909090;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: 24px;
+`;

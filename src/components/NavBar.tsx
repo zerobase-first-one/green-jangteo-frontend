@@ -7,6 +7,53 @@ import { Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { roleState, tokenState, userIdState } from '../store/atom/auth';
 
+const NavBar = () => {
+  const token = useRecoilValue(tokenState);
+  const userId = useRecoilValue(userIdState);
+  const roles = useRecoilValue(roleState);
+
+  return (
+    <Wrapper>
+      <Container>
+        <Link to={'/'}>
+          <button type="button">
+            <AiFillHome />
+            <span className="blind">홈</span>
+          </button>
+        </Link>
+        <Link to={'/search'}>
+          <button type="button">
+            <IoSearch />
+            <span className="blind">검색</span>
+          </button>
+        </Link>
+        <button type="button">
+          <IoIosDocument />
+          <span className="blind">주문내역</span>
+        </button>
+        <Link
+          to={
+            token && userId !== null
+              ? roles[0] === '구매자'
+                ? `users/${userId}/profile`
+                : roles[0] === '판매자'
+                  ? `stores/${userId}`
+                  : '/users/login'
+              : '/users/login'
+          }
+        >
+          <button type="button">
+            <BsPersonFill />
+            <span className="blind">마이페이지</span>
+          </button>
+        </Link>
+      </Container>
+    </Wrapper>
+  );
+};
+
+export default NavBar;
+
 const Wrapper = styled.div`
   position: fixed;
   bottom: 0;
@@ -54,50 +101,3 @@ const Container = styled.div`
     overflow: hidden;
   }
 `;
-
-const NavBar = () => {
-  const token = useRecoilValue(tokenState);
-  const userId = useRecoilValue(userIdState);
-  const roles = useRecoilValue(roleState);
-
-  return (
-    <Wrapper>
-      <Container>
-        <Link to={'/'}>
-          <button type="button">
-            <AiFillHome />
-            <span className="blind">홈</span>
-          </button>
-        </Link>
-        <Link to={'/search'}>
-          <button type="button">
-            <IoSearch />
-            <span className="blind">검색</span>
-          </button>
-        </Link>
-        <button type="button">
-          <IoIosDocument />
-          <span className="blind">주문내역</span>
-        </button>
-        <Link
-          to={
-            token && userId !== null
-              ? roles[0] === '구매자'
-                ? `users/${userId}/profile`
-                : roles[0] === '판매자'
-                  ? `stores/${userId}`
-                  : '/users/login'
-              : '/users/login'
-          }
-        >
-          <button type="button">
-            <BsPersonFill />
-            <span className="blind">마이페이지</span>
-          </button>
-        </Link>
-      </Container>
-    </Wrapper>
-  );
-};
-
-export default NavBar;
