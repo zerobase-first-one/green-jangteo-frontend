@@ -1,8 +1,22 @@
 import { atom } from 'recoil';
 
+// export const tokenState = atom({
+//   key: 'tokenState',
+//   default: localStorage.getItem('token') ?? null,
+//   effects_UNSTABLE: [
+//     ({ onSet }) => {
+//       onSet(newValue => {
+//         localStorage.setItem('token', JSON.stringify(newValue));
+//       });
+//     },
+//   ],
+// });
+
 export const tokenState = atom({
   key: 'tokenState',
-  default: localStorage.getItem('token') ?? null,
+  default: localStorage.getItem('token')
+    ? JSON.parse(localStorage.getItem('token')!)
+    : null,
   effects_UNSTABLE: [
     ({ onSet }) => {
       onSet(newValue => {

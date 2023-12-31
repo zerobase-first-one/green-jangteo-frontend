@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import NavBar from '../../components/NavBar';
 import { Link, useParams } from 'react-router-dom';
 import { useGetMyProfile } from '../../hooks/useGetMyProfile';
+import { Avatar } from '@mui/material';
 
 export default function MyProfile() {
   const { userId } = useParams();
@@ -16,12 +17,17 @@ export default function MyProfile() {
     <Wrapper>
       <Header />
       <TopWrapper>
-        <Username>{myInfo.username}님</Username>
-        <hr />
-        <RatingWrapper>
-          <Rating>화이트</Rating>
-          <RatingBtn>등급 혜택보기</RatingBtn>
-        </RatingWrapper>
+        <AvatarWrapper>
+          <AvatarStyled src="/broken-image.jpg" />
+        </AvatarWrapper>
+        <TextWrapper>
+          <Username>{myInfo.username}님</Username>
+          <hr />
+          <RatingWrapper>
+            <Rating>화이트</Rating>
+            <RatingBtn>등급 혜택보기</RatingBtn>
+          </RatingWrapper>
+        </TextWrapper>
       </TopWrapper>
       {/* <Button>적립금</Button>
       <Button>쿠폰</Button> */}
@@ -50,17 +56,34 @@ const TopWrapper = styled.div`
   height: 150px;
   background-color: #ffffff;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
   padding: 20px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
   margin-bottom: 20px;
 `;
 
+const AvatarWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const AvatarStyled = styled(Avatar)`
+  width: 80px;
+  height: 80px;
+  margin-right: 20px;
+`;
+
+const TextWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 const Username = styled.div`
   font-size: 24px;
-  margin-bottom: 10px;
+  margin-bottom: -5px;
+  margin-top: 5px;
 `;
 
 const RatingWrapper = styled.div`

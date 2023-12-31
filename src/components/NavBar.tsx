@@ -41,10 +41,10 @@ const Container = styled.div`
     margin: 0;
     padding: 0;
     cursor: pointer;
-  }
 
-  button:hover {
-    color: var(--maincolor);
+    &:hover {
+      color: var(--maincolor);
+    }
   }
 
   button .blind {
@@ -60,16 +60,24 @@ const NavBar = () => {
   const userId = useRecoilValue(userIdState);
   const roles = useRecoilValue(roleState);
 
+  const generateProfileLink = () => {
+    if (token && userId !== null) {
+      if (roles[0] === '구매자') return `users/${userId}/profile`;
+      if (roles[0] === '판매자') return `stores/${userId}`;
+    }
+    return '/users/login';
+  };
+
   return (
     <Wrapper>
       <Container>
-        <Link to={'/'}>
+        <Link to="/">
           <button type="button">
             <AiFillHome />
             <span className="blind">홈</span>
           </button>
         </Link>
-        <Link to={'/search'}>
+        <Link to="/search">
           <button type="button">
             <IoSearch />
             <span className="blind">검색</span>
@@ -79,17 +87,7 @@ const NavBar = () => {
           <IoIosDocument />
           <span className="blind">주문내역</span>
         </button>
-        <Link
-          to={
-            token && userId !== null
-              ? roles[0] === '구매자'
-                ? `users/${userId}/profile`
-                : roles[0] === '판매자'
-                  ? `stores/${userId}`
-                  : '/users/login'
-              : '/users/login'
-          }
-        >
+        <Link to={generateProfileLink()}>
           <button type="button">
             <BsPersonFill />
             <span className="blind">마이페이지</span>

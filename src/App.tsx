@@ -34,6 +34,7 @@ import EditProduct from './routes/Seller/EditProduct';
 import EditReview from './components/EditReview';
 import UserProfile from './components/UserProfile';
 import ReviewListContainer from './components/ReviewListContainer';
+import Chat from './views/Chat';
 
 const GlobalStyle = createGlobalStyle`
   ${reset};
@@ -106,6 +107,7 @@ function App() {
           path="/reviews/users/:userId"
           element={<ReviewListContainer />}
         />
+        <Route path="/chat" element={<Chat />} />
         <Route path="/search" element={<Search />}></Route>
         <Route path="/carts" element={<Cart />}></Route>
         <Route path="/orders" element={<Order />}></Route>

@@ -104,14 +104,16 @@ export default function Detail() {
       <Outlet context={product} />
       <hr />
       <BottomActionBar>
-        <IoChatbubbleEllipsesOutline
-          style={{
-            width: '30%',
-            height: '40px',
-            marginLeft: '40px',
-            cursor: 'pointer',
-          }}
-        />
+        <Link to={'/chat'}>
+          <IoChatbubbleEllipsesOutline
+            style={{
+              width: '30%',
+              height: '40px',
+              marginLeft: '40px',
+              cursor: 'pointer',
+            }}
+          />
+        </Link>
         <OrderBtn onClick={onOrderBtnClick}>주문하기</OrderBtn>
       </BottomActionBar>
       {clicked ? (
