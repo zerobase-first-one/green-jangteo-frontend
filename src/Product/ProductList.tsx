@@ -78,7 +78,7 @@ const ProductList = () => {
             .reverse()
             .map(
               (item: any) =>
-                item.categories[0] == `음식` && (
+                item.categories.firstCategory == `음식` && (
                   <ProductListItem
                     image={item.image}
                     title={item.productName}

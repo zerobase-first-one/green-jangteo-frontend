@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
-// import { BASE_URL } from "../../constant/union";
 import { useEffect, useState } from 'react';
 import customAxios from '../apiFetcher/customAxios';
 import HeaderPrevPageBtn from '../components/HeaderPrevPageBtn';
