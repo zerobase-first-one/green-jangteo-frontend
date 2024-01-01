@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import HeaderPrevPageBtn from '../../components/HeaderPrevPageBtn';
 import addCommaPrice from '../../../public/module/addComma';
 import { useEffect } from 'react';
-// import customAxios from '../../apiFetcher/customAxios';
 import { useLocation } from 'react-router-dom';
 import { useGetProfile } from '../../hooks/useGetProfile';
 import customAxios from '../../apiFetcher/customAxios';

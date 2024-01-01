@@ -12,14 +12,7 @@ import { categoryList } from '../../Product/categoryList';
 interface FormValue {
   productName: string;
   price: number;
-  categories: [
-    {
-      category: string;
-    },
-    {
-      category: string;
-    },
-  ];
+  categoryId: number;
   images: [
     {
       url: string;
@@ -59,14 +52,7 @@ const EditProduct = () => {
       .put(`/products/${productId}`, {
         productName: data.productName,
         price: data.price,
-        categories: [
-          {
-            category: data.categories[0].category,
-          },
-          {
-            category: data.categories[1].category,
-          },
-        ],
+        categoryId: data.categoryId,
         description: data.description,
         inventory: data.inventory,
         images: [
@@ -172,12 +158,9 @@ const EditProduct = () => {
                 <Label htmlFor="firstCategories">분류1</Label>
                 <Select
                   id="firstCategories"
-                  {...register('categories.0.category', {
-                    required: '카테고리를 지정해주세요',
-                    onChange: e => {
-                      handleSelectInput(e);
-                    },
-                  })}
+                  onChange={e => {
+                    handleSelectInput(e);
+                  }}
                 >
                   <Option value="카테고리">카테고리</Option>
                   {categoryList.map(category => (
@@ -194,7 +177,7 @@ const EditProduct = () => {
                 <Label htmlFor="SecondCategories">분류2</Label>
                 <Select
                   id="SecondCategories"
-                  {...register('categories.1.category', {
+                  {...register('categoryId', {
                     required: '카테고리를 지정해주세요',
                   })}
                 >
