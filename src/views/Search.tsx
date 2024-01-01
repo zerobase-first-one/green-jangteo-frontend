@@ -1,51 +1,25 @@
 import styled from 'styled-components';
 import HeaderPrevPageBtn from '../components/HeaderPrevPageBtn';
-import { useState } from 'react';
-
-const Wrapper = styled.div`
-  min-height: inherit;
-  box-sizing: border-box;
-  background-color: #f1f1f1;
-`;
-const Input = styled.input`
-  width: 100%;
-  height: 60px;
-  font-size: 18px;
-  border: none;
-  text-indent: 10px;
-  &:focus {
-    outline: none;
-  }
-`;
-
-const ItemList = styled.ul`
-  background-color: #ffffff;
-`;
-const Item = styled.li`
-  height: 20px;
-  text-indent: 10px;
-  font-size: 18px;
-`;
-
-const itemsData = [
-  { name: '감귤' },
-  { name: '감귤1' },
-  { name: '사과1' },
-  { name: '감귤1' },
-  { name: '감귤2' },
-];
+import { useEffect, useState } from 'react';
+import customAxios from '../apiFetcher/customAxios';
 
 const Search = () => {
-  const [filteredItem, setFilteredItem] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [currentValue, setCurrentValue] = useState([]);
+  console.log(currentValue);
+  useEffect(() => {
+    customAxios
+      .get('/products/auto-complete', { params: { keyword: currentValue } })
+      .then(response => {
+        setProducts(response.data);
+      })
+      .catch(err => console.log(err.message));
+  }, [currentValue]);
+  console.log(products);
 
   const autoComplete = (e: any) => {
     const currentValue = e.target.value;
-    const filtered: any = itemsData.filter(item =>
-      item.name.includes(currentValue),
-    );
-    {
-      currentValue !== '' ? setFilteredItem(filtered) : setFilteredItem([]);
-    }
+    setCurrentValue(currentValue);
   };
 
   return (
@@ -59,8 +33,8 @@ const Search = () => {
         />
 
         <ItemList>
-          {filteredItem.map((item: any, idx) => (
-            <Item key={idx}>{item.name}</Item>
+          {products.map((product: any, idx) => (
+            <Item key={idx}>{product.productName}</Item>
           ))}
         </ItemList>
       </Wrapper>
@@ -69,3 +43,31 @@ const Search = () => {
 };
 
 export default Search;
+
+const Wrapper = styled.div`
+  min-height: inherit;
+  box-sizing: border-box;
+  background-color: #f1f1f1;
+`;
+const Input = styled.input`
+  width: 100%;
+  height: 60px;
+  font-size: 18px;
+  border: none;
+  text-indent: 10px;
+  border-bottom: 1px solid #cccccc;
+  &:focus {
+    outline: none;
+  }
+`;
+
+const ItemList = styled.ul`
+  background-color: #ffffff;
+  padding: 10px 0;
+`;
+const Item = styled.li`
+  height: 50px;
+  line-height: 50px;
+  text-indent: 10px;
+  font-size: 18px;
+`;
