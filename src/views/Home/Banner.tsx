@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import BannerSlick from './bannerSlick';
 import { Link } from 'react-router-dom';
+import BannerSlick from './bannerSlick';
 
 const BannerContainer = styled.div`
   height: 450px;
