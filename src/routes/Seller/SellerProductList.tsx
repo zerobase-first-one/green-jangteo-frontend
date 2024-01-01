@@ -36,7 +36,10 @@ const SellerProductList = () => {
   console.log(products);
   useEffect(() => {
     customAxios
-      .get(`/stores/${userId}`, { params: { userId } })
+      .get(`/stores/${userId}`)
+      // axios
+      //   .get(`${BASE_URL}/stores/${userId}`)
+      // .get(`http://localhost:3000/post/${userId}`)
       .then(response => {
         setProducts(response.data.storeProductDtos);
         console.log(response.data);
@@ -47,7 +50,7 @@ const SellerProductList = () => {
   return (
     <Wrapper>
       <Ul>
-        {products.reverse().map((product: any, idx: number) => (
+        {products.map((product: any, idx: number) => (
           <List key={idx}>
             <Link
               to={`/stores/${userId}/products/${product.productId}/description`}
@@ -95,16 +98,10 @@ const ImgBox = styled.div`
   margin-right: 20px;
   background-color: #dedede;
   overflow: hidden;
-  position: relative;
 `;
 const Img = styled.img`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-
-  // height: 120px;
+  width: 120px;
+  height: 120px;
 `;
 const InfoBox = styled.div`
   display: flex;
