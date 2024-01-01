@@ -1,6 +1,7 @@
 {
   "name": "green-jangteo",
   "private": true,
+  "homepage": "https://green-jangteo.vercel.app",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
