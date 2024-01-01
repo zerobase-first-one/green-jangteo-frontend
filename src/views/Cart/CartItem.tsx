@@ -3,75 +3,46 @@ import { LuPlus } from 'react-icons/lu';
 import { LuMinus } from 'react-icons/lu';
 import addCommaPrice from '../../../public/module/addComma';
 import { useState } from 'react';
+// import axios from 'axios';
 import customAxios from '../../apiFetcher/customAxios';
-import { useRecoilValue } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { userIdState } from '../../store/atom/auth';
-import { IoClose } from 'react-icons/io5';
 
-const CartItem = ({ item, checkedItemHandler, checked, getData }: any) => {
+const CartItem = ({ item, checkedItemHandler, checked }: any) => {
   const [isChecked, setIsChecked] = useState(false);
   const checkHandler = ({ target }: any) => {
     setIsChecked(!isChecked);
     const { checked } = target;
-    checkedItemHandler(
-      checked,
-      item.productName,
-      item.productId,
-      item.cartProductId,
-      quantity,
-      item.imageUrl,
-      price,
-    );
+    checkedItemHandler(item.productId, checked, price);
   };
 
-  const userId = useRecoilValue(userIdState);
-  // const token = useRecoilValue(tokenState);
   const [quantity, setQuantity] = useState(item.quantity);
   const [price, setPrice] = useState(item.price * quantity);
 
   const quantityMinus = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
-      updateQuantity(item.productId, quantity - 1);
+      updateQuantity(item.id, quantity - 1);
       setPrice(item.price * (quantity - 1));
-      getData(item.price * (quantity - 1));
     }
   };
 
   const quantityPlus = () => {
     setQuantity(quantity + 1);
-    updateQuantity(item.productId, quantity + 1);
+    updateQuantity(item.id, quantity + 1);
     setPrice(item.price * (quantity + 1));
-    getData(item.price * (quantity + 1));
   };
 
+  const userId = useSetRecoilState(userIdState);
+
   const updateQuantity = (productId: number, quantity: number) => {
-    customAxios
-      .put(`/carts/cart-products/${item.cartProductId}`, {
-        cartProduct: {
-          productId: productId,
-          quantity: quantity,
-        },
-        userId: userId,
-      })
-      .then(res => console.log(res));
-  };
-  const deleteCart = () => {
-    customAxios
-      .delete(`/carts/selects`, {
-        data: {
-          cartProducts: [
-            {
-              cartProductId: item.cartProductId,
-              quantity: item.quantity,
-            },
-          ],
-          userId: userId,
-        },
-      })
-      .then(response => console.log('삭제 성공', response))
-      .catch(error => console.log('실패', error.message));
-    // alert('상품이 삭제되었습니다.');
+    return customAxios.put(`/carts/cart-products/{cartProductId}`, {
+      cartProduct: {
+        productId: productId,
+        quantity: quantity,
+      },
+      userId: userId,
+    });
   };
 
   return (
@@ -85,11 +56,10 @@ const CartItem = ({ item, checkedItemHandler, checked, getData }: any) => {
         />
       </Label>
       <ItemInfoBox>
-        <ImageBox>
-          <Image src={item.imageUrl} alt={item.productName} />
-        </ImageBox>
+        <ImageBox></ImageBox>
         <InfoBox>
-          <ItemName>{item.productName}</ItemName>
+          {/* <ItemName>{item.productName}</ItemName> */}
+          <ItemName>{item.productId}</ItemName>
           <ItemCntBox>
             <Price>{addCommaPrice(price)} 원</Price>
 
@@ -110,9 +80,6 @@ const CartItem = ({ item, checkedItemHandler, checked, getData }: any) => {
             </ButtonBox>
           </ItemCntBox>
         </InfoBox>
-        <ProdcutDeleteButton onClick={deleteCart}>
-          <IoClose />
-        </ProdcutDeleteButton>
       </ItemInfoBox>
     </Wrapper>
   );
@@ -125,12 +92,11 @@ const Wrapper = styled.div`
   grid-template-columns: 30px 1fr;
   grid-template-areas: 'checkbox info';
   flex-direction: row;
-  padding: 20px 0;
+  padding: 10px 0;
   border-bottom: 1px solid #dedede;
   &:last-child {
     border: none;
   }
-  position: relative;
 `;
 const Label = styled.label`
   grid-area: checkbox;
@@ -149,16 +115,10 @@ const ImageBox = styled.div`
   height: 80px;
   background-color: #cccccc;
   margin-right: 15px;
-  overflow: hidden;
-  position: relative;
 `;
-const Image = styled.img`
-  width: 100%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`;
+// const Image = styled.img`
+//    width: 100%;
+// `;
 const InfoBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -167,10 +127,11 @@ const InfoBox = styled.div`
 `;
 const ItemName = styled.strong`
   display: block;
+  // width: 250px;
   width: 100%;
-  // text-overflow: ellipsis;
-  // white-space: nowrap;
-  // overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 `;
 const ItemCntBox = styled.div`
   display: flex;
@@ -204,14 +165,3 @@ const Quantity = styled.span`
   justify-content: center;
 `;
 const Price = styled.span``;
-
-const ProdcutDeleteButton = styled.button`
-  position: absolute;
-  right: 0;
-  top: 10px;
-  color: #909090;
-  padding: 0;
-  border: 0;
-  background: none;
-  font-size: 24px;
-`;

@@ -1,12 +1,9 @@
 import { useEffect, useState } from 'react';
-// import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import customAxios from '../apiFetcher/customAxios';
-import { useRecoilValue } from 'recoil';
-import { userIdState } from '../store/atom/auth';
 
 export const useGetProfile = () => {
-  const token = useRecoilValue(userIdState);
-  // const { userId } = useParams();
+  const { userId } = useParams();
   const [userData, setUserData] = useState<any>({
     username: '',
     address: {
@@ -27,7 +24,7 @@ export const useGetProfile = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await customAxios.get(`/users/${token}/profile`);
+        const response = await customAxios.get(`/users/${userId}/profile`);
         const userProfile = response.data;
 
         setUserData({
@@ -71,12 +68,12 @@ export const useGetProfile = () => {
       }
     };
 
-    if (!token) {
+    if (!userId) {
       return;
     }
 
     getData();
-  }, [token]);
+  }, []);
 
   return userData;
 };

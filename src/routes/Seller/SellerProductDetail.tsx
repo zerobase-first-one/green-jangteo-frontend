@@ -79,7 +79,7 @@ const SellerProductDetail = () => {
       },
     ],
   });
-  const { userId } = useParams();
+  // const { userId } = useParams();
   const { productId } = useParams();
   console.log(product);
   useEffect(() => {
@@ -99,7 +99,7 @@ const SellerProductDetail = () => {
 
   const navigate = useNavigate();
   const deleteProduct = () => {
-    customAxios.delete(`/products/${productId}`, { params: { userId } });
+    customAxios.delete(`/products/${productId}`);
     alert('삭제되었습니다.');
     navigate(-1);
   };

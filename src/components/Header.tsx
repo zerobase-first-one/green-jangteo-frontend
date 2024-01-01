@@ -1,12 +1,9 @@
-import styled from 'styled-components';
-import { FaBell, FaShoppingCart } from 'react-icons/fa';
-import { IoClose } from 'react-icons/io5';
-import { TbMenu2 } from 'react-icons/tb';
-import { Link } from 'react-router-dom';
-import { useReducer } from 'react';
-import { useRecoilValue } from 'recoil';
-import { roleState, tokenState, userIdState } from '../store/atom/auth';
-import { categoryList } from '../Product/categoryList';
+import styled from "styled-components";
+import { FaBell, FaShoppingCart } from "react-icons/fa";
+import { IoClose } from "react-icons/io5";
+import { TbMenu2 } from "react-icons/tb";
+import { Link } from "react-router-dom";
+import { useReducer } from "react";
 
 const HeaderWrapper = styled.div`
   background-color: #16a114;
@@ -74,7 +71,8 @@ const Navigation = styled.nav`
   height: 620px;
 `;
 
-const Ul1deps = styled.ul``;
+const Ul1deps = styled.ul`
+`;
 
 const CategoryList = styled.li`
   width: 150px;
@@ -133,37 +131,31 @@ const UtilBtnBox = styled.div`
     width: 1px;
     height: 1px;
     overflow: hidden;
-  }
+ }
 `;
 
 const Header = () => {
-  // const categories = [
-  //   {
-  //     firstCategory: '음식',
-  //     secondCategoryList: [
-  //       { secondCategory: '스낵' },
-  //       { secondCategory: '과일' },
-  //     ],
-  //   },
-  //   {
-  //     firstCategory: '의류',
-  //     secondCategoryList: [
-  //       { secondCategory: '상의' },
-  //       { secondCategory: '하의' },
-  //     ],
-  //   },
-  // ];
+  const categories = [
+    {
+      firstCategory: "음식",
+      secondCategoryList: [
+        { secondCategory: "스낵" },
+        { secondCategory: "과일" },
+      ],
+    },
+    {
+      firstCategory: "의류",
+      secondCategoryList: [
+        { secondCategory: "상의" },
+        { secondCategory: "하의" },
+      ],
+    },
+  ];
 
   const [display, setDisplay] = useReducer(
-    val => (val === 'none' ? 'block' : 'none'),
-    'none',
+    (val) => (val === "none" ? "block" : "none"),
+    "none"
   );
-
-  const token = useRecoilValue(tokenState);
-  const userId = useRecoilValue(userIdState);
-  const roles = useRecoilValue(roleState);
-
-  console.log(categoryList);
 
   return (
     <HeaderWrapper>
@@ -172,27 +164,24 @@ const Header = () => {
           <span className="blind">그린장터</span>
         </Logo>
         <CategoryBtn type="button" onClick={setDisplay}>
-          {display === 'none' ? <TbMenu2 /> : <IoClose />}
+          {display === "none" ? <TbMenu2 /> : <IoClose />}
           <span className="blind">카테고리</span>
         </CategoryBtn>
         <Navigation style={{ display }}>
           <Ul1deps>
-            {categoryList.map((category: any) => (
-              <CategoryList key={category.firstCategoryName}>
-                <Link
-                  to={`/${category.firstCategoryName}`}
-                  onClick={setDisplay}
-                >
-                  {category.firstCategoryName}
+            {categories.map((category: any) => (
+              <CategoryList key={category.firstCategory}>
+                <Link to={`/${category.firstCategory}`} onClick={setDisplay}>
+                  {category.firstCategory}
                 </Link>
-                <Ul2deps key={category.firstCategoryName}>
-                  {category.secondCategories.map((secondCategory: any) => (
-                    <List key={secondCategory.name}>
+                <Ul2deps key={category.firstCategory}>
+                  {category.secondCategoryList.map((list: any) => (
+                    <List key={list.secondCategory}>
                       <Link
-                        to={`/${category.firstCategoryName}/${secondCategory.name}`}
+                        to={`/${category.firstCategory}/${list.secondCategory}`}
                         onClick={setDisplay}
                       >
-                        {secondCategory.name}
+                        {list.secondCategory}
                       </Link>
                     </List>
                   ))}
@@ -206,22 +195,11 @@ const Header = () => {
             <FaBell />
             <span className="blind">알림</span>
           </button>
-          <Link
-            // to={`/carts`}
-            to={
-              token && userId !== null
-                ? roles[0] === '구매자'
-                  ? `/carts`
-                  : roles[0] === '판매자'
-                    ? `/carts`
-                    : '/users/login'
-                : '/users/login'
-            }
-          >
-            <button type="button">
-              <FaShoppingCart />
-              <span className="blind">장바구니</span>
-            </button>
+          <Link to={`/carts`}>
+          <button type="button">
+            <FaShoppingCart />
+            <span className="blind">장바구니</span>
+          </button>
           </Link>
         </UtilBtnBox>
       </HeaderContainer>
