@@ -8,12 +8,20 @@ import { useRecoilValue } from 'recoil';
 import { userIdState } from '../../store/atom/auth';
 import { IoClose } from 'react-icons/io5';
 
-const CartItem = ({ item, checkedItemHandler, checked }: any) => {
+const CartItem = ({ item, checkedItemHandler, checked, getData }: any) => {
   const [isChecked, setIsChecked] = useState(false);
   const checkHandler = ({ target }: any) => {
     setIsChecked(!isChecked);
     const { checked } = target;
-    checkedItemHandler(item.productId, item.quantity, checked, price);
+    checkedItemHandler(
+      checked,
+      item.productName,
+      item.productId,
+      item.cartProductId,
+      quantity,
+      item.imageUrl,
+      price,
+    );
   };
 
   const userId = useRecoilValue(userIdState);
@@ -26,6 +34,7 @@ const CartItem = ({ item, checkedItemHandler, checked }: any) => {
       setQuantity(quantity - 1);
       updateQuantity(item.productId, quantity - 1);
       setPrice(item.price * (quantity - 1));
+      getData(item.price * (quantity - 1));
     }
   };
 
@@ -33,12 +42,12 @@ const CartItem = ({ item, checkedItemHandler, checked }: any) => {
     setQuantity(quantity + 1);
     updateQuantity(item.productId, quantity + 1);
     setPrice(item.price * (quantity + 1));
+    getData(item.price * (quantity + 1));
   };
 
-  console.log(userId);
   const updateQuantity = (productId: number, quantity: number) => {
     customAxios
-      .put(`/carts/cart-products/${item.productId}`, {
+      .put(`/carts/cart-products/${item.cartProductId}`, {
         cartProduct: {
           productId: productId,
           quantity: quantity,
@@ -47,19 +56,16 @@ const CartItem = ({ item, checkedItemHandler, checked }: any) => {
       })
       .then(res => console.log(res));
   };
-  // const token = useRecoilValue(tokenState);
   const deleteCart = () => {
     customAxios
-      .delete(`/carts/cart-products/${item.productId}`, {
-        // headers: {
-        //   Authorization: `Bearer ${token}`,
-        // },
-        // params: {
-        //   cartProductId: item.productId,
-        //   userId: userId,
-        // },
+      .delete(`/carts/selects`, {
         data: {
-          cartProductId: item.productId,
+          cartProducts: [
+            {
+              cartProductId: item.cartProductId,
+              quantity: item.quantity,
+            },
+          ],
           userId: userId,
         },
       })
@@ -79,10 +85,11 @@ const CartItem = ({ item, checkedItemHandler, checked }: any) => {
         />
       </Label>
       <ItemInfoBox>
-        <ImageBox></ImageBox>
+        <ImageBox>
+          <Image src={item.imageUrl} alt={item.productName} />
+        </ImageBox>
         <InfoBox>
-          {/* <ItemName>{item.productName}</ItemName> */}
-          <ItemName>{item.productId}</ItemName>
+          <ItemName>{item.productName}</ItemName>
           <ItemCntBox>
             <Price>{addCommaPrice(price)} 원</Price>
 
@@ -142,10 +149,16 @@ const ImageBox = styled.div`
   height: 80px;
   background-color: #cccccc;
   margin-right: 15px;
+  overflow: hidden;
+  position: relative;
 `;
-// const Image = styled.img`
-//    width: 100%;
-// `;
+const Image = styled.img`
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
 const InfoBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -154,11 +167,10 @@ const InfoBox = styled.div`
 `;
 const ItemName = styled.strong`
   display: block;
-  // width: 250px;
   width: 100%;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
+  // text-overflow: ellipsis;
+  // white-space: nowrap;
+  // overflow: hidden;
 `;
 const ItemCntBox = styled.div`
   display: flex;

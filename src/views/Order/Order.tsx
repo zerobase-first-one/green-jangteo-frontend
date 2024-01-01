@@ -83,6 +83,13 @@ const Order = () => {
       })
       .catch(err => console.log(`실패`, err));
   };
+  const totalPrice = products
+    .map((product: any) => product.price)
+    .reduce((prev: number, cur: number) => prev + cur);
+  const membershipDiscount = 0;
+  const couponDiscount = 0;
+  const orderPrice = totalPrice - membershipDiscount - couponDiscount;
+  const ShippingFee = orderPrice > 50000 ? 0 : 3000;
 
   return (
     <>
@@ -116,13 +123,15 @@ const Order = () => {
           <OrderList>
             {products.map((product: any) => (
               <OrderListItem key={product.productId}>
-                <ProductImgBox></ProductImgBox>
+                <ProductImgBox>
+                  <Image src={product.imageUrl} />
+                </ProductImgBox>
                 <ProductInfoBox>
-                  <ProductName>{product.productId}</ProductName>
+                  <ProductName>{product.productName}</ProductName>
                   <ProductQuantity>
                     주문 수량: {product.quantity}개
                   </ProductQuantity>
-                  <ProductPrice>{addCommaPrice(100000)} 원</ProductPrice>
+                  <ProductPrice>{addCommaPrice(product.price)} 원</ProductPrice>
                 </ProductInfoBox>
               </OrderListItem>
             ))}
@@ -133,36 +142,36 @@ const Order = () => {
           <TextBox>
             <OrderName>
               총 상품금액
-              <OrderInfo>{addCommaPrice(10000)} 원</OrderInfo>
+              <OrderInfo>{addCommaPrice(totalPrice)} 원</OrderInfo>
             </OrderName>
             <OrderName>
               멤버십 할인
-              <OrderInfo>{addCommaPrice(10000)} 원</OrderInfo>
+              <OrderInfo>{addCommaPrice(membershipDiscount)} 원</OrderInfo>
             </OrderName>
             <OrderName>
               쿠폰 할인
-              <OrderInfo>{addCommaPrice(10000)} 원</OrderInfo>
+              <OrderInfo>{addCommaPrice(couponDiscount)} 원</OrderInfo>
             </OrderName>
           </TextBox>
           <TextBox>
             <OrderName>
               주문 금액
-              <OrderInfo>{addCommaPrice(10000)} 원</OrderInfo>
+              <OrderInfo>{addCommaPrice(orderPrice)} 원</OrderInfo>
             </OrderName>
             <OrderName>
               배송비
-              <OrderInfo>{addCommaPrice(10000)} 원</OrderInfo>
+              <OrderInfo>{addCommaPrice(ShippingFee)} 원</OrderInfo>
             </OrderName>
             <OrderName>
               적립금 사용
-              <OrderInfo>{addCommaPrice(10000)} 원</OrderInfo>
+              <OrderInfo>{addCommaPrice(0)} 원</OrderInfo>
             </OrderName>
           </TextBox>
           <TextBox style={{ border: `none` }}>
             <OrderName>
               결제하실 금액
               <OrderInfo className="orderPrice">
-                {addCommaPrice(10000)} 원
+                {addCommaPrice(totalPrice + ShippingFee)} 원
               </OrderInfo>
             </OrderName>
           </TextBox>
@@ -243,10 +252,24 @@ const OrderListItem = styled.li`
   }
 `;
 const ProductImgBox = styled.div`
-  width: 80px;
-  height: 80px;
   background-color: #cccccc;
   margin-right: 15px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+  width: 120px;
+  height: 120px;
+  @media screen and (max-width: 768px) {
+    width: 100px;
+    height: 100px;
+  }
+`;
+const Image = styled.img`
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 const ProductInfoBox = styled.div`
   flex: auto;

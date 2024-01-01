@@ -27,7 +27,7 @@ const SellerOrderList = () => {
 
   useEffect(() => {
     customAxios
-      .get(`/orders`, { data: { userId: `${userId}` } })
+      .get(`/orders`, { params: { userId: userId } })
       .then(response => {
         setOrder(response.data);
         console.log(response.data);

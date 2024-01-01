@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import customAxios from '../../apiFetcher/customAxios';
 // import AWS from 'aws-sdk';
+import { categoryList } from '../../Product/categoryList';
 
 interface FormValue {
   productName: string;
@@ -135,8 +136,11 @@ const EditProduct = () => {
     });
   };
 
-  const firstCategory = ['음식', '의류', '생필품'];
-  // const secondCategory = ["음식", "의류", "생필품"];
+  const [selectCategory, setselectCategory] = useState();
+  const handleSelectInput = (e: any) => {
+    setselectCategory(e.target.value);
+  };
+
   return (
     <>
       <HeaderPrevPageBtn />
@@ -168,18 +172,17 @@ const EditProduct = () => {
                 <Label htmlFor="firstCategories">분류1</Label>
                 <Select
                   id="firstCategories"
-                  value={val.categories[0].category}
                   {...register('categories.0.category', {
                     required: '카테고리를 지정해주세요',
-                    onChange: onChange,
+                    onChange: e => {
+                      handleSelectInput(e);
+                    },
                   })}
                 >
-                  <Option value="카테고리" disabled>
-                    카테고리
-                  </Option>
-                  {firstCategory.map(category => (
-                    <Option value={category} key={category}>
-                      {category}
+                  <Option value="카테고리">카테고리</Option>
+                  {categoryList.map(category => (
+                    <Option value={category.name} key={category.name}>
+                      {category.name}
                     </Option>
                   ))}
                 </Select>
@@ -190,17 +193,23 @@ const EditProduct = () => {
                   id="SecondCategories"
                   {...register('categories.1.category', {
                     required: '카테고리를 지정해주세요',
-                    onChange: onChange,
                   })}
                 >
                   <Option value="카테고리" disabled>
                     카테고리
                   </Option>
-                  {firstCategory.map(category => (
-                    <Option value={category} key={category}>
-                      {category}
-                    </Option>
-                  ))}
+                  {categoryList.map(
+                    category =>
+                      selectCategory == category.name &&
+                      category.secondCategory.map(secondCategory => (
+                        <Option
+                          value={secondCategory.id}
+                          key={secondCategory.name}
+                        >
+                          {secondCategory.name}
+                        </Option>
+                      )),
+                  )}
                 </Select>
               </Box>
               <Box>

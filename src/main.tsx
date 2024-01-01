@@ -8,7 +8,7 @@ import './index.css';
 ReactDOM.createRoot(document.getElementById('root')!).render(
   // <React.StrictMode>
   <RecoilRoot>
-    <Container>
+    <Container style={{ padding: 0 }}>
       <App />
     </Container>
   </RecoilRoot>,

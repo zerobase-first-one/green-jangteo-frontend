@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { useReducer } from 'react';
 import { useRecoilValue } from 'recoil';
 import { roleState, tokenState, userIdState } from '../store/atom/auth';
+import { categoryList } from '../Product/categoryList';
 
 const HeaderWrapper = styled.div`
   background-color: #16a114;
@@ -136,22 +137,22 @@ const UtilBtnBox = styled.div`
 `;
 
 const Header = () => {
-  const categories = [
-    {
-      firstCategory: '음식',
-      secondCategoryList: [
-        { secondCategory: '스낵' },
-        { secondCategory: '과일' },
-      ],
-    },
-    {
-      firstCategory: '의류',
-      secondCategoryList: [
-        { secondCategory: '상의' },
-        { secondCategory: '하의' },
-      ],
-    },
-  ];
+  // const categories = [
+  //   {
+  //     firstCategory: '음식',
+  //     secondCategoryList: [
+  //       { secondCategory: '스낵' },
+  //       { secondCategory: '과일' },
+  //     ],
+  //   },
+  //   {
+  //     firstCategory: '의류',
+  //     secondCategoryList: [
+  //       { secondCategory: '상의' },
+  //       { secondCategory: '하의' },
+  //     ],
+  //   },
+  // ];
 
   const [display, setDisplay] = useReducer(
     val => (val === 'none' ? 'block' : 'none'),
@@ -161,6 +162,8 @@ const Header = () => {
   const token = useRecoilValue(tokenState);
   const userId = useRecoilValue(userIdState);
   const roles = useRecoilValue(roleState);
+
+  console.log(categoryList);
 
   return (
     <HeaderWrapper>
@@ -174,19 +177,22 @@ const Header = () => {
         </CategoryBtn>
         <Navigation style={{ display }}>
           <Ul1deps>
-            {categories.map((category: any) => (
-              <CategoryList key={category.firstCategory}>
-                <Link to={`/${category.firstCategory}`} onClick={setDisplay}>
-                  {category.firstCategory}
+            {categoryList.map((category: any) => (
+              <CategoryList key={category.firstCategoryName}>
+                <Link
+                  to={`/${category.firstCategoryName}`}
+                  onClick={setDisplay}
+                >
+                  {category.firstCategoryName}
                 </Link>
-                <Ul2deps key={category.firstCategory}>
-                  {category.secondCategoryList.map((list: any) => (
-                    <List key={list.secondCategory}>
+                <Ul2deps key={category.firstCategoryName}>
+                  {category.secondCategories.map((secondCategory: any) => (
+                    <List key={secondCategory.name}>
                       <Link
-                        to={`/${category.firstCategory}/${list.secondCategory}`}
+                        to={`/${category.firstCategoryName}/${secondCategory.name}`}
                         onClick={setDisplay}
                       >
-                        {list.secondCategory}
+                        {secondCategory.name}
                       </Link>
                     </List>
                   ))}

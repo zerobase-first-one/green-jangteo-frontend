@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import customAxios from '../../apiFetcher/customAxios';
 import { useRecoilValue } from 'recoil';
 import { userIdState } from '../../store/atom/auth';
+import { useGetProfile } from '../../hooks/useGetProfile';
 
 interface Cart {
   productId: number;
@@ -18,16 +19,39 @@ const Cart = () => {
   const [cartList, setCartList] = useState<Cart[]>([]);
   const userId = useRecoilValue(userIdState);
   // 장바구니 목록 get method
+  const getProduct = async () => {
+    try {
+      const response = await customAxios.get(`/carts`, {
+        params: { userId: userId },
+      });
+      setCartList(response.data);
+    } catch {
+      (err: any) => console.log(err.message);
+    }
+  };
   useEffect(() => {
-    customAxios
-      .get(`/carts`, { params: { userId: userId } })
-      .then(response => {
-        setCartList(response.data);
-        console.log(response.data);
-      })
-      .catch(err => console.log(err.message));
-  }, [userId]);
+    getProduct();
+  }, []);
+  // useEffect(() => {
+  //   customAxios
+  //     .get(`/carts`, { params: { userId: userId } })
+  //     .then(response => {
+  //       setCartList(response.data);
+  //       console.log(response.data);
+  //     })
+  //     .catch(err => console.log(err.message));
+  // }, [userId]);
+  // console.log(cartList);
+
+  const [numbers, setNumber] = useState(0);
+  console.log(numbers);
   console.log(cartList);
+
+  const getData = (price: any) => {
+    // setNumber(price);
+    console.log(price);
+    setNumber(price);
+  };
 
   const [checkedItem, setCheckedItem] = useState([
     ...cartList.map((item: any) => item.productId),
@@ -35,7 +59,7 @@ const Cart = () => {
   const [checkedItemPrice, setCheckedItemPrice] = useState([
     ...cartList.map((item: any) => item.price),
   ]);
-  // console.log(checkedItem);
+  console.log(checkedItemPrice);
   const totalPrice = checkedItemPrice.reduce((acc: number, cur: number) => {
     return acc + cur;
   }, 0);
@@ -44,30 +68,23 @@ const Cart = () => {
     ...cartList.map((item: any) => item.productId),
   ]);
   console.log(selectOrder);
-  //변수명 productId -> cartProductId로 변경
-  const changeCartId: any = [];
-  const api = () => {
-    for (let i = 0; i < selectOrder.length; i++) {
-      const alert = (information: any) => {
-        const { productId: cartProductId, quantity } = information;
-        return { cartProductId, quantity };
-      };
-      changeCartId.push(alert(selectOrder[i]));
-    }
-  };
-  api();
-  console.log(changeCartId);
 
   // 상품 개별 체크
   const checkedItemHandler = (
-    productId: number,
-    quantity: number,
     checked: any,
+    productName: string,
+    productId: number,
+    cartProductId: number,
+    quantity: number,
+    imageUrl: number,
     price: any,
   ) => {
     if (checked) {
       setCheckedItem(prev => [...prev, productId]);
-      setSelectOrder(prev => [...prev, { productId, quantity }]);
+      setSelectOrder(prev => [
+        ...prev,
+        { productName, productId, cartProductId, quantity, imageUrl, price },
+      ]);
       setCheckedItemPrice(prev => [...prev, price]);
     } else {
       setCheckedItem(checkedItem.filter(item => item !== productId));
@@ -79,6 +96,10 @@ const Cart = () => {
   const allCheckedHandler = (e: any) => {
     if (e.target.checked) {
       setCheckedItem(cartList.map((item: any) => item.productId));
+      setSelectOrder(cartList.map((item: any) => item));
+      setCheckedItemPrice(
+        cartList.map((item: any) => item.price * item.quantity),
+      );
     } else {
       setCheckedItem([]);
       setCheckedItemPrice([]);
@@ -88,17 +109,16 @@ const Cart = () => {
   // 장바구니 전체 삭제
   const deleteAllCart = () => {
     customAxios
-      .delete(`/carts`, { data: { userId: `${userId}` } })
+      .delete(`/carts`, { params: { userId: userId } })
       .then(response => console.log('삭제 성공', response))
       .catch(error => console.log('삭제 실패', error.message));
-    alert('상품이 삭제되었습니다.');
   };
   // 장바구니 선택 삭제
   const deleteSellectCart = () => {
     customAxios
       .delete(`/carts/selects`, {
         data: {
-          cartProducts: changeCartId,
+          cartProducts: selectOrder,
           userId: userId,
         },
       })
@@ -135,16 +155,30 @@ const Cart = () => {
       });
     }
   };
-  useEffect(() => {
-    customAxios
-      .get(`/orders`, { data: { userId: `${userId}` } })
-      .then(response => {
-        // setOrder(response.data);
-        console.log(response.data);
-      })
-      .catch(err => console.log(err.message));
-  }, [userId]);
+  // 장바구니 전체 주문
+  const cartId = localStorage.getItem('cartId');
+  console.log(cartId);
+  const { address } = useGetProfile();
 
+  const AllorderPost = () => {
+    customAxios
+      .post(`/orders/cart-order`, {
+        buyerId: userId,
+        cartId: cartId,
+        shippingAddressDto: {
+          city: address.city,
+          detailedAddress: address.detailedAddress,
+          street: address.street,
+          zipcode: address.zipcode,
+        },
+      })
+      .then(response => {
+        console.log(`성공`, response.data.orderId);
+        localStorage.setItem('orderId', JSON.stringify(response.data.orderId));
+        navigate('/cart/orders');
+      })
+      .catch(err => console.log(`실패`, err));
+  };
   return (
     <Wrapper>
       <HeaderBackPageBtn />
@@ -171,6 +205,7 @@ const Cart = () => {
               checkedItemHandler={checkedItemHandler}
               checkedItem={checkedItem}
               checked={checkedItem.includes(item.productId) ? true : false}
+              getData={getData}
             ></CartItem>
           ))}
         </CartList>
@@ -181,16 +216,17 @@ const Cart = () => {
           </PriceName>
           <PriceName>
             멤버십 할인 예상 금액
-            <Price>-{addCommaPrice(2000)} 원</Price>
+            <Price>- {addCommaPrice(0)} 원</Price>
           </PriceName>
           <PriceName>
             주문 금액
-            <Price className="orderPrice">{addCommaPrice(8000)} 원</Price>
+            <Price className="orderPrice">{addCommaPrice(totalPrice)} 원</Price>
           </PriceName>
         </TextBox>
         {/* <Link to={`/orders`} state={selectOrder}> */}
         <OrderBtn onClick={orderPost}>주문하기</OrderBtn>
         {/* </Link> */}
+        <OrderBtn onClick={AllorderPost}>장바구니 전체 주문하기</OrderBtn>
       </Container>
     </Wrapper>
   );
@@ -266,4 +302,5 @@ const OrderBtn = styled.button`
   cursor: pointer;
   padding: 0;
   width: 100%;
+  margin-bottom: 15px;
 `;

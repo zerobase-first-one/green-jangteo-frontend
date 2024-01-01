@@ -58,7 +58,7 @@ const Wrapper = styled.div`
   position: fixed;
   bottom: 0;
   z-index: 999;
-  width: 1152px;
+  width: 1200px;
   height: 100px;
   padding: 0 20px;
   background-color: #ffffff;
@@ -66,10 +66,9 @@ const Wrapper = styled.div`
   font-size: 40px;
 
   @media screen and (max-width: 1200px) {
-    width: calc(100% - 48px);
+    width: 100%;
   }
   @media screen and (max-width: 430px) {
-    width: calc(100% - 32px);
   }
 `;
 

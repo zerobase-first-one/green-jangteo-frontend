@@ -6,6 +6,7 @@ import customAxios from '../../apiFetcher/customAxios';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { userIdState } from '../../store/atom/auth';
+import { CartId } from './cartId';
 
 const Overlay = styled(motion.div)`
   background-color: rgba(0, 0, 0, 0.5);
@@ -87,15 +88,6 @@ interface DetailPageModalProps {
   setClicked: (value: boolean) => void;
   item: any;
 }
-
-// interface AddCart {
-//   cartProduct: {
-//     productId: number;
-//     quantity: number;
-//   };
-//   userId: number;
-// }
-
 export default function DetailPageModal({
   setClicked,
   item,
@@ -118,6 +110,9 @@ export default function DetailPageModal({
 
   const { productId } = useParams();
 
+  const [cartId, setCartId] = useState();
+  CartId(cartId);
+  console.log(cartId);
   const AddCart = () => {
     customAxios
       .post(`/carts`, {
@@ -128,7 +123,7 @@ export default function DetailPageModal({
         userId: userId,
       })
       .then(response => {
-        console.log(response.data);
+        setCartId(response.data.cartId);
       })
       .catch(err => console.log(err.message));
   };

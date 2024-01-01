@@ -95,10 +95,16 @@ const ImgBox = styled.div`
   margin-right: 20px;
   background-color: #dedede;
   overflow: hidden;
+  position: relative;
 `;
 const Img = styled.img`
-  width: 120px;
-  height: 120px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+
+  // height: 120px;
 `;
 const InfoBox = styled.div`
   display: flex;
