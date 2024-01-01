@@ -48,7 +48,6 @@ const CategoryPage = () => {
   ]);
 
   useEffect(() => {
-    // axios.get("https://d53733be-f889-423d-81e7-e8f003a8ebae.mock.pstmn.io/products")
     customAxios
       .get('/products')
       .then(response => {
@@ -77,7 +76,7 @@ const CategoryPage = () => {
         </CategoryNameBox>
         {products.map((item: any) =>
           secondCategory !== undefined
-            ? secondCategory == item.categories.secondCategory && (
+            ? secondCategory == item.categories[1] && (
                 <ProductListItem
                   productId={item.productId}
                   image={item.image}
@@ -88,7 +87,7 @@ const CategoryPage = () => {
                   width={`50%`}
                 />
               )
-            : firstCategory == item.categories.firstCategory && (
+            : firstCategory == item.categories[0] && (
                 <ProductListItem
                   productId={item.productId}
                   image={item.image}

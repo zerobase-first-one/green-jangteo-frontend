@@ -6,6 +6,9 @@
 // import { useEffect, useState } from 'react';
 // import customAxios from '../../apiFetcher/customAxios';
 // import AWS from 'aws-sdk';
+// import { categoryList } from '../../Product/categoryList';
+// import { UploadPageModal } from '../../components/modal/UploadPageModal';
+// import axios from 'axios';
 
 // interface formValue {
 //   userId: number;
@@ -45,62 +48,66 @@
 //     navigate(-1);
 //   };
 
-//   const [myBucket, setMyBucket] = useState(Object);
+//   // const [myBucket, setMyBucket] = useState(Object);
+//   // console.log(Object);
 //   const [selectedFile, setSelectedFile] = useState('');
 //   const [imgURL, setImgURL] = useState(``);
 //   // console.log(myBucket);
 //   const onSubmit = async (data: formValue) => {
-//     uploadFile(selectedFile);
-//     console.log('selectedFile', selectedFile);
-//     await customAxios
-//       .post(`/products`, {
-//         userId: userId,
-//         productName: data.productName,
-//         price: data.price,
-//         categories: [
-//           {
-//             category: data.categories[0].category,
-//           },
-//           {
-//             category: data.categories[1].category,
-//           },
-//         ],
-//         description: data.description,
-//         inventory: data.inventory,
-//         images: [
-//           {
-//             url: imgURL.slice(0, imgURL.indexOf('?')),
-//             position: 0,
-//           },
-//         ],
-//       })
+//     await axios
+//       .all([
+//         customAxios.post(`/product`, {
+//           userId: userId,
+//           productName: data.productName,
+//           price: data.price,
+//           categoryId: data.categories[1].category,
+
+//           description: data.description,
+//           inventory: data.inventory,
+//           images: [
+//             {
+//               url: imgURL.slice(0, limit),
+//               position: 0,
+//             },
+//           ],
+//         }),
+//         customAxios.post(`/productDocuments`, {
+//           productName: data.productName,
+//         }),
+//       ])
 //       .then(response => {
 //         console.log(response);
 //         navigate(-1);
 //       })
 //       .catch(error => {
 //         console.log(error.response);
+//         console.log(data);
 //       });
 //   };
+
 //   const limit = imgURL.indexOf('?');
-//   console.log(imgURL.slice(0, limit));
 
 //   useEffect(() => {
 //     AWS.config.update({
 //       accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
 //       secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
 //     });
-//     const myBucket = new AWS.S3({
-//       params: { Bucket: `greengangteo` },
-//       region: import.meta.env.VITE_AWS_DEFAULT_REGION,
-//     });
-
-//     setMyBucket(myBucket);
 //   }, []);
+//   const myBucket = new AWS.S3({
+//     params: { Bucket: `greengangteo` },
+//     region: import.meta.env.VITE_AWS_DEFAULT_REGION,
+//   });
+
+//   //   setMyBucket(myBucket);
 
 //   const handleFileInput = (e: any) => {
 //     setSelectedFile(e.target.files[0]);
 //     console.log('e', e);
+//   };
+
+//   const [selectCategory, setselectCategory] = useState();
+//   const handleSelectInput = (e: any) => {
+//     setselectCategory(e.target.value);
 //   };
 //   const uploadFile = (file: any) => {
 //     const param = {
@@ -122,8 +129,13 @@
 //     });
 //   };
 
-//   const firstCategory = ['음식', '의류', '생필품'];
-//   // const secondCategory = ["음식", "의류", "생필품"];
+//   const [modalOpen, setModalOpen] = useState(false);
+
+//   const showModal = () => {
+//     setModalOpen(true);
+//     uploadFile(selectedFile);
+//   };
+
 //   return (
 //     <>
 //       <HeaderPrevPageBtn />
@@ -133,7 +145,11 @@
 //             <Button type="reset" onClick={onReset}>
 //               취소
 //             </Button>
-//             <Button type="submit">등록</Button>
+//             {/* <Button type="submit"> */}
+//             <Button type="button" onClick={showModal}>
+//               등록
+//             </Button>
+//             {modalOpen && <UploadPageModal setModalOpen={setModalOpen} />}
 //             {/* <Button type="submit">작성완료</Button> */}
 //           </BtnBox>
 //           <Box>
@@ -155,14 +171,18 @@
 //               id="firstCategories"
 //               {...register('categories.0.category', {
 //                 required: '카테고리를 지정해주세요',
+//                 onChange: e => {
+//                   handleSelectInput(e);
+//                 },
 //               })}
 //             >
-//               <Option value="카테고리" disabled>
-//                 카테고리
-//               </Option>
-//               {firstCategory.map(category => (
-//                 <Option value={category} key={category}>
-//                   {category}
+//               <Option value="카테고리">카테고리</Option>
+//               {categoryList.map(category => (
+//                 <Option
+//                   value={category.firstCategoryName}
+//                   key={category.firstCategoryName}
+//                 >
+//                   {category.firstCategoryName}
 //                 </Option>
 //               ))}
 //             </Select>
@@ -178,11 +198,15 @@
 //               <Option value="카테고리" disabled>
 //                 카테고리
 //               </Option>
-//               {firstCategory.map(category => (
-//                 <Option value={category} key={category}>
-//                   {category}
-//                 </Option>
-//               ))}
+//               {categoryList.map(
+//                 category =>
+//                   selectCategory == category.firstCategoryName &&
+//                   category.secondCategories.map(secondCategory => (
+//                     <Option value={secondCategory.id} key={secondCategory.name}>
+//                       {secondCategory.name}
+//                     </Option>
+//                   )),
+//               )}
 //             </Select>
 //           </Box>
 //           <Box>
@@ -229,6 +253,7 @@
 
 // const Wrapper = styled.div`
 //   padding: 20px;
+//   position: relative;
 // `;
 // const BtnBox = styled.div`
 //   display: flex;
