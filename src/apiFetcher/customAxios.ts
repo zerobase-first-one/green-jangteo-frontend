@@ -1,8 +1,9 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
+import { BASE_URL } from '../constant/union';
 
 const customAxios: AxiosInstance = axios.create({
   withCredentials: true,
-  baseURL: 'https://green-jangteo.duckdns.org:8443/',
+  baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },

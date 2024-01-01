@@ -55,12 +55,12 @@ export default function MyBoardDetail() {
     if (!userId) return;
     e.preventDefault();
     const commentValue = ref.current?.value || '';
-    z({ userId, content: commentValue });
+    postComment({ userId, content: commentValue });
     setComment(commentValue);
     ref.current!.value = '';
   };
 
-  const z = async ({
+  const postComment = async ({
     userId,
     content,
   }: {

@@ -72,7 +72,7 @@ export default function Detail() {
     };
 
     fetchData();
-  }, [productId]);
+  }, []);
 
   const onOrderBtnClick = () => {
     if (token === null) {
@@ -113,9 +113,7 @@ export default function Detail() {
         />
         <OrderBtn onClick={onOrderBtnClick}>주문하기</OrderBtn>
       </BottomActionBar>
-      {clicked ? (
-        <DetailPageModal setClicked={setClicked} item={product} />
-      ) : null}
+      {clicked ? <DetailPageModal setClicked={setClicked} /> : null}
     </Wrapper>
   );
 }
