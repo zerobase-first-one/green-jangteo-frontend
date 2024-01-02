@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import customAxios from '../apiFetcher/customAxios';
 
-export const useGetProfile = () => {
+export const useGetMyProfile = () => {
   const { userId } = useParams();
-  const [userData, setUserData] = useState<any>({
+  const [myInfo, setMyInfo] = useState<any>({
     username: '',
     address: {
       city: '',
@@ -25,31 +25,27 @@ export const useGetProfile = () => {
     const getData = async () => {
       try {
         const response = await customAxios.get(`/users/${userId}/profile`);
-        const userProfile = response.data;
 
-        setUserData({
-          username: userProfile.username || '',
-          address: userProfile.addressDto || {
+        setMyInfo({
+          username: response.data.username || '',
+          address: response.data.addressDto || {
             city: '',
             detailedAddress: '',
             street: '',
             zipcode: '',
           },
-          createdAt: userProfile.createdAt || '',
-          email: userProfile.email || '',
-          fullName: userProfile.fullName || '',
-          modifiedAt: userProfile.modifiedAt || '',
-          phone: userProfile.phone || '',
-          roles: userProfile.roles || [],
+          createdAt: response.data.createdAt || '',
+          email: response.data.email || '',
+          fullName: response.data.fullName || '',
+          modifiedAt: response.data.modifiedAt || '',
+          phone: response.data.phone || '',
+          roles: response.data.roles || [],
           loading: false,
         });
       } catch (error) {
         console.error('사용자 프로필을 불러오는 중 오류 발생:', error);
-        // console.log('error.config:', error.config);
-        // console.log('error.request:', error.request);
-        // console.log('error.response:', error.response);
 
-        setUserData({
+        setMyInfo({
           username: '',
           address: {
             city: '',
@@ -75,5 +71,5 @@ export const useGetProfile = () => {
     getData();
   }, []);
 
-  return userData;
+  return { myInfo };
 };

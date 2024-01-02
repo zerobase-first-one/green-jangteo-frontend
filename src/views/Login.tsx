@@ -1,6 +1,6 @@
-import HeaderPrevPageBtn from "../components/HeaderPrevPageBtn";
-import LoginContainer from "../components/LoginContainer";
-import styled from "styled-components";
+import HeaderPrevPageBtn from '../components/HeaderPrevPageBtn';
+import LoginContainer from '../components/LoginContainer';
+import styled from 'styled-components';
 
 export const Login = () => {
   return (

@@ -34,7 +34,7 @@ export default function BoardListForm({
   subject,
   username,
   createdAt,
-  commentCount,
+  viewCount,
 }: IBoard) {
   return (
     <Link to={`/posts/${postId}`}>
@@ -43,7 +43,7 @@ export default function BoardListForm({
         <Username>{username}</Username>
         <CreateAt>{createdAt}</CreateAt>
         <hr />
-        <Comment>댓글 {commentCount}</Comment>
+        <Comment>댓글 {viewCount}</Comment>
       </Wrapper>
     </Link>
   );

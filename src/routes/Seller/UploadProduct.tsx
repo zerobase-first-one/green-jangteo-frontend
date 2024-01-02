@@ -10,44 +10,43 @@
 // import { UploadPageModal } from '../../components/modal/UploadPageModal';
 // import axios from 'axios';
 
-// interface formValue {
-//   userId: number;
-//   productName: string;
-//   price: number;
-//   categories: [
-//     {
-//       category: string;
-//     },
-//     {
-//       category: string;
-//     },
-//   ];
-//   // imageStoragePath: 'C:/greenjangteo/product';
-//   images: [
-//     {
-//       url: string;
-//       position: 0;
-//     },
-//   ];
-//   description: string;
-//   inventory: number;
-// }
+interface formValue {
+  userId: number;
+  productName: string;
+  price: number;
+  categories: [
+    {
+      category: string;
+    },
+    {
+      category: string;
+    },
+  ];
+  // imageStoragePath: 'C:/greenjangteo/product';
+  images: [
+    {
+      url: string;
+      position: 0;
+    },
+  ];
+  description: string;
+  inventory: number;
+}
 
-// const UploadProduct = () => {
-//   const {
-//     register,
-//     handleSubmit,
-//     // formState: { errors },
-//   } = useForm<formValue>({
-//     mode: 'onSubmit',
-//   });
+const UploadProduct = () => {
+  const {
+    register,
+    handleSubmit,
+    // formState: { errors },
+  } = useForm<formValue>({
+    mode: 'onSubmit',
+  });
 
-//   const { userId } = useParams();
-//   const navigate = useNavigate();
-//   const onReset = () => {
-//     navigate(-1);
-//   };
-
+  const { userId } = useParams();
+  const navigate = useNavigate();
+  const onReset = () => {
+    navigate(-1);
+  };
 //   // const [myBucket, setMyBucket] = useState(Object);
 //   // console.log(Object);
 //   const [selectedFile, setSelectedFile] = useState('');
@@ -118,16 +117,16 @@
 //       Key: `product/${file.name}`,
 //     };
 
-//     myBucket.putObject(param).send((err: any) => {
-//       if (err) {
-//         console.log(err);
-//       } else {
-//         const url = myBucket.getSignedUrl('getObject', { Key: param.Key });
-//         console.log(url, 'url');
-//         setImgURL(url);
-//       }
-//     });
-//   };
+    myBucket.putObject(param).send((err: any) => {
+      if (err) {
+        console.log(err);
+      } else {
+        const url = myBucket.getSignedUrl('getObject', { Key: param.Key });
+        console.log(url, 'url');
+        setImgURL(url);
+      }
+    });
+  };
 
 //   const [modalOpen, setModalOpen] = useState(false);
 
@@ -267,48 +266,48 @@
 //   align-items: center;
 //   margin: 10px 0;
 
-//   &.category {
-//     margin-bottom: 20px;
-//   }
-// `;
-// const Button = styled.button`
-//   display: block;
-//   margin-left: auto;
-//   padding: 10px 20px;
-//   background-color: #dedede;
-//   border: none;
-//   border-radius: 5px;
-//   font-size: 16px;
-//   cursor: pointer;
-//   margin-left: 10px;
-// `;
-// const UploadForm = styled.form`
-//   display: flex;
-//   flex-direction: column;
-// `;
-// const Input = styled.input`
-//   flex: auto;
-//   padding: 5px;
-// `;
-// const Label = styled.label`
-//   width: 120px;
-// `;
-// const Select = styled.select`
-//   // margin: 20px 0;
-//   flex: auto;
-//   padding: 5px;
-//   font-size: 16px;
-// `;
-// const Option = styled.option`
-//   text-align: center;
-//   font-size: 16px;
-// `;
-// const Textarea = styled.textarea`
-//   margin: 10px 0;
-//   padding: 10px;
-//   font-size: 16px;
+  &.category {
+    margin-bottom: 20px;
+  }
+`;
+const Button = styled.button`
+  display: block;
+  margin-left: auto;
+  padding: 10px 20px;
+  background-color: #dedede;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: 10px;
+`;
+const UploadForm = styled.form`
+  display: flex;
+  flex-direction: column;
+`;
+const Input = styled.input`
+  flex: auto;
+  padding: 5px;
+`;
+const Label = styled.label`
+  width: 120px;
+`;
+const Select = styled.select`
+  // margin: 20px 0;
+  flex: auto;
+  padding: 5px;
+  font-size: 16px;
+`;
+const Option = styled.option`
+  text-align: center;
+  font-size: 16px;
+`;
+const Textarea = styled.textarea`
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 16px;
 
-//   &::placeholder {
-//     color: #b0b0b0;
-//   }
-// `;
+  &::placeholder {
+    color: #b0b0b0;
+  }
+`;

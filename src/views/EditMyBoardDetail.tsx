@@ -3,29 +3,16 @@ import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { userIdState } from '../store/atom/auth';
 import customAxios from '../apiFetcher/customAxios';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
-interface IEditMyBoardDetail {
-  postId?: string;
-  subject: string;
-  content: string;
-  handleSaveEdit: (params: {
-    userId: string;
-    editedSubject: string;
-    editedContent: string;
-  }) => void;
-  handleCancelEdit: () => void;
-}
-
-const EditMyBoardDetail = ({
-  postId,
-  subject,
-  content,
-  handleSaveEdit,
-  handleCancelEdit,
-}: IEditMyBoardDetail) => {
-  const [editedSubject, setEditedSubject] = useState(subject);
-  const [editedContent, setEditedContent] = useState(content);
-  const userId = useRecoilValue(userIdState); // TODO: userId 쓰임 확인할 것
+const EditMyBoardDetail = () => {
+  const location = useLocation();
+  const value = location.state;
+  const [editedSubject, setEditedSubject] = useState(value.subject);
+  const [editedContent, setEditedContent] = useState(value.content);
+  const userId = useRecoilValue(userIdState);
+  const { postId } = useParams();
+  const navigate = useNavigate();
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditedSubject(e.currentTarget.value);
@@ -35,27 +22,42 @@ const EditMyBoardDetail = ({
     setEditedContent(e.currentTarget.value);
   };
 
-  const handleSave = async () => {
+  const onCancelClick = () => {
+    navigate(-1);
+  };
+
+  const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     try {
-      await customAxios.put(`/posts/${postId}`, {
-        userId,
+      const data = {
+        userId: userId,
         subject: editedSubject,
         content: editedContent,
-      });
-      if (!userId) return;
-      handleSaveEdit({ userId, editedSubject, editedContent });
+        imageRequestDtos: [
+          // {
+          //   positionInContent: 10,
+          //   url: 'https://test-images-bucket.s3.us-west-1.amazonaws.com/images/sample1.jpg',
+          // },
+        ],
+      };
+      await customAxios.put(`/posts/${postId}`, data);
+
+      alert('게시글이 수정되었습니다.');
+
+      navigate(-1);
     } catch (error) {
       console.error('게시물 업데이트 오류:', error);
+      alert('게시물 업데이트 중 오류가 발생했습니다. 다시 시도해주세요.');
     }
   };
 
   return (
-    <Form>
+    <Form onSubmit={handleSave}>
       <Title type="text" value={editedSubject} onChange={handleTitleChange} />
       <TextArea value={editedContent} onChange={handleContentChange} />
       <ButtonWrapper>
-        <SaveButton onClick={handleSave}>수정 저장</SaveButton>
-        <CancelButton onClick={handleCancelEdit}>취소</CancelButton>
+        <SaveButton type="submit">수정 저장</SaveButton>
+        <CancelButton onClick={onCancelClick}>취소</CancelButton>
       </ButtonWrapper>
     </Form>
   );
