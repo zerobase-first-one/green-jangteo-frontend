@@ -31,7 +31,7 @@ const Modal = styled.div`
 `;
 
 const ModalBox = styled.div`
-  width: 60%;
+  width: 80%;
   background-color: #ffffff;
   position: absolute;
   top: 40%;

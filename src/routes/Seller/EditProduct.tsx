@@ -8,27 +8,21 @@ import { useState } from 'react';
 import customAxios from '../../apiFetcher/customAxios';
 // import AWS from 'aws-sdk';
 import { categoryList } from '../../Product/categoryList';
+import axios from 'axios';
 
 interface FormValue {
-  productName: string;
-  price: number;
-  categories: [
-    {
-      category: string;
-    },
-    {
-      category: string;
-    },
-  ];
-  images: [
-    {
-      url: string;
-      position: 0;
-    },
-  ];
+  categoryId: number;
   description: string;
   inventory: number;
+  price: number;
   productId: number;
+  productName: string;
+  // images: [
+  //   {
+  //     url: string;
+  //     position: 0;
+  //   },
+  // ];
 }
 
 const EditProduct = () => {
@@ -53,37 +47,32 @@ const EditProduct = () => {
   const location = useLocation();
   const value = [location.state];
 
-  const onSubmit = (data: FormValue) => {
-    // uploadFile(selectedFile);
-    customAxios
-      .put(`/products/${productId}`, {
-        productName: data.productName,
-        price: data.price,
-        categories: [
-          {
-            category: data.categories[0].category,
-          },
-          {
-            category: data.categories[1].category,
-          },
-        ],
-        description: data.description,
-        inventory: data.inventory,
-        images: [
-          {
-            url: value[0].images[0].url,
-            position: 0,
-          },
-        ],
-        productId: productId,
-      })
+  const onSubmit = async (data: FormValue) => {
+    await axios
+      .all([
+        customAxios.put(`/products/${productId}`, {
+          categoryId: data.categoryId,
+          description: data.description,
+          images: [
+            // {
+            //   url: imgURL.slice(0, limit),
+            //   position: 0,
+            // },
+          ],
+          inventory: data.inventory,
+          price: data.price,
+          productId: productId,
+          productName: data.productName,
+        }),
+        customAxios.post(`/productDocuments`),
+      ])
       .then(response => {
         console.log(response);
-        alert(`수정이 완료되었습니다.`);
         navigate(-1);
       })
       .catch(error => {
         console.log(error.response);
+        console.log(data);
       });
   };
 
@@ -172,12 +161,9 @@ const EditProduct = () => {
                 <Label htmlFor="firstCategories">분류1</Label>
                 <Select
                   id="firstCategories"
-                  {...register('categories.0.category', {
-                    required: '카테고리를 지정해주세요',
-                    onChange: e => {
-                      handleSelectInput(e);
-                    },
-                  })}
+                  onChange={e => {
+                    handleSelectInput(e);
+                  }}
                 >
                   <Option value="카테고리">카테고리</Option>
                   {categoryList.map(category => (
@@ -194,7 +180,7 @@ const EditProduct = () => {
                 <Label htmlFor="SecondCategories">분류2</Label>
                 <Select
                   id="SecondCategories"
-                  {...register('categories.1.category', {
+                  {...register('categoryId', {
                     required: '카테고리를 지정해주세요',
                   })}
                 >
@@ -276,6 +262,7 @@ const BtnBox = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  margin-bottom: 20px;
 `;
 const Box = styled.div`
   display: flex;
@@ -291,8 +278,8 @@ const Box = styled.div`
 const Button = styled.button`
   display: block;
   margin-left: auto;
-  padding: 10px 20px;
-  background-color: #dedede;
+  padding: 7px 15px;
+  background-color: #e9e9e9;
   border: none;
   border-radius: 5px;
   font-size: 16px;
@@ -304,17 +291,20 @@ const UploadForm = styled.form`
   flex-direction: column;
 `;
 const Input = styled.input`
+  height: 2rem;
   flex: auto;
   padding: 5px;
+  border: 1px solid #dedede;
+  font-size: 18px;
 `;
 const Label = styled.label`
-  width: 120px;
+  width: 100px;
 `;
 const Select = styled.select`
-  // margin: 20px 0;
   flex: auto;
   padding: 5px;
   fon-tsize: 16px;
+  border: 1px solid #dedede;
 `;
 const Option = styled.option`
   text-align: center;
@@ -323,7 +313,8 @@ const Option = styled.option`
 const Textarea = styled.textarea`
   margin: 10px 0;
   padding: 10px;
-  font-size: 16px;
+  font-size: 18px;
+  border: 1px solid #dedede;
   &::placeholder {
     color: #b0b0b0;
   }

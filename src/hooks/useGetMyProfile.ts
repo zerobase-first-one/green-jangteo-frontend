@@ -26,14 +26,16 @@ export const useGetMyProfile = () => {
       try {
         const response = await customAxios.get(`/users/${userId}/profile`);
 
+        const addressInfo = response.data.addressDto || {
+          city: '',
+          detailedAddress: '',
+          street: '',
+          zipcode: '',
+        };
+
         setMyInfo({
           username: response.data.username || '',
-          address: response.data.addressDto || {
-            city: '',
-            detailedAddress: '',
-            street: '',
-            zipcode: '',
-          },
+          address: addressInfo,
           createdAt: response.data.createdAt || '',
           email: response.data.email || '',
           fullName: response.data.fullName || '',
@@ -69,7 +71,7 @@ export const useGetMyProfile = () => {
     }
 
     getData();
-  }, []);
+  }, [userId]);
 
-  return { myInfo };
+  return myInfo;
 };

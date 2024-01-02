@@ -57,7 +57,7 @@ const SellerProductList = () => {
               </ImgBox>
               <InfoBox>
                 <ProductName>{product.productName}</ProductName>
-                <ProductRate>★★★★★({product.averageScore})</ProductRate>
+                {/* <ProductRate>★★★★★({product.averageScore})</ProductRate> */}
                 <ProductPrice>{addCommaPrice(product.price)}원</ProductPrice>
               </InfoBox>
             </Link>
@@ -113,7 +113,8 @@ const InfoBox = styled.div`
   font-size: 24px;
 `;
 const ProductName = styled.strong`
+  font-size: 20px;
   // font-weight: bold;
 `;
-const ProductRate = styled.div``;
+// const ProductRate = styled.div``;
 const ProductPrice = styled.span``;

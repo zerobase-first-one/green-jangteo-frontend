@@ -25,7 +25,7 @@ import SellerProfile from './routes/Seller/SellerProfile';
 import SellerProductList from './routes/Seller/SellerProductList';
 import SellerOrderList from './routes/Seller/SellerOrderList';
 import SellerOrderDetail from './routes/Seller/SellerOrderDetail';
-// import UploadProduct from './routes/Seller/UploadProduct';
+import UploadProduct from './routes/Seller/UploadProduct';
 import SellerProductDetail from './routes/Seller/SellerProductDetail';
 import SellerDescription from './routes/Seller/SellerDescription';
 import SellerReview from './routes/Seller/SellerReview';
@@ -38,9 +38,11 @@ import UserProfile from './views/profile/UserProfile';
 import EditMyBoardDetail from './views/EditMyBoardDetail';
 import CartOrder from './views/Order/CartOrder';
 import { SuccessPage } from './views/Order/Success';
-// import EditSellerProfile from './routes/Seller/EditSellerProfile';
-import ProductCategoryList from './Product/ProductCategoryList';
+import EditSellerProfile from './routes/Seller/EditSellerProfile';
 import UpdateCategory from './Product/UpdateCategory';
+import OrderList from './views/Order/OrderList';
+import CreateCoupon from './views/Home/CreateCoupon';
+import OrderListDetail from './views/Order/OrderListDetail';
 
 const GlobalStyle = createGlobalStyle`
   ${reset};
@@ -120,7 +122,7 @@ function App() {
           <Route path="" element={<SellerProductList />}></Route>
           <Route path="order" element={<SellerOrderList />}></Route>
         </Route>
-        {/* <Route path="/stores/:userId/profile" element={<EditSellerProfile />} /> */}
+        <Route path="/stores/:userId/profile" element={<EditSellerProfile />} />
         <Route path="/reviews" element={<CreateReview />} />
         <Route
           path="/stores/:userId/products/:productId"
@@ -133,20 +135,22 @@ function App() {
           path="/stores/:userId/order/:orderId"
           element={<SellerOrderDetail />}
         ></Route>
-        {/* <Route
+        <Route
           path="/stores/:userId/upload"
           element={<UploadProduct />}
-        ></Route> */}
+        ></Route>
         <Route
           path="/stores/products/:productId"
           element={<EditProduct />}
         ></Route>
         <Route path="/orders/sucess" element={<SuccessPage />}></Route>
-        <Route
-          path="/products/category"
-          element={<ProductCategoryList />}
-        ></Route>
         <Route path="/categorySetting" element={<UpdateCategory />}></Route>
+        <Route path="/users/:userId/orderList" element={<OrderList />}></Route>
+        <Route
+          path="/users/:userId/orderList/:orderId"
+          element={<OrderListDetail />}
+        ></Route>
+        <Route path="/createCoupon" element={<CreateCoupon />}></Route>
       </Routes>
     </BrowserRouter>
   );
