@@ -32,9 +32,10 @@ import SellerReview from './routes/Seller/SellerReview';
 import CreateReview from './components/CreateReview';
 import EditProduct from './routes/Seller/EditProduct';
 import EditReview from './components/EditReview';
-import UserProfile from './components/UserProfile';
 import ReviewListContainer from './components/ReviewListContainer';
 import Chat from './views/Chat';
+import UserProfile from './views/profile/UserProfile';
+import EditMyBoardDetail from './views/EditMyBoardDetail';
 
 const GlobalStyle = createGlobalStyle`
   ${reset};
@@ -96,6 +97,7 @@ function App() {
           <Route path="my" element={<MyBoardList />} />
         </Route>
         <Route path="/posts/:postId" element={<MyBoardDetail />} />
+        <Route path="/posts/:postId/edit" element={<EditMyBoardDetail />} />
         <Route path="/create-post" element={<CreatePostForm />} />
         <Route path="/products/:productId" element={<Detail />}>
           <Route path="description" element={<Description />} />

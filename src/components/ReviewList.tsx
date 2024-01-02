@@ -2,16 +2,17 @@ import styled from 'styled-components';
 import customAxios from '../apiFetcher/customAxios';
 import { useRecoilValue } from 'recoil';
 import { userIdState } from '../store/atom/auth';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function ReviewList({ product }: any) {
   const userId = useRecoilValue(userIdState);
+  const navigate = useNavigate();
 
   const onDeleteBtnClick = async () => {
     try {
-      const response = await customAxios.delete(`/reviews/${userId}`);
+      await customAxios.delete(`/reviews/${product.reviewId}`);
       alert('리뷰내역이 삭제되었습니다.');
-      // fetchMyReviewList();
-      console.log(response);
+      navigate(-1);
     } catch (error) {
       console.error('리뷰 삭제 에러가 발생했습니다', error);
     }
@@ -21,10 +22,14 @@ export default function ReviewList({ product }: any) {
     <Wrapper>
       <Image src={product?.imageUrl} />
       <ContentWrapper>
-        <ProductName>{product?.content}</ProductName>
+        <Link to={`/products/${product.productId}/review`}>
+          <Content>{product?.content}</Content>
+        </Link>
         {userId == product?.userId && (
           <Buttons>
-            <Button>수정</Button>
+            <Link to={`/reviews/${product.reviewId}`} state={product.content}>
+              <Button>수정</Button>
+            </Link>
             <ButtonDelete onClick={onDeleteBtnClick}>삭제</ButtonDelete>
           </Buttons>
         )}
@@ -57,7 +62,7 @@ const ContentWrapper = styled.div`
   flex-direction: column;
 `;
 
-const ProductName = styled.p`
+const Content = styled.p`
   font-size: 16px;
   margin-bottom: 5px;
 `;

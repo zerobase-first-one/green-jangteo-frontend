@@ -98,22 +98,16 @@ export default function Detail() {
           <Link to="description">상품설명</Link>
         </Tab>
         <Tab isActive={reviewMatch !== null}>
-          <Link to="review">리뷰(1,702)</Link>
+          <Link to="review">리뷰</Link>
         </Tab>
       </Tabs>
       <Outlet context={product} />
       <hr />
       <BottomActionBar>
-        <Link to={'/chat'}>
-          <IoChatbubbleEllipsesOutline
-            style={{
-              width: '30%',
-              height: '40px',
-              marginLeft: '40px',
-              cursor: 'pointer',
-            }}
-          />
-        </Link>
+        <ChatLink to={'/chat'}>
+          <ChatText>판매자와 1:1 채팅하기</ChatText>
+          <ChatIcon />
+        </ChatLink>
         <OrderBtn onClick={onOrderBtnClick}>주문하기</OrderBtn>
       </BottomActionBar>
       {clicked ? (
@@ -203,17 +197,43 @@ const Tab = styled.span<{ isActive: boolean }>`
 const BottomActionBar = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
   margin-top: 15px;
 `;
 
+const ChatLink = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  margin-left: 10px;
+  width: 50%;
+  height: 50px;
+  border: 1px solid #16a113;
+  border-radius: 10px;
+`;
+
+const ChatText = styled.p`
+  margin-right: 5px;
+  font-size: 16px;
+  text-align: center;
+  display: flex;
+`;
+
+const ChatIcon = styled(IoChatbubbleEllipsesOutline)`
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+`;
+
 const OrderBtn = styled.button`
-  width: 70%;
+  width: 50%;
   height: 50px;
   background-color: #16a113;
-  color: white;
+  color: #fff;
   font-size: 16px;
   border: none;
   border-radius: 10px;
-  margin-left: 30px;
+  margin-left: 10px;
   cursor: pointer;
 `;

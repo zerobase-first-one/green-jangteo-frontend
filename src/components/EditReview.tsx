@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import HeaderPrevPageBtn from './HeaderPrevPageBtn';
 import styled from 'styled-components';
 import { useState } from 'react';
@@ -6,7 +6,10 @@ import customAxios from '../apiFetcher/customAxios';
 
 export default function EditReview() {
   const { reviewId } = useParams();
-  const [editedContent, setEditedContent] = useState('');
+  const location = useLocation();
+  const value = location.state;
+  const [editedContent, setEditedContent] = useState(value);
+  const navigate = useNavigate();
 
   const onContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setEditedContent(e.currentTarget.value);
@@ -15,8 +18,9 @@ export default function EditReview() {
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = { content: editedContent, reviewId };
-    const response = await customAxios.put(`reviews/${reviewId}`, data);
-    console.log(response);
+    await customAxios.put(`/reviews/${reviewId}`, data);
+    alert('상품후기 수정이 완료되었습니다.');
+    navigate(-1);
   };
 
   return (

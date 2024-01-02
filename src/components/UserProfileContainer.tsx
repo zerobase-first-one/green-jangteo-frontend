@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import useGetUserProfile from '../hooks/useGetUserProfile';
 import ReviewListContainer from './ReviewListContainer';
 
-export default function UserProfile() {
+export default function UserProfileContainer() {
   const { userInfo } = useGetUserProfile();
 
   return (

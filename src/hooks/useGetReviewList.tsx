@@ -7,6 +7,7 @@ export interface IReviewList {
   createdAt: string;
   imageUrl: string;
   modifiedAt: string;
+  reviewId: string;
   score: string;
   userId: string;
   productId: string;

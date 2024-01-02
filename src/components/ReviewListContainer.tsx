@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import ReviewList from './ReviewList';
 import useGetReviewList from '../hooks/useGetReviewList';
 
@@ -7,11 +6,13 @@ export default function ReviewListContainer() {
 
   return (
     <>
-      {products.map(product => (
-        <Link to={`/products/${product.productId}/review`}>
-          <ReviewList product={product} />
-        </Link>
-      ))}
+      {products.length > 0 ? (
+        products.map(product => (
+          <ReviewList key={product.reviewId} product={product} />
+        ))
+      ) : (
+        <div>리뷰 작성 내역이 없습니다.</div>
+      )}
     </>
   );
 }

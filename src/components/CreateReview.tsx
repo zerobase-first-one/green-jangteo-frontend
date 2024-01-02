@@ -9,7 +9,7 @@ import AWS from 'aws-sdk';
 
 export default function CreateReview() {
   const userId = useRecoilValue(userIdState);
-  const productId = '9';
+  const productId = '23';
   const navigate = useNavigate();
   const [content, setContent] = useState('');
   const [myBucket, setMyBucket] = useState(Object);

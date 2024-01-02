@@ -17,9 +17,9 @@ export default function MyProfile() {
     <Wrapper>
       <Header />
       <TopWrapper>
-        <AvatarWrapper>
-          <AvatarStyled src="/broken-image.jpg" />
-        </AvatarWrapper>
+        {/* <AvatarWrapper key="avatar-key"> */}
+        <AvatarStyled src="/broken-image.jpg" />
+        {/* </AvatarWrapper> */}
         <TextWrapper>
           <Username>{myInfo.username}님</Username>
           <hr />
@@ -64,10 +64,10 @@ const TopWrapper = styled.div`
   margin-bottom: 20px;
 `;
 
-const AvatarWrapper = styled.div`
-  display: flex;
-  align-items: center;
-`;
+// const AvatarWrapper = styled.div`
+//   display: flex;
+//   align-items: center;
+// `;
 
 const AvatarStyled = styled(Avatar)`
   width: 80px;
