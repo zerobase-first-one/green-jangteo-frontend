@@ -1,8 +1,9 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
+import { BASE_URL } from '../constant/union';
 
 const customAxios: AxiosInstance = axios.create({
   withCredentials: true,
-  baseURL: '/api',
+  baseURL: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },

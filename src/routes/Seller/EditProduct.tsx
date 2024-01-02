@@ -3,14 +3,13 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 // import { BASE_URL } from "../../constant/union";
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import customAxios from '../../apiFetcher/customAxios';
-import AWS from 'aws-sdk';
-import { useRecoilValue } from 'recoil';
-import { userIdState } from '../../store/atom/auth';
+// import AWS from 'aws-sdk';
+import { categoryList } from '../../Product/categoryList';
 
-interface formValue {
-  userId: number;
+interface FormValue {
   productName: string;
   price: number;
   categories: [
@@ -21,16 +20,15 @@ interface formValue {
       category: string;
     },
   ];
-  // imageStoragePath: 'C:/greenjangteo/product';
   images: [
     {
       url: string;
       position: 0;
     },
   ];
-  productImage: '';
   description: string;
   inventory: number;
+  productId: number;
 }
 
 const EditProduct = () => {
@@ -38,34 +36,27 @@ const EditProduct = () => {
     register,
     handleSubmit,
     // formState: { errors },
-  } = useForm<formValue>({
+  } = useForm<FormValue>({
     mode: 'onSubmit',
   });
-
-  const userId = useRecoilValue(userIdState);
 
   const { productId } = useParams();
   const navigate = useNavigate();
   const onReset = () => {
     navigate(-1);
   };
-
-  const [myBucket, setMyBucket] = useState(Object);
-  const [selectedFile, setSelectedFile] = useState('');
-  const [imgURL, setImgURL] = useState(``);
-  console.log(myBucket);
+  // const [myBucket, setMyBucket] = useState(Object);
+  // const [selectedFile, setSelectedFile] = useState('');
+  // const [imgURL, setImgURL] = useState(``);
+  // console.log(myBucket);
 
   const location = useLocation();
   const value = [location.state];
-  // console.log(...value);
 
-  const onSubmit = (data: formValue) => {
-    uploadFile(selectedFile);
-    // axios.post(`http://localhost:3000/post`, {
+  const onSubmit = (data: FormValue) => {
+    // uploadFile(selectedFile);
     customAxios
-      .put(`/product/${productId}`, {
-        // axios.post(`${BASE_URL}/products`, {
-        userId: userId,
+      .put(`/products/${productId}`, {
         productName: data.productName,
         price: data.price,
         categories: [
@@ -76,15 +67,15 @@ const EditProduct = () => {
             category: data.categories[1].category,
           },
         ],
-        productImage: data.productImage,
         description: data.description,
         inventory: data.inventory,
         images: [
           {
-            url: imgURL,
+            url: value[0].images[0].url,
             position: 0,
           },
         ],
+        productId: productId,
       })
       .then(response => {
         console.log(response);
@@ -96,46 +87,60 @@ const EditProduct = () => {
       });
   };
 
-  useEffect(() => {
-    AWS.config.update({
-      accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
-      secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
-    });
-    const myBucket = new AWS.S3({
-      params: { Bucket: `greengangteo` },
-      region: import.meta.env.VITE_AWS_DEFAULT_REGION,
-    });
-    console.log(myBucket);
+  // useEffect(() => {
+  //   AWS.config.update({
+  //     accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
+  //     secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
+  //   });
+  //   const myBucket = new AWS.S3({
+  //     params: { Bucket: `greengangteo` },
+  //     region: import.meta.env.VITE_AWS_DEFAULT_REGION,
+  //   });
+  //   console.log(myBucket);
 
-    setMyBucket(myBucket);
-  }, []);
+  //   setMyBucket(myBucket);
+  // }, []);
 
-  const handleFileInput = (e: any) => {
-    setSelectedFile(e.target.files[0]);
-    console.log('e', e);
+  // const handleFileInput = (e: any) => {
+  //   setSelectedFile(e.target.files[0]);
+  //   console.log('e', e);
+  // };
+  // const uploadFile = (file: any) => {
+  //   const param = {
+  //     ACL: 'public-read',
+  //     ContentType: `image/*`,
+  //     Body: file,
+  //     Bucket: `greengangteo`,
+  //     Key: `product/${file.name}`,
+  //   };
+
+  //   myBucket.putObject(param).send((err: any) => {
+  //     if (err) {
+  //       console.log(err);
+  //     } else {
+  //       const url = myBucket.getSignedUrl('getObject', { Key: param.Key });
+  //       console.log(url, 'url');
+  //       setImgURL(url);
+  //     }
+  //   });
+  // };
+
+  const [board, setBoard] = useState<FormValue[]>([]);
+  console.log(board);
+
+  const onChange = (e: any) => {
+    const { value, name } = e.target; //event.target에서 name과 value만 가져오기
+    setBoard({
+      ...board,
+      [name]: value,
+    });
   };
-  const uploadFile = (file: any) => {
-    const param = {
-      ACL: 'public-read',
-      ContentType: `image/*`,
-      Body: file,
-      Bucket: `greengangteo`,
-      Key: `product/${file.name}`,
-    };
 
-    myBucket.putObject(param).send((err: any) => {
-      if (err) {
-        console.log(err);
-      } else {
-        const url = myBucket.getSignedUrl('getObject', { Key: param.Key });
-        console.log(url, 'url');
-        setImgURL(url);
-      }
-    });
+  const [selectCategory, setselectCategory] = useState();
+  const handleSelectInput = (e: any) => {
+    setselectCategory(e.target.value);
   };
 
-  const firstCategory = ['음식', '의류', '생필품'];
-  // const secondCategory = ["음식", "의류", "생필품"];
   return (
     <>
       <HeaderPrevPageBtn />
@@ -150,34 +155,37 @@ const EditProduct = () => {
           </BtnBox>
           {value.map((val: any) => (
             <>
-              <Box>
+              {/* <Box>
                 <Label htmlFor="image">이미지</Label>
                 <Input
                   type="file"
                   id="image"
                   {...register('productImage', {
-                    onChange: e => {
-                      handleFileInput(e);
-                      // uploadFile(selectedFile);
-                    },
+                    // onChange: e => {
+                    // handleFileInput(e);
+                    // uploadFile(selectedFile);
+                    // },
                   })}
                 ></Input>
-              </Box>
+              </Box> */}
               <Box>
                 <Label htmlFor="firstCategories">분류1</Label>
                 <Select
                   id="firstCategories"
-                  value={val.categories[0].category}
                   {...register('categories.0.category', {
                     required: '카테고리를 지정해주세요',
+                    onChange: e => {
+                      handleSelectInput(e);
+                    },
                   })}
                 >
-                  <Option value="카테고리" disabled>
-                    카테고리
-                  </Option>
-                  {firstCategory.map(category => (
-                    <Option value={category} key={category}>
-                      {category}
+                  <Option value="카테고리">카테고리</Option>
+                  {categoryList.map(category => (
+                    <Option
+                      value={category.firstCategoryName}
+                      key={category.firstCategoryName}
+                    >
+                      {category.firstCategoryName}
                     </Option>
                   ))}
                 </Select>
@@ -193,11 +201,18 @@ const EditProduct = () => {
                   <Option value="카테고리" disabled>
                     카테고리
                   </Option>
-                  {firstCategory.map(category => (
-                    <Option value={category} key={category}>
-                      {category}
-                    </Option>
-                  ))}
+                  {categoryList.map(
+                    category =>
+                      selectCategory == category.firstCategoryName &&
+                      category.secondCategories.map(secondCategory => (
+                        <Option
+                          value={secondCategory.id}
+                          key={secondCategory.name}
+                        >
+                          {secondCategory.name}
+                        </Option>
+                      )),
+                  )}
                 </Select>
               </Box>
               <Box>
@@ -208,6 +223,7 @@ const EditProduct = () => {
                   defaultValue={val.productName}
                   {...register('productName', {
                     required: '상품명을 입력해주세요',
+                    onChange: onChange,
                   })}
                 ></Input>
               </Box>
@@ -217,7 +233,10 @@ const EditProduct = () => {
                   type="number"
                   id="price"
                   defaultValue={val.price}
-                  {...register('price', { required: '가격을 입력해주세요' })}
+                  {...register('price', {
+                    required: '가격을 입력해주세요',
+                    onChange: onChange,
+                  })}
                 ></Input>
               </Box>
               <Box>
@@ -228,6 +247,7 @@ const EditProduct = () => {
                   defaultValue={val.count}
                   {...register('inventory', {
                     required: '재고 수량을 입력해주세요',
+                    onChange: onChange,
                   })}
                 ></Input>
               </Box>
@@ -237,6 +257,7 @@ const EditProduct = () => {
                 defaultValue={val.description}
                 {...register('description', {
                   required: '제품의 설명을 입력해주세요',
+                  onChange: onChange,
                 })}
               ></Textarea>
             </>
