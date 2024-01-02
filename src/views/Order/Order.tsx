@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 import HeaderPrevPageBtn from '../../components/HeaderPrevPageBtn';
 import addCommaPrice from '../../../public/module/addComma';
-import { useEffect } from 'react';
-// import customAxios from '../../apiFetcher/customAxios';
-import { useLocation } from 'react-router-dom';
+// import { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import customAxios from '../../apiFetcher/customAxios';
 import { useRecoilValue } from 'recoil';
 import { userIdState } from '../../store/atom/auth';
-import { useGetMyProfile } from '../../hooks/useGetMyProfile';
+// import { useGetMyProfile } from '../../hooks/useGetMyProfile';
+import { userDataState } from '../../store/atom/userDataState';
 
 interface OrderInfo {
   buyerId: number;
@@ -17,7 +17,7 @@ interface OrderInfo {
       quantity: number;
     },
   ];
-  sellerId: 1;
+  sellerId: 0;
   shippingAddressDto: {
     city: string;
     detailedAddress: string;
@@ -59,27 +59,34 @@ interface OrderInfo {
 
 const Order = () => {
   const userId = useRecoilValue(userIdState);
-  const { fullName, phone, address }: any = useGetMyProfile();
+  // const { fullName, phone, address }: any = useGetMyProfile();
+  const userData = useRecoilValue(userDataState);
+  const address = userData?.addressDto;
+  const fullName = userData?.fullName;
+  const phone = userData?.phone;
+
   const location = useLocation();
   const products = location.state;
   console.log(products);
-  useEffect(() => {});
+  console.log(address);
+  const navigate = useNavigate();
+  // useEffect(() => {});
   const orderPost = () => {
     customAxios
       .post(`/orders`, {
         buyerId: userId,
         orderProductRequestDtos: products,
-        sellerId: 2,
+        sellerId: 22,
         shippingAddressDto: {
-          city: address.city,
-          detailedAddress: address.detailedAddress,
-          street: address.street,
-          zipcode: address.zipcode,
+          city: address?.city,
+          detailedAddress: address?.detailedAddress,
+          street: address?.street,
+          zipcode: address?.zipcode,
         },
       })
       .then(response => {
         console.log(`성공`, response);
-        // navigate('/orders');
+        navigate('/');
       })
       .catch(err => console.log(`실패`, err));
   };
@@ -109,11 +116,11 @@ const Order = () => {
             <OrderName>
               배송지
               <OrderInfo className="shippingInfo">
-                {address.zipcode}
+                {address?.zipcode}
                 <Box>
-                  {address.city} {address.street}
+                  {address?.city} {address?.street}
                 </Box>
-                {address.detailedAddress}
+                {address?.detailedAddress}
               </OrderInfo>
             </OrderName>
           </TextBox>

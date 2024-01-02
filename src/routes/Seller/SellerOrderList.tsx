@@ -72,7 +72,7 @@ const SellerOrderList = () => {
             </OrderState>
             <DetailBtn>
               <Link
-                to={`/stores/:userId/order/${item.orderId}`}
+                to={`/stores/${userId}/order/${item.orderId}`}
                 state={{ item: item }}
               >
                 주문상세

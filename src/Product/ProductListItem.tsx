@@ -42,7 +42,7 @@ const ProductListItem = (props: Info) => {
 export default ProductListItem;
 
 const Wrapper = styled.div`
-  float: left;
+  // float: left;
   display: flex;
   flex-direction: column;
   padding: 0 15px;
