@@ -63,6 +63,9 @@ const Banner = () => {
           <Link to={`/categorySetting`}>
             <Container>나</Container>
           </Link>
+          <Link to={`/categorySetting`}>
+            <Container>쿠폰 발행</Container>
+          </Link>
         </BannerSlick>
       </BannerContainer>
     </>

@@ -27,10 +27,12 @@ const NavBar = () => {
             <span className="blind">검색</span>
           </button>
         </Link>
-        <button type="button">
-          <IoIosDocument />
-          <span className="blind">주문내역</span>
-        </button>
+        <Link to={`users/${userId}/orderList`}>
+          <button type="button">
+            <IoIosDocument />
+            <span className="blind">주문내역</span>
+          </button>
+        </Link>
         <Link
           to={
             token && userId !== null

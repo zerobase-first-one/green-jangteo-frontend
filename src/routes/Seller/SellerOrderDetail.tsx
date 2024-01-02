@@ -13,10 +13,10 @@ interface OrderDetail {
   buyerResponseDto: {
     buyerName: string;
     buyerPhone: number;
-    shippingAddress: {
+    shippingAddressDto: {
       city: string;
       street: string;
-      zipcode: number;
+      zipcode: string;
       detailedAddress: string;
     };
   };
@@ -89,10 +89,10 @@ const SellerOrderDetail = () => {
     buyerResponseDto: {
       buyerName: '',
       buyerPhone: 0,
-      shippingAddress: {
+      shippingAddressDto: {
         city: '',
         street: '',
-        zipcode: 0,
+        zipcode: '',
         detailedAddress: '',
       },
     },
@@ -114,6 +114,7 @@ const SellerOrderDetail = () => {
     totalOrderPrice: 0,
     createdAt: '',
   });
+  console.log(order);
   useEffect(() => {
     customAxios
       .get(`/orders/${orderId}`, { params: { userId: userId } })
@@ -130,18 +131,24 @@ const SellerOrderDetail = () => {
         <Container>
           <OrderDate>{order.createdAt.slice(0, 10)}</OrderDate>
           <OrderNumber>주문번호: {orderId}</OrderNumber>
-          {order.orderProductResponseDtos.map((item, idx) => (
-            <OrderProductBox key={idx}>
-              <ProductImgBox>
-                <Image src={item.productToOrderResponseDto.imageUrl}></Image>
-              </ProductImgBox>
-              <ProductInfoBox>
-                <ProductName>{item.productToOrderResponseDto.name}</ProductName>
-                <ProductQuantity>수량: {item.quantity}</ProductQuantity>
-                <ProductPrice>{addCommaPrice(item.orderPrice)} 원</ProductPrice>
-              </ProductInfoBox>
-            </OrderProductBox>
-          ))}
+          <Ul>
+            {order.orderProductResponseDtos.map((item, idx) => (
+              <OrderProductBox key={idx}>
+                <ProductImgBox>
+                  <Image src={item.productToOrderResponseDto.imageUrl}></Image>
+                </ProductImgBox>
+                <ProductInfoBox>
+                  <ProductName>
+                    {item.productToOrderResponseDto.name}
+                  </ProductName>
+                  <ProductQuantity>수량: {item.quantity}</ProductQuantity>
+                  <ProductPrice>
+                    {addCommaPrice(item.orderPrice)} 원
+                  </ProductPrice>
+                </ProductInfoBox>
+              </OrderProductBox>
+            ))}
+          </Ul>
         </Container>
         <Container>
           <Title>배송 정보</Title>
@@ -157,13 +164,12 @@ const SellerOrderDetail = () => {
             <OrderTitle>
               주소
               <OrderInfo className="shippingInfo">
-                {order.buyerResponseDto.shippingAddress.zipcode}
-
+                {order.buyerResponseDto.shippingAddressDto.zipcode}
                 <Box>
-                  {order.buyerResponseDto.shippingAddress.city}{' '}
-                  {order.buyerResponseDto.shippingAddress.street}
+                  {order.buyerResponseDto.shippingAddressDto.city}{' '}
+                  {order.buyerResponseDto.shippingAddressDto.street}
                 </Box>
-                {order.buyerResponseDto.shippingAddress.detailedAddress}
+                {order.buyerResponseDto.shippingAddressDto.detailedAddress}
               </OrderInfo>
             </OrderTitle>
           </TextBox>
@@ -192,7 +198,6 @@ const Wrapper = styled.div`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0 20px;
   padding: 30px;
   margin-bottom: 30px;
   background-color: #ffffff;
@@ -213,13 +218,18 @@ const OrderDate = styled.span`
 const OrderNumber = styled.span`
   margin-bottom: 20px;
 `;
-const OrderProductBox = styled.div`
+const Ul = styled.ul`
+  border-bottom: 1px solid #b0b0b0;
+  border-top: 1px solid #b0b0b0;
+`;
+const OrderProductBox = styled.li`
   display: flex;
   flex-direction: row;
-  margin-bottom: 20px;
+  padding: 20px 0;
+  border-bottom: 1px solid #d0d0d0;
 
   &:last-child {
-    margin-bottom: 0;
+    border-bottom: none;
   }
 `;
 const ProductImgBox = styled.div`

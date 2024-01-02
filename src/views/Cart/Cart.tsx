@@ -159,6 +159,7 @@ const Cart = () => {
   const cartId = localStorage.getItem('cartId');
   console.log(cartId);
   const { address } = useGetProfile();
+  console.log(address);
 
   const AllorderPost = () => {
     customAxios

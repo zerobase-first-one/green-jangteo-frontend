@@ -8,20 +8,21 @@ import { useState } from 'react';
 import customAxios from '../../apiFetcher/customAxios';
 // import AWS from 'aws-sdk';
 import { categoryList } from '../../Product/categoryList';
+import axios from 'axios';
 
 interface FormValue {
-  productName: string;
-  price: number;
   categoryId: number;
-  images: [
-    {
-      url: string;
-      position: 0;
-    },
-  ];
   description: string;
   inventory: number;
+  price: number;
   productId: number;
+  productName: string;
+  // images: [
+  //   {
+  //     url: string;
+  //     position: 0;
+  //   },
+  // ];
 }
 
 const EditProduct = () => {
@@ -46,30 +47,32 @@ const EditProduct = () => {
   const location = useLocation();
   const value = [location.state];
 
-  const onSubmit = (data: FormValue) => {
-    // uploadFile(selectedFile);
-    customAxios
-      .put(`/products/${productId}`, {
-        productName: data.productName,
-        price: data.price,
-        categoryId: data.categoryId,
-        description: data.description,
-        inventory: data.inventory,
-        images: [
-          {
-            url: value[0].images[0].url,
-            position: 0,
-          },
-        ],
-        productId: productId,
-      })
+  const onSubmit = async (data: FormValue) => {
+    await axios
+      .all([
+        customAxios.put(`/product/${productId}`, {
+          categoryId: data.categoryId,
+          description: data.description,
+          // images: [
+          //   {
+          //     url: imgURL.slice(0, limit),
+          //     position: 0,
+          //   },
+          // ],
+          inventory: data.inventory,
+          price: data.price,
+          productId: productId,
+          productName: data.productName,
+        }),
+        customAxios.post(`/productDocuments`),
+      ])
       .then(response => {
         console.log(response);
-        alert(`수정이 완료되었습니다.`);
         navigate(-1);
       })
       .catch(error => {
         console.log(error.response);
+        console.log(data);
       });
   };
 

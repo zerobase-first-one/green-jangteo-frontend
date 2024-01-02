@@ -9,20 +9,10 @@ import Footer from '../components/Footer';
 import customAxios from '../apiFetcher/customAxios';
 
 const CategoryPage = () => {
-  const [products, setProducts] = useState([
-    //    {
-    //       productId: 0,
-    //       productName: "",
-    //       price: 0,
-    //       categories: {
-    //           firstCategory: "",
-    //           secondCategory: ""
-    //       },
-    //       createdAt: 0,
-    //       modifiedAt: 0,
-    //       membership: boolean
-    //   },
-  ]);
+  const { firstCategory } = useParams();
+  const { secondCategory } = useParams();
+
+  const [products, setProducts] = useState([]);
   console.log(products);
 
   useEffect(() => {
@@ -34,12 +24,8 @@ const CategoryPage = () => {
       .catch(err => console.log(err.message));
   }, []);
 
-  const { firstCategory } = useParams();
-  const { secondCategory } = useParams();
-
   const [what, setWhat] = useState({});
-  console.log(what);
-  // console.log(firstCategory);
+  console.log(what, `category`);
   useEffect(() => {
     customAxios
       .get(`/products/category`, {
@@ -47,26 +33,15 @@ const CategoryPage = () => {
       })
       .then(response => {
         setWhat(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch(err => console.log(err.message));
   }, [firstCategory]);
 
-  // const [width, setWidth] = useState(window.innerWidth);
-  // const handleResize = () => {
-  //   setWidth(window.innerWidth);
-  // };
-
-  // useEffect(() => {
-  //   window.addEventListener('resize', handleResize);
-  //   return () => {
-  //     window.removeEventListener('resize', handleResize);
-  //   };
-  // }, []);
   return (
     <>
       <Header />
-      <Wrapper>
+      <Wrapper key={secondCategory}>
         <CategoryNameBox>
           <FirstCategory>
             <Link to={`/${firstCategory}`}>{firstCategory}</Link>

@@ -35,7 +35,6 @@ import EditProduct from './routes/Seller/EditProduct';
 import CartOrder from './views/Order/CartOrder';
 import { SuccessPage } from './views/Order/Success';
 import EditSellerProfile from './routes/Seller/EditSellerProfile';
-import ProductCategoryList from './Product/ProductCategoryList';
 import UpdateCategory from './Product/UpdateCategory';
 import OrderList from './views/Order/OrderList';
 
@@ -131,12 +130,8 @@ function App() {
           element={<EditProduct />}
         ></Route>
         <Route path="/orders/sucess" element={<SuccessPage />}></Route>
-        <Route
-          path="/products/category"
-          element={<ProductCategoryList />}
-        ></Route>
         <Route path="/categorySetting" element={<UpdateCategory />}></Route>
-        <Route path="/orderList" element={<OrderList />}></Route>
+        <Route path="users/:userId/orderList" element={<OrderList />}></Route>
       </Routes>
     </BrowserRouter>
   );

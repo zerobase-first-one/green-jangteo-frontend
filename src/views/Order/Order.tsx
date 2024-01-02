@@ -62,13 +62,14 @@ const Order = () => {
   const location = useLocation();
   const products = location.state;
   console.log(products);
+  console.log(address);
   useEffect(() => {});
   const orderPost = () => {
     customAxios
       .post(`/orders`, {
         buyerId: userId,
         orderProductRequestDtos: products,
-        sellerId: 2,
+        sellerId: 21,
         shippingAddressDto: {
           city: address.city,
           detailedAddress: address.detailedAddress,
