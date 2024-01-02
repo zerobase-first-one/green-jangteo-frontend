@@ -34,12 +34,13 @@ const EditMyBoardDetail = () => {
         subject: editedSubject,
         content: editedContent,
         imageRequestDtos: [
-          // {
-          //   positionInContent: 10,
-          //   url: 'https://test-images-bucket.s3.us-west-1.amazonaws.com/images/sample1.jpg',
-          // },
+          {
+            positionInContent: 10,
+            url: 'https://test-images-bucket.s3.us-west-1.amazonaws.com/images/sample1.jpg',
+          },
         ],
       };
+
       await customAxios.put(`/posts/${postId}`, data);
 
       alert('게시글이 수정되었습니다.');

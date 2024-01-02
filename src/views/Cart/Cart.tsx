@@ -19,6 +19,7 @@ const Cart = () => {
   // const navigate = useNavigate();
   const [cartList, setCartList] = useState<Cart[]>([]);
   const userId = useRecoilValue(userIdState);
+  console.log('userId', userId);
   // 장바구니 목록 get method
   const getProduct = async () => {
     try {
@@ -163,6 +164,10 @@ const Cart = () => {
   const cartId = localStorage.getItem('cartId');
   // const { address } = useGetMyProfile();
   // console.log(userName);
+
+  const myInfo = useGetMyProfile();
+  console.log('address', address);
+  console.log('myInfo', myInfo);
 
   const AllorderPost = () => {
     customAxios

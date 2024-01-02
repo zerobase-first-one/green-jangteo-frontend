@@ -112,7 +112,7 @@ function App() {
         </Route>
         <Route path="/reviews" element={<CreateReview />} />
         <Route path="/reviews/:reviewId" element={<EditReview />} />
-        <Route path="/users/:userId" element={<ReviewListContainer />} />
+        <Route path="reviews/users/:userId" element={<ReviewListContainer />} />
         <Route path="/chat" element={<Chat />} />
         <Route path="/search" element={<Search />}></Route>
         <Route path="/carts" element={<Cart />}></Route>

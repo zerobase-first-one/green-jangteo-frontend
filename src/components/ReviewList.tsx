@@ -2,17 +2,18 @@ import styled from 'styled-components';
 import customAxios from '../apiFetcher/customAxios';
 import { useRecoilValue } from 'recoil';
 import { userIdState } from '../store/atom/auth';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import useGetReviewList from '../hooks/useGetReviewList';
 
 export default function ReviewList({ product }: any) {
   const userId = useRecoilValue(userIdState);
-  const navigate = useNavigate();
+  const { refreshReviewList } = useGetReviewList();
 
   const onDeleteBtnClick = async () => {
     try {
       await customAxios.delete(`/reviews/${product.reviewId}`);
       alert('리뷰내역이 삭제되었습니다.');
-      navigate(-1);
+      refreshReviewList();
     } catch (error) {
       console.error('리뷰 삭제 에러가 발생했습니다', error);
     }

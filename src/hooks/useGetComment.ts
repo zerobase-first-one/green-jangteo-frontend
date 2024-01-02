@@ -32,12 +32,16 @@ export default function useGetComment() {
 
   useEffect(() => {
     fetchComment();
-    setPage;
-  }, []);
+    // setPage;
+  }, [postId, page]);
+
+  const refreshComments = () => {
+    fetchComment();
+  };
 
   const addComment = (newComment: IComment) => {
     setComments(prevComments => [newComment, ...prevComments]);
   };
 
-  return { comments, addComment, setPage };
+  return { comments, addComment, setPage, setComments, refreshComments };
 }

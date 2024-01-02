@@ -7,9 +7,9 @@ import { Avatar } from '@mui/material';
 
 export default function MyProfile() {
   const { userId } = useParams();
-  const myInfo = useGetMyProfile();
+  const { loading, username } = useGetMyProfile();
 
-  if (myInfo.loading) {
+  if (loading) {
     return <div>로딩중...</div>;
   }
 
@@ -21,7 +21,7 @@ export default function MyProfile() {
         <AvatarStyled src="/broken-image.jpg" />
         {/* </AvatarWrapper> */}
         <TextWrapper>
-          <Username>{myInfo.username}님</Username>
+          <Username>{username}님</Username>
           <hr />
           <RatingWrapper>
             <Rating>화이트</Rating>

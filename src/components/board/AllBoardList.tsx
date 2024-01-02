@@ -1,4 +1,3 @@
-// import styled from "styled-components";
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
@@ -9,7 +8,6 @@ import customAxios from '../../apiFetcher/customAxios';
 export default function AllBoardList() {
   const [isLoading, setLoading] = useState(false);
   const [posts, setPost] = useRecoilState<IBoard[]>(postState);
-  console.log('리스트목록', posts);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,35 +30,11 @@ export default function AllBoardList() {
     <div>로딩중...</div>
   ) : (
     <>
-      {posts.map(post => (
-        <BoardListForm key={post.postId} {...post} />
-      ))}
+      {Array.isArray(posts) && posts.length > 0 ? (
+        posts.map(post => <BoardListForm key={post.postId} {...post} />)
+      ) : (
+        <div>게시물이 없습니다</div>
+      )}
     </>
   );
 }
-
-// const Wrapper = styled.div`
-//   width: 95%;
-//   height: 170px;
-//   background-color: #ffffff;
-//   margin: 10px auto;
-//   padding: 30px 20px;
-// `;
-
-// const Title = styled.div`
-//   width: 100%;
-//   margin-bottom: 30px;
-// `;
-
-// const Username = styled.p`
-//   font-size: 12px;
-// `;
-
-// const CreateAt = styled.p`
-//   font-size: 12px;
-//   color: #999999;
-// `;
-
-// const Comment = styled.p`
-//   margin-top: 20px;
-// `;
