@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import HeaderPrevPageBtn from '../components/HeaderPrevPageBtn';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -7,46 +7,47 @@ import MyBoardDetailModal from '../components/modal/MyBoardDetailModal';
 import { useRecoilValue } from 'recoil';
 import { userIdState } from '../store/atom/auth';
 import customAxios from '../apiFetcher/customAxios';
-import useGetComment from '../hooks/useGetComment';
+// import useGetComment from '../hooks/useGetComment';
 import useGetPost from '../hooks/useGetPost';
+import PostFormComment from './PostFormComment';
 
 export default function MyBoardDetail() {
   const { subject } = useGetPost();
   const { content } = useGetPost();
   const { username } = useGetPost();
   const { date } = useGetPost();
-  const { comments, addComment, setPage } = useGetComment();
+  // const { addComment } = useGetComment();
   const [clicked, setClicked] = useState(false);
   const { postId } = useParams();
-  const ref = useRef<HTMLInputElement>(null);
+  // const ref = useRef<HTMLInputElement>(null);
   const userId = useRecoilValue(userIdState);
   const navigate = useNavigate();
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    if (!userId || !postId) return;
-    e.preventDefault();
-    const newComment = ref.current?.value || '';
+  // const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  //   if (!userId || !postId) return;
+  //   e.preventDefault();
+  //   const newComment = ref.current?.value || '';
 
-    try {
-      const data = { userId, content: newComment, postId };
-      const response = await customAxios.post(`/comments`, data);
-      const newCommentData = {
-        commentId: response.data.commentId,
-        userId: response.data.userId,
-        username: response.data.username,
-        content: response.data.content,
-        createdAt: response.data.createdAt,
-      };
-      console.log('newComment', newCommentData);
+  //   try {
+  //     const data = { userId, content: newComment, postId };
+  //     const response = await customAxios.post(`/comments`, data);
+  //     const newCommentData = {
+  //       commentId: response.data.commentId,
+  //       userId: response.data.userId,
+  //       username: response.data.username,
+  //       content: response.data.content,
+  //       createdAt: response.data.createdAt,
+  //     };
+  //     console.log('newComment', newCommentData);
 
-      addComment(newCommentData);
-    } catch (e) {
-      console.error('Comment Error:', e);
-      throw e;
-    }
+  //     addComment(newCommentData);
+  //   } catch (e) {
+  //     console.error('Comment Error:', e);
+  //     throw e;
+  //   }
 
-    ref.current!.value = '';
-  };
+  //   ref.current!.value = '';
+  // };
 
   const onDeleteClick = async () => {
     try {
@@ -59,14 +60,6 @@ export default function MyBoardDetail() {
       console.error('Error deleting post:', error);
       alert('게시물 삭제 중 오류가 발생했습니다. 다시 시도해주세요.');
     }
-  };
-
-  const handlePreviousPage = () => {
-    setPage(prevPage => Math.max(prevPage - 1, 0));
-  };
-
-  const handleNextPage = () => {
-    setPage(prevPage => prevPage + 1);
   };
 
   return (
@@ -88,25 +81,12 @@ export default function MyBoardDetail() {
         </Link>
         <button onClick={onDeleteClick}>삭제</button>
         <hr />
-        <div>
-          {comments.map(comment => (
-            <div>
-              {comment && (
-                <div>
-                  <span>{comment.username}</span>
-                  <p>{comment.content}</p>
-                </div>
-              )}
-            </div>
-          ))}
-          <button onClick={handlePreviousPage}>Previous Page</button>
-          <button onClick={handleNextPage}>Next Page</button>
-        </div>
+        <PostFormComment />
       </ContentWrapper>
-      <CommentWrapper onSubmit={onSubmit}>
+      {/* <CommentWrapper onSubmit={onSubmit}>
         <Input type="text" placeholder="댓글을 남겨보세요." ref={ref} />
         <Button type="submit">등록</Button>
-      </CommentWrapper>
+      </CommentWrapper> */}
       {clicked ? <MyBoardDetailModal setClicked={setClicked} /> : null}
     </Wrapper>
   );
@@ -152,35 +132,35 @@ const Content = styled.div`
   font-size: 16px;
 `;
 
-const CommentWrapper = styled.form`
-  position: relative;
-  bottom: -10px;
-  display: flex;
-  align-items: center;
-  width: 90%;
-  margin: 0 auto;
-`;
+// const CommentWrapper = styled.form`
+//   position: relative;
+//   bottom: -10px;
+//   display: flex;
+//   align-items: center;
+//   width: 90%;
+//   margin: 0 auto;
+// `;
 
-const Input = styled.input`
-  flex: 1;
-  height: 45px;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 15px;
-  outline: none;
-`;
+// const Input = styled.input`
+//   flex: 1;
+//   height: 45px;
+//   padding: 10px;
+//   font-size: 16px;
+//   border: 1px solid #ccc;
+//   border-radius: 15px;
+//   outline: none;
+// `;
 
-const Button = styled.button`
-  position: absolute;
-  right: 10px;
-  width: 70px;
-  height: 35px;
-  padding: 0 15px;
-  font-size: 16px;
-  border: 1px solid #007bff;
-  border-radius: 10px;
-  background-color: #007bff;
-  color: #fff;
-  cursor: pointer;
-`;
+// const Button = styled.button`
+//   position: absolute;
+//   right: 10px;
+//   width: 70px;
+//   height: 35px;
+//   padding: 0 15px;
+//   font-size: 16px;
+//   border: 1px solid #007bff;
+//   border-radius: 10px;
+//   background-color: #007bff;
+//   color: #fff;
+//   cursor: pointer;
+// `;
