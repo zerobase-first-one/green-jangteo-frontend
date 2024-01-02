@@ -86,13 +86,15 @@ export default function Detail() {
   return (
     <Wrapper>
       <Header />
-      <ImageBox>
-        <Image src={product?.images[0].url} />
-      </ImageBox>
-      <ProductInfo>
-        <ProductName>{product?.productName}</ProductName>
-        <Price>{product?.price}원</Price>
-      </ProductInfo>
+      <Box>
+        <ImageBox>
+          <Image src={product?.images[0].url} />
+        </ImageBox>
+        <ProductInfo>
+          <ProductName>{product?.productName}</ProductName>
+          <Price>{product?.price}원</Price>
+        </ProductInfo>
+      </Box>
       <Tabs>
         <Tab isActive={descriptionMatch !== null}>
           <Link to="description">상품설명</Link>
@@ -111,7 +113,7 @@ export default function Detail() {
         <OrderBtn onClick={onOrderBtnClick}>주문하기</OrderBtn>
       </BottomActionBar>
       {clicked ? (
-        <DetailPageModal price={product?.price ?? 0} setClicked={setClicked} />
+        <DetailPageModal item={product} setClicked={setClicked} />
       ) : null}
     </Wrapper>
   );
@@ -137,18 +139,30 @@ const Wrapper = styled.div`
   }
 `;
 
-const ImageBox = styled.div`
+const Box = styled.div`
+  padding: 20px 0;
   display: flex;
-  justify-content: center;
+  flex-direction: row;
+  // justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 60vh;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+  }
+`;
+
+const ImageBox = styled.div`
+  width: 40%;
+  padding-bottom: 40%;
+  margin-right: 30px;
+  background-color: #dedede;
   position: relative;
   overflow: hidden;
 
   @media screen and (max-width: 768px) {
-    height: 40vh;
-    margin-bottom: 20px;
+    width: 100%;
+    padding-bottom: 100%;
+    margin-right: 0;
   }
 `;
 
@@ -157,13 +171,18 @@ const Image = styled.img`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 90%;
-  height: 90%;
-  background-size: cover;
+  width: 100%;
 `;
 
 const ProductInfo = styled.div`
-  text-align: center;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 10px 0;
+  @media screen and (max-width: 768px) {
+    align-items: center;
+  }
 `;
 
 const ProductName = styled.p`
