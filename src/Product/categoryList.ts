@@ -1,10 +1,4 @@
-// export const categoryList = [
-//   { firstCategory: '음식', secondCategory: ['과일', '채소', '시리얼'] },
-//   { firstCategory: '의류', secondCategory: ['상의', '하의'] },
-// ];
 export const categoryList = [
-  // {
-  //   firstCategory: [
   {
     firstCategoryName: '음식',
     secondCategories: [
@@ -21,6 +15,4 @@ export const categoryList = [
       { name: '자켓', id: 6 },
     ],
   },
-  //   ],
-  // },
 ];
