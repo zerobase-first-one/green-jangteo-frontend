@@ -6,11 +6,11 @@ import { Container } from '@mui/material';
 import './index.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <RecoilRoot>
-      <Container style={{ padding: 0 }}>
-        <App />
-      </Container>
-    </RecoilRoot>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <RecoilRoot>
+    <Container style={{ padding: 0 }}>
+      <App />
+    </Container>
+  </RecoilRoot>,
+  // </React.StrictMode>,
 );

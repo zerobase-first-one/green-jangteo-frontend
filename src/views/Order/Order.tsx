@@ -62,6 +62,7 @@ const Order = () => {
   const location = useLocation();
   const products = location.state;
   console.log(products);
+  console.log(address);
   useEffect(() => {});
   const orderPost = () => {
     customAxios

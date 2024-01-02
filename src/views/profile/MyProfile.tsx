@@ -7,7 +7,7 @@ import { Avatar } from '@mui/material';
 
 export default function MyProfile() {
   const { userId } = useParams();
-  const { myInfo } = useGetMyProfile();
+  const myInfo = useGetMyProfile();
 
   if (myInfo.loading) {
     return <div>로딩중...</div>;

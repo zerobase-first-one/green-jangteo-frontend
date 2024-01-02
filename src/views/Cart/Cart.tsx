@@ -157,8 +157,8 @@ const Cart = () => {
   };
   // 장바구니 전체 주문
   const cartId = localStorage.getItem('cartId');
-  console.log(cartId);
-  const { address }: any = useGetMyProfile();
+  const { address } = useGetMyProfile();
+  console.log(address);
 
   const AllorderPost = () => {
     customAxios
