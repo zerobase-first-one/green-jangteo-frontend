@@ -148,6 +148,7 @@ const Box = styled.div`
 
   @media screen and (max-width: 768px) {
     flex-direction: column;
+    padding: 0;
   }
 `;
 

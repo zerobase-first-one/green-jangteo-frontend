@@ -10,7 +10,7 @@ import { categoryList } from '../../Product/categoryList';
 import { UploadPageModal } from '../../components/modal/UploadPageModal';
 import axios from 'axios';
 
-interface formValue {
+interface FormValue {
   userId: number;
   productName: string;
   price: number;
@@ -31,7 +31,7 @@ const UploadProduct = () => {
     register,
     handleSubmit,
     // formState: { errors },
-  } = useForm<formValue>({
+  } = useForm<FormValue>({
     mode: 'onSubmit',
   });
 
@@ -46,7 +46,7 @@ const UploadProduct = () => {
   const [selectedFile, setSelectedFile] = useState('');
   const [imgURL, setImgURL] = useState(``);
   // console.log(myBucket);
-  const onSubmit = async (data: formValue) => {
+  const onSubmit = async (data: FormValue) => {
     await axios
       .all([
         customAxios.post(`/product`, {
@@ -64,9 +64,7 @@ const UploadProduct = () => {
             },
           ],
         }),
-        customAxios.post(`/productDocuments`, {
-          productName: data.productName,
-        }),
+        customAxios.post(`/productDocuments`),
       ])
       .then(response => {
         console.log(response);
@@ -285,7 +283,7 @@ const Input = styled.input`
   padding: 5px;
 `;
 const Label = styled.label`
-  width: 120px;
+  width: 100px;
 `;
 const Select = styled.select`
   // margin: 20px 0;

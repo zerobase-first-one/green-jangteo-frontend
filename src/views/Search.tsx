@@ -17,20 +17,6 @@ const Search = () => {
   }, [currentValue]);
   console.log(products);
 
-  // dfdsdfdddddddddddddddddddddddddddddddd
-  const [coupon, setCoupon] = useState([]);
-  console.log(coupon);
-  useEffect(() => {
-    customAxios
-      .get('/coupon-groups')
-      .then(response => {
-        setCoupon(response.data);
-      })
-      .catch(err => console.log(err.message));
-  }, [currentValue]);
-  console.log(products);
-  // 여기까지지ㅣㅣㅣㅣㅣㅣㅣㅣ
-
   const autoComplete = (e: any) => {
     const currentValue = e.target.value;
     setCurrentValue(currentValue);
