@@ -14,7 +14,7 @@ import Cart from './views/Cart/Cart';
 import Order from './views/Order/Order';
 import CreatePostForm from './views/CreatePostForm';
 import MyBoardDetail from './views/MyBoardDetail';
-import Profile from './views/profile/Profile';
+import MyProfile from './views/profile/MyProfile';
 import { ChangePassword } from './views/profile/ChangePassword';
 import MyBoardList from './components/board/MyBoardList';
 import { ChangeEmail } from './views/profile/ChangeEmail';
@@ -29,9 +29,13 @@ import UploadProduct from './routes/Seller/UploadProduct';
 import SellerProductDetail from './routes/Seller/SellerProductDetail';
 import SellerDescription from './routes/Seller/SellerDescription';
 import SellerReview from './routes/Seller/SellerReview';
-import CreateReview from './views/CreateReview';
-import MyReviews from './views/MyReviews';
+import CreateReview from './components/CreateReview';
 import EditProduct from './routes/Seller/EditProduct';
+import EditReview from './components/EditReview';
+import ReviewListContainer from './components/ReviewListContainer';
+import Chat from './views/Chat';
+import UserProfile from './views/profile/UserProfile';
+import EditMyBoardDetail from './views/EditMyBoardDetail';
 import CartOrder from './views/Order/CartOrder';
 import { SuccessPage } from './views/Order/Success';
 import EditSellerProfile from './routes/Seller/EditSellerProfile';
@@ -85,21 +89,30 @@ function App() {
         ></Route>
         <Route path="/users/login" element={<Login />} />
         <Route path="/users/signup" element={<Signup />} />
-        <Route path="/users/:userId/profile" element={<Profile />} />
+        <Route path="/users/:userId" element={<UserProfile />} />
+        <Route path="/users/:userId/profile" element={<MyProfile />} />
         <Route path="/users/:userId/password" element={<ChangePassword />} />
         <Route path="/users/:userId/email" element={<ChangeEmail />} />
         <Route path="/users/:userId/phone" element={<ChangePhone />} />
         <Route path="/users/:userId/address" element={<ChangeAddress />} />
-        <Route path="/users/:userId" element={<DeleteAccount />} />
+        <Route
+          path="/users/:userId/delete-account"
+          element={<DeleteAccount />}
+        />
         <Route path="/posts" element={<Board />}>
           <Route path="my" element={<MyBoardList />} />
         </Route>
         <Route path="/posts/:postId" element={<MyBoardDetail />} />
+        <Route path="/posts/:postId/edit" element={<EditMyBoardDetail />} />
         <Route path="/create-post" element={<CreatePostForm />} />
         <Route path="/products/:productId" element={<Detail />}>
           <Route path="description" element={<Description />} />
           <Route path="review" element={<Review />} />
         </Route>
+        <Route path="/reviews" element={<CreateReview />} />
+        <Route path="/reviews/:reviewId" element={<EditReview />} />
+        <Route path="/users/:userId" element={<ReviewListContainer />} />
+        <Route path="/chat" element={<Chat />} />
         <Route path="/search" element={<Search />}></Route>
         <Route path="/carts" element={<Cart />}></Route>
         <Route path="/orders" element={<Order />}></Route>
@@ -109,7 +122,6 @@ function App() {
           <Route path="order" element={<SellerOrderList />}></Route>
         </Route>
         <Route path="/stores/:userId/profile" element={<EditSellerProfile />} />
-        <Route path="/reviews/users/:userId" element={<MyReviews />} />
         <Route path="/reviews" element={<CreateReview />} />
         <Route
           path="/stores/:userId/products/:productId"

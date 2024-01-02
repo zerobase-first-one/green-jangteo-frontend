@@ -6,14 +6,10 @@ export interface IBoard {
   subject: string;
   createdAt: string;
   modifiedAt?: string;
-  commentCount: number;
+  viewCount: number;
 }
 
-export interface IBoardListForm {
-  content: IBoard[];
-}
-
-export const postState = atom<IBoardListForm>({
+export const postState = atom<IBoard[]>({
   key: 'postState',
-  default: { content: [] },
+  default: [],
 });

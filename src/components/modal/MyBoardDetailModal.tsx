@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { AnimatePresence, motion } from "framer-motion";
+import styled from 'styled-components';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const variants = {
   hidden: {
@@ -18,12 +18,10 @@ const variants = {
 
 interface MyBoardDetailModalPops {
   setClicked: (value: boolean) => void;
-  setEditing: (value: boolean) => void;
 }
 
 export default function MyBoardDetailModal({
   setClicked,
-  setEditing,
 }: MyBoardDetailModalPops) {
   return (
     <AnimatePresence>
@@ -33,13 +31,12 @@ export default function MyBoardDetailModal({
           initial="hidden"
           animate="visible"
           exit="exit"
-          transition={{ type: "tween", duration: 0.3 }}
-          onClick={(e) => e.stopPropagation()}
+          transition={{ type: 'tween', duration: 0.3 }}
+          onClick={e => e.stopPropagation()}
         >
           <Btns>
             <Button
               onClick={() => {
-                setEditing(true);
                 setClicked(false);
               }}
             >

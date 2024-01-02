@@ -3,10 +3,10 @@ import HeaderPrevPageBtn from '../../components/HeaderPrevPageBtn';
 import addCommaPrice from '../../../public/module/addComma';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useGetProfile } from '../../hooks/useGetProfile';
 import customAxios from '../../apiFetcher/customAxios';
 import { useRecoilValue } from 'recoil';
 import { userIdState } from '../../store/atom/auth';
+import { useGetMyProfile } from '../../hooks/useGetMyProfile';
 
 interface OrderInfo {
   buyerId: number;
@@ -58,7 +58,7 @@ interface OrderInfo {
 
 const Order = () => {
   const userId = useRecoilValue(userIdState);
-  const { fullName, phone, address } = useGetProfile();
+  const { fullName, phone, address }: any = useGetMyProfile();
   const location = useLocation();
   const products = location.state;
   console.log(products);

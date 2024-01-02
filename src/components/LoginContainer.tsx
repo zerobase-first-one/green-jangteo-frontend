@@ -5,6 +5,7 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import { roleState, tokenState, userIdState } from '../store/atom/auth';
 import { postUserLogin } from '../apiFetcher/user/postUserLogin';
 import { userDataState } from '../store/atom/userDataState';
+import { AxiosError } from 'axios';
 
 export default function LoginContainer() {
   const navigate = useNavigate();
@@ -30,8 +31,10 @@ export default function LoginContainer() {
       setRoles(roleDescriptions);
       setUserInfo(userInfo);
       navigate('/');
-    } catch (e) {
-      setError('입력하신 정보가 일치하지 않습니다.');
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        setError(error.response?.data.message);
+      }
     } finally {
       setLoading(false);
     }
@@ -43,8 +46,10 @@ export default function LoginContainer() {
     } = e;
     if (name === 'emailOrUsername') {
       setEmailOrUsername(value);
+      setError('');
     } else if (name === 'password') {
       setPassword(value);
+      setError('');
     }
   };
 

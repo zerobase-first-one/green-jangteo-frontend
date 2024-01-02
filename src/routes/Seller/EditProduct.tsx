@@ -307,7 +307,6 @@ const Textarea = styled.textarea`
   margin: 10px 0;
   padding: 10px;
   font-size: 16px;
-
   &::placeholder {
     color: #b0b0b0;
   }
