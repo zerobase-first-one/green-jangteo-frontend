@@ -89,106 +89,151 @@ export default function Detail() {
       <ImageBox>
         <Image src={product?.images[0].url} />
       </ImageBox>
-      <ProductName>{product?.productName}</ProductName>
-      <Star>{product?.description}</Star>
-      <Price>{product?.price}원</Price>
+      <ProductInfo>
+        <ProductName>{product?.productName}</ProductName>
+        <Price>{product?.price}원</Price>
+      </ProductInfo>
       <Tabs>
         <Tab isActive={descriptionMatch !== null}>
           <Link to="description">상품설명</Link>
         </Tab>
         <Tab isActive={reviewMatch !== null}>
-          <Link to="review">리뷰(1,792)</Link>
+          <Link to="review">리뷰</Link>
         </Tab>
       </Tabs>
       <Outlet context={product} />
       <hr />
       <BottomActionBar>
-        <IoChatbubbleEllipsesOutline
-          style={{
-            width: '30%',
-            height: '40px',
-            marginLeft: '40px',
-            cursor: 'pointer',
-          }}
-        />
+        <ChatLink to={'/chat'}>
+          <ChatText>판매자와 1:1 채팅하기</ChatText>
+          <ChatIcon />
+        </ChatLink>
         <OrderBtn onClick={onOrderBtnClick}>주문하기</OrderBtn>
       </BottomActionBar>
       {clicked ? (
-        <DetailPageModal setClicked={setClicked} item={product} />
+        <DetailPageModal price={product?.price ?? 0} setClicked={setClicked} />
       ) : null}
     </Wrapper>
   );
 }
 
 const Wrapper = styled.div`
-  background-color: white;
+  background-color: #fff;
   height: 100vh;
+  padding-bottom: 60px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  &::-webkit-scrollbar-thumb,
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
 `;
 
 const ImageBox = styled.div`
-  width: 40%;
-  padding-bottom: 40%;
-  margin-right: 30px;
-  background-color: #dedede;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 60vh;
   position: relative;
   overflow: hidden;
 
   @media screen and (max-width: 768px) {
-    width: 100%;
-    padding-bottom: 100%;
-    margin-right: 0;
+    height: 40vh;
+    margin-bottom: 20px;
   }
 `;
+
 const Image = styled.img`
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 100%;
+  width: 90%;
+  height: 90%;
+  background-size: cover;
+`;
+
+const ProductInfo = styled.div`
+  text-align: center;
 `;
 
 const ProductName = styled.p`
-  margin-left: 20px;
-`;
-
-const Star = styled.p`
-  margin-left: 20px;
+  margin: 20px 0 10px;
+  font-size: 24px;
+  font-weight: bold;
 `;
 
 const Price = styled.span`
-  margin-left: 20px;
+  margin: 0 0 10px;
+  font-size: 18px;
+  color: #16a113;
 `;
 
 const Tabs = styled.div`
   width: 90%;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  margin: 0 auto;
+  display: flex;
+  margin: 20px auto 0;
+  margin-bottom: 20px;
 `;
 
 const Tab = styled.span<{ isActive: boolean }>`
+  flex: 1;
   text-align: center;
-  border: 1px solid black;
-  padding: 10px 0px;
-  border: none;
+  padding: 10px 0;
   background-color: ${props => (props.isActive ? '#149211' : '#E0E0E0')};
   color: ${props => (props.isActive ? '#FFFFFF' : '#AAAAAA')};
+  text-decoration: none;
 `;
 
 const BottomActionBar = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
   margin-top: 15px;
 `;
 
+const ChatLink = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  margin-left: 10px;
+  width: 50%;
+  height: 50px;
+  border: 1px solid #16a113;
+  border-radius: 10px;
+`;
+
+const ChatText = styled.p`
+  margin-right: 5px;
+  font-size: 16px;
+  text-align: center;
+  display: flex;
+`;
+
+const ChatIcon = styled(IoChatbubbleEllipsesOutline)`
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+`;
+
 const OrderBtn = styled.button`
-  width: 70%;
+  width: 50%;
   height: 50px;
   background-color: #16a113;
-  color: white;
+  color: #fff;
   font-size: 16px;
   border: none;
   border-radius: 10px;
-  margin-left: 30px;
+  margin-left: 10px;
   cursor: pointer;
 `;

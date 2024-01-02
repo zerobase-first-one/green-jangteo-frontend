@@ -47,7 +47,6 @@
 //   const onReset = () => {
 //     navigate(-1);
 //   };
-
 //   // const [myBucket, setMyBucket] = useState(Object);
 //   // console.log(Object);
 //   const [selectedFile, setSelectedFile] = useState('');
@@ -118,16 +117,16 @@
 //       Key: `product/${file.name}`,
 //     };
 
-//     myBucket.putObject(param).send((err: any) => {
-//       if (err) {
-//         console.log(err);
-//       } else {
-//         const url = myBucket.getSignedUrl('getObject', { Key: param.Key });
-//         console.log(url, 'url');
-//         setImgURL(url);
-//       }
-//     });
-//   };
+//   myBucket.putObject(param).send((err: any) => {
+//     if (err) {
+//       console.log(err);
+//     } else {
+//       const url = myBucket.getSignedUrl('getObject', { Key: param.Key });
+//       console.log(url, 'url');
+//       setImgURL(url);
+//     }
+//   });
+// };
 
 //   const [modalOpen, setModalOpen] = useState(false);
 

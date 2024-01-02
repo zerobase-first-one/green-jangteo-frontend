@@ -4,10 +4,13 @@ import { useOutletContext } from 'react-router-dom';
 
 const Wrapper = styled.div`
   width: 90%;
-  height: 260px;
-  background-color: #d1d1d1;
+  height: 200px;
+  background-color: #ececec;
+  border-radius: 10px;
   margin: 0 auto;
   margin-bottom: 20px;
+  padding: 20px;
+  transition: background-color 0.3s;
 `;
 
 interface DescriptionProps

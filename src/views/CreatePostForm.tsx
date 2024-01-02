@@ -1,41 +1,45 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { postState } from '../store/atom/postState';
-import ConfirmModal from '../components/modal/ConfirmModal';
+// import ConfirmModal from '../components/modal/ConfirmModal';
 import HeaderPrevPageBtn from '../components/HeaderPrevPageBtn';
-import { useParams } from 'react-router-dom';
 import customAxios from '../apiFetcher/customAxios';
+import { userIdState } from '../store/atom/auth';
+import { useNavigate } from 'react-router-dom';
 // import { useParams } from "react-router-dom";
 
-interface IForm {
+interface PostProps {
   userId: string;
   subject: string;
   content: string;
+  imageRequestDtos?: [
+    // {
+    //   positionInContent: 10;
+    //   url: 'https://test-images-bucket.s3.us-west-1.amazonaws.com/images/sample1.jpg';
+    // },
+  ];
 }
 
 const CreatePostForm = () => {
-  const { userId } = useParams();
   const [subject, setSubject] = useState('');
   const [content, setContent] = useState('');
   const [posts, setPost] = useRecoilState(postState);
-  const [showModal, setShowModal] = useState(false);
-  // const userId = useRecoilValue(userIdState);
+  // const [showModal, setShowModal] = useState(false);
+  const userId = useRecoilValue(userIdState);
+  const navigate = useNavigate();
   console.log('등록페이지', posts);
   console.log('userId', userId);
 
-  const createPost = async ({ userId, subject, content }: IForm) => {
+  const createPost = async ({ userId, subject, content }: PostProps) => {
     const data = { userId, subject, content };
     await customAxios
       .post(`/posts`, data)
       .then(response => {
-        // const { token } = response.data;
-        console.log(response.data);
-        // axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-        // setToken(token);
         const newPostData = response.data;
         setPost(prevPosts => ({
-          content: [...prevPosts.content, newPostData],
+          ...prevPosts,
+          newPostData,
         }));
       })
       .catch(e => {
@@ -59,12 +63,14 @@ const CreatePostForm = () => {
     if (!userId) return;
     try {
       createPost({ userId, subject, content });
+      // setShowModal(true);
       setSubject('');
       setContent('');
+      alert('게시글이 등록되었습니다.');
+      navigate('/posts/my');
     } catch (e) {
       console.error(e);
     }
-    setShowModal(true);
   };
 
   return (
@@ -86,7 +92,7 @@ const CreatePostForm = () => {
         />
         <SubmitBtn type="submit">등록</SubmitBtn>
       </Form>
-      {showModal && <ConfirmModal onClose={() => setShowModal(false)} />}
+      {/* {showModal && <ConfirmModal onClose={() => setShowModal(false)} />} */}
     </Wrapper>
   );
 };

@@ -1,6 +1,6 @@
-import HeaderPrevPageBtn from "../components/HeaderPrevPageBtn";
-import SignupContainer from "../components/SignupContainer";
-import styled from "styled-components";
+import HeaderPrevPageBtn from '../components/HeaderPrevPageBtn';
+import SignupContainer from '../components/SignupContainer';
+import styled from 'styled-components';
 
 export const Signup = () => {
   return (
@@ -19,6 +19,10 @@ const Wrapper = styled.div`
   background-color: white;
   overflow: scroll;
   overflow-x: hidden;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const Title = styled.h1`
