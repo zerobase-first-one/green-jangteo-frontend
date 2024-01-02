@@ -1,7 +1,11 @@
 import styled from 'styled-components';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import customAxios from '../../apiFetcher/customAxios';
+import { useRecoilValue } from 'recoil';
+import { userIdState } from '../../store/atom/auth';
+import { CartId } from './cartId';
 
 const variants = {
   hidden: {
@@ -20,15 +24,37 @@ const variants = {
 
 interface DetailPageModalProps {
   setClicked: (value: boolean) => void;
-  price: number;
+  item: any;
 }
 
 export default function DetailPageModal({
   setClicked,
-  price,
+  item,
 }: DetailPageModalProps) {
   const [count, setCount] = useState(1);
-  const [totalPrice] = useState(price);
+  const [totalPrice] = useState(item.price);
+
+  const userId = useRecoilValue(userIdState);
+  const { productId } = useParams();
+
+  const [cartId, setCartId] = useState();
+  CartId(cartId);
+  console.log(cartId);
+
+  const AddCart = () => {
+    customAxios
+      .post(`/carts`, {
+        cartProduct: {
+          productId: productId,
+          quantity: count,
+        },
+        userId: userId,
+      })
+      .then(response => {
+        setCartId(response.data.cartId);
+      })
+      .catch(err => console.log(err.message));
+  };
 
   return (
     <AnimatePresence>
@@ -55,7 +81,7 @@ export default function DetailPageModal({
           </CountTab>
           <Price>{totalPrice * count}원</Price>
           <Btns>
-            <ToCartBtn>장바구니에 담기</ToCartBtn>
+            <ToCartBtn onClick={AddCart}>장바구니에 담기</ToCartBtn>
             <Link to={'/orders'}>
               <OrderBtn>주문하기</OrderBtn>
             </Link>

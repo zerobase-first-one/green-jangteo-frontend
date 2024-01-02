@@ -39,7 +39,7 @@ const ProductList = () => {
     // .get(`../product-dummy.json`)
     // .get(`${BASE_URL}/products`)
     customAxios
-      .get('/products', { params: { page: 0, size: 3 } })
+      .get('/products', { params: { page: 0, size: 6 } })
       .then(response => {
         setProducts(response.data);
         console.log(response.data);
@@ -73,28 +73,10 @@ const ProductList = () => {
       </Slick> */}
       <Title>음식</Title>
       <Slick>
-        {products &&
-          products
-            .reverse()
-            .map(
-              (item: any) =>
-                item.categories[0] == `음식` && (
-                  <ProductListItem
-                    image={item.image}
-                    title={item.productName}
-                    price={item.price}
-                    productId={item.productId}
-                    key={item.productId}
-                    width={`100%`}
-                  />
-                ),
-            )}
-      </Slick>
-      <Title>시리얼</Title>
-      <Slick>
-        {products.map(
-          (item: any) =>
-            item.categories.secondCategory == `시리얼` && (
+        {products
+          .reverse()
+          .map((item: any) =>
+            item.categories.firstCategory == `음식` ? (
               <ProductListItem
                 image={item.image}
                 title={item.productName}
@@ -103,7 +85,26 @@ const ProductList = () => {
                 key={item.productId}
                 width={`100%`}
               />
+            ) : (
+              void 0
             ),
+          )}
+      </Slick>
+      <Title>시리얼</Title>
+      <Slick>
+        {products.map((item: any) =>
+          item.categories.secondCategory == `시리얼` ? (
+            <ProductListItem
+              image={item.image}
+              title={item.productName}
+              price={item.price}
+              productId={item.productId}
+              key={item.productId}
+              width={`100%`}
+            />
+          ) : (
+            void 0
+          ),
         )}
       </Slick>
       <Title>하의</Title>

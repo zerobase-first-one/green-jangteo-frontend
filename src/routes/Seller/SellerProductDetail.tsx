@@ -159,7 +159,7 @@ const BtnBox = styled.div`
 const Button = styled.button`
   display: block;
   margin-left: auto;
-  padding: 10px 20px;
+  padding: 7px 15px;
   background-color: #dedede;
   border: none;
   border-radius: 5px;

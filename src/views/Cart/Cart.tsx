@@ -7,7 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import customAxios from '../../apiFetcher/customAxios';
 import { useRecoilValue } from 'recoil';
 import { userIdState } from '../../store/atom/auth';
-import { useGetMyProfile } from '../../hooks/useGetMyProfile';
+// import { useGetMyProfile } from '../../hooks/useGetMyProfile';
+import { userDataState } from '../../store/atom/userDataState';
 
 interface Cart {
   productId: number;
@@ -155,10 +156,13 @@ const Cart = () => {
       });
     }
   };
+
+  const userData = useRecoilValue(userDataState);
+  const address = userData?.addressDto;
   // 장바구니 전체 주문
   const cartId = localStorage.getItem('cartId');
-  console.log(cartId);
-  const { address }: any = useGetMyProfile();
+  // const { address } = useGetMyProfile();
+  // console.log(userName);
 
   const AllorderPost = () => {
     customAxios
@@ -166,10 +170,10 @@ const Cart = () => {
         buyerId: userId,
         cartId: cartId,
         shippingAddressDto: {
-          city: address.city,
-          detailedAddress: address.detailedAddress,
-          street: address.street,
-          zipcode: address.zipcode,
+          city: address?.city,
+          detailedAddress: address?.detailedAddress,
+          street: address?.street,
+          zipcode: address?.zipcode,
         },
       })
       .then(response => {

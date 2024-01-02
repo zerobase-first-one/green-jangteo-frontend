@@ -33,7 +33,7 @@ export default function useGetComment() {
   useEffect(() => {
     fetchComment();
     setPage;
-  }, [postId, page]);
+  }, []);
 
   const addComment = (newComment: IComment) => {
     setComments(prevComments => [newComment, ...prevComments]);

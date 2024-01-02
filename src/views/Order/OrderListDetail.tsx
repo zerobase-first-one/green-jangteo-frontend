@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import HeaderPrevPageBtn from '../../components/HeaderPrevPageBtn';
 import styled from 'styled-components';
 import addCommaPrice from '../../../public/module/addComma';
@@ -39,8 +39,9 @@ interface OrderDetail {
   createdAt: string;
 }
 
-const SellerOrderDetail = () => {
+const OrderListDetail = () => {
   const { orderId } = useParams();
+  console.log(orderId);
 
   // const order = {
   //   amountToPay: 216510,
@@ -117,7 +118,9 @@ const SellerOrderDetail = () => {
   console.log(order);
   useEffect(() => {
     customAxios
-      .get(`/orders/${orderId}`, { params: { userId: userId } })
+      .get(`/orders/${orderId}`, {
+        params: { userId: userId },
+      })
       .then(response => {
         setOrder(response.data);
       })
@@ -145,6 +148,9 @@ const SellerOrderDetail = () => {
                   <ProductPrice>
                     {addCommaPrice(item.orderPrice)} 원
                   </ProductPrice>
+                  <Link to={`/`}>
+                    <Button>리뷰 작성</Button>
+                  </Link>
                 </ProductInfoBox>
               </OrderProductBox>
             ))}
@@ -190,7 +196,7 @@ const SellerOrderDetail = () => {
   );
 };
 
-export default SellerOrderDetail;
+export default OrderListDetail;
 
 const Wrapper = styled.div`
   background-color: #f1f1f1;
@@ -248,9 +254,15 @@ const Image = styled.img`
   height: 100%;
 `;
 const ProductInfoBox = styled.div`
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+
+  a {
+    display: block;
+    width: 100%;
+  }
 `;
 const ProductName = styled.span``;
 const ProductQuantity = styled.span`
@@ -289,3 +301,10 @@ const OrderInfo = styled.span`
   }
 `;
 const Box = styled.div``;
+const Button = styled.button`
+  width: 100%;
+  border: none;
+  border-radius: 3px;
+  padding: 4px 0;
+  color: #999999;
+`;
