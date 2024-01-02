@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import customAxios from '../../apiFetcher/customAxios';
 import { useRecoilValue } from 'recoil';
 import { userIdState } from '../../store/atom/auth';
-import { useGetProfile } from '../../hooks/useGetProfile';
+import { useGetMyProfile } from '../../hooks/useGetMyProfile';
 
 interface Cart {
   productId: number;
@@ -158,7 +158,7 @@ const Cart = () => {
   // 장바구니 전체 주문
   const cartId = localStorage.getItem('cartId');
   console.log(cartId);
-  const { address } = useGetProfile();
+  const { address }: any = useGetMyProfile();
 
   const AllorderPost = () => {
     customAxios

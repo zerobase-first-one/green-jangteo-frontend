@@ -14,10 +14,10 @@ interface PostProps {
   subject: string;
   content: string;
   imageRequestDtos?: [
-    {
-      positionInContent: 10;
-      url: 'https://test-images-bucket.s3.us-west-1.amazonaws.com/images/sample1.jpg';
-    },
+    // {
+    //   positionInContent: 10;
+    //   url: 'https://test-images-bucket.s3.us-west-1.amazonaws.com/images/sample1.jpg';
+    // },
   ];
 }
 
