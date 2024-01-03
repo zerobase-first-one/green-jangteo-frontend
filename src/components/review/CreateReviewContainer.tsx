@@ -12,7 +12,7 @@ export default function CreateReviewContainer() {
   const location = useLocation();
   const productId = String(location.state);
   const [content, setContent] = useState('');
-  const [myBucket, setMyBucket] = useState(Object);
+  // const [myBucket, setMyBucket] = useState(Object);
   const [selectedFile, setSelectedFile] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [imgURL, setImgURL] = useState('');
@@ -22,13 +22,11 @@ export default function CreateReviewContainer() {
       accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
       secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
     });
-    const myBucket = new AWS.S3({
-      params: { Bucket: `greengangteo` },
-      region: import.meta.env.VITE_AWS_DEFAULT_REGION,
-    });
-
-    setMyBucket(myBucket);
   }, []);
+  const myBucket = new AWS.S3({
+    params: { Bucket: `greengangteo` },
+    region: import.meta.env.VITE_AWS_DEFAULT_REGION,
+  });
 
   const onContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.currentTarget.value);
