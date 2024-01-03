@@ -1,20 +1,24 @@
 import styled from 'styled-components';
-import customAxios from '../apiFetcher/customAxios';
+import customAxios from '../../apiFetcher/customAxios';
 import { useRecoilValue } from 'recoil';
-import { userIdState } from '../store/atom/auth';
-import { Link, useNavigate } from 'react-router-dom';
+import { userIdState } from '../../store/atom/auth';
+import { Link } from 'react-router-dom';
+import useGetReviewList from '../../hooks/useGetReviewList';
+import { useState } from 'react';
+import AskModal from '../modal/AskModal';
 
 export default function ReviewList({ product }: any) {
   const userId = useRecoilValue(userIdState);
-  const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const { refreshReviewList } = useGetReviewList();
 
   const onDeleteBtnClick = async () => {
     try {
       await customAxios.delete(`/reviews/${product.reviewId}`);
-      alert('리뷰내역이 삭제되었습니다.');
-      navigate(-1);
+      setShowModal(false);
+      refreshReviewList();
     } catch (error) {
-      console.error('리뷰 삭제 에러가 발생했습니다', error);
+      console.error('상품후기 삭제 에러가 발생했습니다', error);
     }
   };
 
@@ -27,13 +31,25 @@ export default function ReviewList({ product }: any) {
         </Link>
         {userId == product?.userId && (
           <Buttons>
-            <Link to={`/reviews/${product.reviewId}`} state={product.content}>
+            <Link
+              to={`/reviews/${product.reviewId}`}
+              state={{ content: product.content, imageUrl: product.imageUrl }}
+            >
               <Button>수정</Button>
             </Link>
-            <ButtonDelete onClick={onDeleteBtnClick}>삭제</ButtonDelete>
+            <ButtonDelete onClick={() => setShowModal(true)}>삭제</ButtonDelete>
           </Buttons>
         )}
       </ContentWrapper>
+      {showModal && (
+        <AskModal
+          onConfirm={() => onDeleteBtnClick()}
+          onClose={() => setShowModal(false)}
+          message="선택한 상품후기를 삭제하시겠습니까?"
+          confirmButtonText="삭제"
+          cancelButtonText="취소"
+        />
+      )}
     </Wrapper>
   );
 }

@@ -3,14 +3,20 @@ import { Link } from 'react-router-dom';
 
 interface ConfirmModalProps {
   onClose: () => void;
+  message: string;
+  linkPath: string;
 }
 
-export default function ConfirmModal({ onClose }: ConfirmModalProps) {
+export default function ConfirmModal({
+  onClose,
+  message,
+  linkPath,
+}: ConfirmModalProps) {
   return (
     <Overlay>
       <Wrapper>
-        <Text>게시물이 등록되었습니다.</Text>
-        <Link to={'/posts/my'}>
+        <Text>{message}</Text>
+        <Link to={linkPath}>
           <Button onClick={onClose}>확인</Button>
         </Link>
       </Wrapper>

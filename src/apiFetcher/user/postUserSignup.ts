@@ -1,7 +1,7 @@
-import { IForm } from '../../store/atom/userDataState';
+import { SignupProps } from '../../components/SignupContainer';
 import customAxios from '../customAxios';
 
-export const postUserSignup = async (userData: IForm) => {
+export const postUserSignup = async (userData: SignupProps) => {
   try {
     const response = await customAxios.post(`/users/signup`, userData);
     return response.data;

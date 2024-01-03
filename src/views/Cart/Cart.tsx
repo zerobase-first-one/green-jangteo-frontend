@@ -7,18 +7,16 @@ import { useNavigate } from 'react-router-dom';
 import customAxios from '../../apiFetcher/customAxios';
 import { useRecoilValue } from 'recoil';
 import { userIdState } from '../../store/atom/auth';
-// import { useGetMyProfile } from '../../hooks/useGetMyProfile';
-import { userDataState } from '../../store/atom/userDataState';
-
+import { useGetMyProfile } from '../../hooks/useGetMyProfile';
 interface Cart {
-  productId: number;
+  productId: string;
   quantity: number;
 }
-
 const Cart = () => {
   // const navigate = useNavigate();
   const [cartList, setCartList] = useState<Cart[]>([]);
   const userId = useRecoilValue(userIdState);
+  console.log('userId', userId);
   // 장바구니 목록 get method
   const getProduct = async () => {
     try {
@@ -33,27 +31,14 @@ const Cart = () => {
   useEffect(() => {
     getProduct();
   }, []);
-  // useEffect(() => {
-  //   customAxios
-  //     .get(`/carts`, { params: { userId: userId } })
-  //     .then(response => {
-  //       setCartList(response.data);
-  //       console.log(response.data);
-  //     })
-  //     .catch(err => console.log(err.message));
-  // }, [userId]);
-  // console.log(cartList);
-
   const [numbers, setNumber] = useState(0);
   console.log(numbers);
   console.log(cartList);
-
   const getData = (price: any) => {
     // setNumber(price);
     console.log(price);
     setNumber(price);
   };
-
   const [checkedItem, setCheckedItem] = useState([
     ...cartList.map((item: any) => item.productId),
   ]);
@@ -69,13 +54,12 @@ const Cart = () => {
     ...cartList.map((item: any) => item.productId),
   ]);
   console.log(selectOrder);
-
   // 상품 개별 체크
   const checkedItemHandler = (
     checked: any,
     productName: string,
-    productId: number,
-    cartProductId: number,
+    productId: string,
+    cartProductId: string,
     quantity: number,
     imageUrl: number,
     price: any,
@@ -127,42 +111,36 @@ const Cart = () => {
       .catch(error => console.log('삭제 실패', error.message));
     // alert('상품이 삭제되었습니다.');
   };
-
   // 주문하기 post method
   const navigate = useNavigate();
   const orderPost = () => {
-    // customAxios
-    //   .post(`/orders`, {
-    //     buyerId: userId,
-    //     orderProductRequestDtos: selectOrder,
-    //     sellerId: 10,
-    //     shippingAddressDto: {
-    //       city: address?.addressDto.city,
-    //       detailedAddress: address?.addressDto.detailedAddress,
-    //       street: address?.addressDto.street,
-    //       zipcode: address?.addressDto.zipcode,
-    //     },
-    //   })
-    //   .then(response => {
-    //     console.log(`성공`, response);
-    //     navigate('/orders');
-    //   })
-    //   .catch(err => console.log(`실패`, err));
     if (totalPrice == 0) {
       alert(`물품을 골라주세요`);
     } else {
-      navigate(`/orders`, {
-        state: selectOrder,
-      });
+      customAxios
+        .post(`/orders`, {
+          buyerId: userId,
+          orderProductRequestDtos: selectOrder,
+          sellerId: 745,
+          shippingAddressDto: {
+            city: `서울`,
+            detailedAddress: `길동아파트 101동 102호`,
+            street: `테헤란로 231`,
+            zipcode: `06142`,
+          },
+        })
+        .then(response => {
+          console.log(`성공`, response);
+          navigate('/orders', { state: response.data });
+        })
+        .catch(err => console.log(`실패`, err));
     }
   };
-
-  const userData = useRecoilValue(userDataState);
-  const address = userData?.addressDto;
+  // const userData = useRecoilValue(userDataState);
+  // const address = userData?.addressDto;
+  const myInfo = useGetMyProfile();
   // 장바구니 전체 주문
   const cartId = localStorage.getItem('cartId');
-  // const { address } = useGetMyProfile();
-  // console.log(userName);
 
   const AllorderPost = () => {
     customAxios
@@ -170,10 +148,10 @@ const Cart = () => {
         buyerId: userId,
         cartId: cartId,
         shippingAddressDto: {
-          city: address?.city,
-          detailedAddress: address?.detailedAddress,
-          street: address?.street,
-          zipcode: address?.zipcode,
+          city: myInfo?.city,
+          detailedAddress: myInfo?.detailedAddress,
+          street: myInfo?.street,
+          zipcode: myInfo?.zipcode,
         },
       })
       .then(response => {
@@ -227,17 +205,13 @@ const Cart = () => {
             <Price className="orderPrice">{addCommaPrice(totalPrice)} 원</Price>
           </PriceName>
         </TextBox>
-        {/* <Link to={`/orders`} state={selectOrder}> */}
         <OrderBtn onClick={orderPost}>주문하기</OrderBtn>
-        {/* </Link> */}
         <OrderBtn onClick={AllorderPost}>장바구니 전체 주문하기</OrderBtn>
       </Container>
     </Wrapper>
   );
 };
-
 export default Cart;
-
 const Wrapper = styled.div`
   font-size: 18px;
 `;
@@ -289,13 +263,11 @@ const PriceName = styled.div`
 `;
 const Price = styled.span`
   margin-left: auto;
-
   &.orderPrice {
     font-weight: bold;
     color: var(--maincolor);
   }
 `;
-
 const OrderBtn = styled.button`
   background: var(--maincolor);
   line-height: 50px;

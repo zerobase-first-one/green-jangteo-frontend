@@ -4,9 +4,6 @@ import styled from 'styled-components';
 import addCommaPrice from '../../../public/module/addComma';
 import { useEffect, useState } from 'react';
 import customAxios from '../../apiFetcher/customAxios';
-// import { useEffect, useState } from "react";
-// import axios from "axios";
-// import { BASE_URL } from "../../constant/union";
 
 interface OrderDetail {
   amountToPay: number;
@@ -24,9 +21,9 @@ interface OrderDetail {
   orderProductResponseDtos: [
     {
       orderPrice: number;
-      orderProductId: number;
+      orderProductId: string;
       productToOrderResponseDto: {
-        productId: number;
+        productId: string;
         name: string;
         imageUrl: `https://cdn.pixabay.com/photo/2017/01/20/15/12/oranges-1995079_1280.jpg`;
       };
@@ -101,9 +98,9 @@ const OrderListDetail = () => {
     orderProductResponseDtos: [
       {
         orderPrice: 0,
-        orderProductId: 0,
+        orderProductId: '',
         productToOrderResponseDto: {
-          productId: 0,
+          productId: '',
           name: '',
           imageUrl: `https://cdn.pixabay.com/photo/2017/01/20/15/12/oranges-1995079_1280.jpg`,
         },
@@ -148,7 +145,10 @@ const OrderListDetail = () => {
                   <ProductPrice>
                     {addCommaPrice(item.orderPrice)} 원
                   </ProductPrice>
-                  <Link to={`/`}>
+                  <Link
+                    to={`/reviews`}
+                    state={item.productToOrderResponseDto.productId}
+                  >
                     <Button>리뷰 작성</Button>
                   </Link>
                 </ProductInfoBox>

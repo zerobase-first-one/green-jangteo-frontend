@@ -1,34 +1,19 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
-import customAxios from '../apiFetcher/customAxios';
+import useGetProductReview from '../../hooks/useGetProductReview';
 
 interface Review {
   content: string;
   createdAt: string;
   imageUrl: string;
   modifiedAt: string;
-  productId: number;
+  productId: string;
   score: number;
-  userId: number;
+  userId: string;
 }
 
 export default function Review() {
-  const { productId } = useParams();
-  const [reviews, setReviews] = useState<Review[]>([]);
-
-  const getProductReview = async () => {
-    try {
-      const response = await customAxios.get(`/reviews/products/${productId}`);
-      setReviews(response.data);
-    } catch (error) {
-      console.error('Error fetching product reviews:', error);
-    }
-  };
-
-  useEffect(() => {
-    getProductReview();
-  }, []);
+  const { reviews } = useGetProductReview();
 
   return (
     <>
@@ -42,7 +27,6 @@ export default function Review() {
                 <Img src={review.imageUrl} />
               </ImgBox>
               <ContentBox>
-                {/* <Username>{userInfo?.username}</Username> */}
                 <ReviewContent>{review.content}</ReviewContent>
                 <Date>{review.createdAt.slice(0, 10)}</Date>
               </ContentBox>
@@ -104,8 +88,6 @@ const ContentBox = styled.div`
   justify-content: space-around;
   font-size: 18px;
 `;
-
-// const Username = styled.p``;
 
 const ReviewContent = styled.p`
   font-size: 16px;

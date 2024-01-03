@@ -1,28 +1,30 @@
 import { atom } from 'recoil';
 
-export interface IAddressDto {
+export interface IForm {
+  username: string;
   city: string;
   detailedAddress: string;
   street: string;
   zipcode: string;
+  storeName?: string;
+  isLoading: boolean;
 }
 
-export interface IForm {
-  email: string;
-  username: string;
-  password: string;
-  passwordConfirm: string;
-  fullName: string;
-  phone: string;
-  addressDto: IAddressDto;
-  storeName?: string;
-  roles: string[];
-}
+const initialData: IForm | null = JSON.parse(
+  localStorage.getItem('userData') || 'null',
+);
 
 export const userDataState = atom<IForm | null>({
   key: 'userDataState',
-  default: null,
-  effects: [
+  default: initialData || {
+    username: '',
+    city: '',
+    detailedAddress: '',
+    street: '',
+    zipcode: '',
+    isLoading: true,
+  },
+  effects_UNSTABLE: [
     ({ onSet }) => {
       onSet(newValue => {
         localStorage.setItem('userData', JSON.stringify(newValue));

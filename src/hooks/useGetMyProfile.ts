@@ -1,67 +1,36 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import customAxios from '../apiFetcher/customAxios';
+import { useRecoilState } from 'recoil';
+import { userDataState } from '../store/atom/userDataState';
 
 export const useGetMyProfile = () => {
   const { userId } = useParams();
-  const [myInfo, setMyInfo] = useState<any>({
-    username: '',
-    address: {
-      city: '',
-      detailedAddress: '',
-      street: '',
-      zipcode: '',
-    },
-    createdAt: '',
-    email: '',
-    fullName: '',
-    modifiedAt: '',
-    phone: '',
-    roles: [],
-    loading: true,
-  });
+  const [myInfo, setMyInfo] = useRecoilState(userDataState);
 
   useEffect(() => {
     const getData = async () => {
       try {
         const response = await customAxios.get(`/users/${userId}/profile`);
 
-        const addressInfo = response.data.addressDto || {
-          city: '',
-          detailedAddress: '',
-          street: '',
-          zipcode: '',
-        };
-
         setMyInfo({
           username: response.data.username || '',
-          address: addressInfo,
-          createdAt: response.data.createdAt || '',
-          email: response.data.email || '',
-          fullName: response.data.fullName || '',
-          modifiedAt: response.data.modifiedAt || '',
-          phone: response.data.phone || '',
-          roles: response.data.roles || [],
-          loading: false,
+          city: response.data.addressDto.city || '',
+          detailedAddress: response.data.addressDto.detailedAddress || '',
+          street: response.data.addressDto.street || '',
+          zipcode: response.data.addressDto.zipcode || '',
+          isLoading: false,
         });
       } catch (error) {
         console.error('사용자 프로필을 불러오는 중 오류 발생:', error);
 
         setMyInfo({
           username: '',
-          address: {
-            city: '',
-            detailedAddress: '',
-            street: '',
-            zipcode: '',
-          },
-          createdAt: '',
-          email: '',
-          fullName: '',
-          modifiedAt: '',
-          phone: '',
-          roles: [],
-          loading: false,
+          city: '',
+          detailedAddress: '',
+          street: '',
+          zipcode: '',
+          isLoading: false,
         });
       }
     };

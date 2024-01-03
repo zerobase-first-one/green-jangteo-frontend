@@ -2,7 +2,6 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate, useParams } from 'react-router-dom';
 import { changeAddress } from '../../apiFetcher/patchUserAddress';
-import { IAddressDto } from '../../store/atom/userDataState';
 
 export default function ChangeAddressContainer() {
   const { userId } = useParams();
@@ -12,7 +11,7 @@ export default function ChangeAddressContainer() {
   const [street, setStreet] = useState('');
   const [zipcode, setZipcode] = useState('');
 
-  const addressDto: IAddressDto = {
+  const addressDto = {
     city,
     detailedAddress,
     street,
