@@ -24,9 +24,9 @@ interface OrderDetail {
   orderProductResponseDtos: [
     {
       orderPrice: number;
-      orderProductId: number;
+      orderProductId: string;
       productToOrderResponseDto: {
-        productId: number;
+        productId: string;
         name: string;
         imageUrl: `https://cdn.pixabay.com/photo/2017/01/20/15/12/oranges-1995079_1280.jpg`;
       };
@@ -100,9 +100,9 @@ const SellerOrderDetail = () => {
     orderProductResponseDtos: [
       {
         orderPrice: 0,
-        orderProductId: 0,
+        orderProductId: '',
         productToOrderResponseDto: {
-          productId: 0,
+          productId: '',
           name: '',
           imageUrl: `https://cdn.pixabay.com/photo/2017/01/20/15/12/oranges-1995079_1280.jpg`,
         },

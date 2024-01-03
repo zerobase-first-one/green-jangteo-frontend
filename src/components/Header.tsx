@@ -8,13 +8,26 @@ import { useRecoilValue } from 'recoil';
 import { roleState, tokenState, userIdState } from '../store/atom/auth';
 import { categoryList } from '../Product/categoryList';
 
-const HeaderWrapper = styled.div`
-  background-color: #16a114;
-  width: 100%;
+const Wrapper = styled.div`
   height: 100px;
+`;
+const HeaderWrapper = styled.div`
+  position: fixed;
+  z-index: 999;
+  width: 1200px;
+  background-color: #16a114;
+  // width: 100%;
+  height: 100px;
+
+  @media screen and (max-width: 1200px) {
+    width: 100%;
+  }
 `;
 
 const HeaderContainer = styled.header`
+  position: fixed;
+  z-index: 999;
+  width: 1200px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -71,7 +84,7 @@ const Navigation = styled.nav`
   bottom: auto;
   background-color: #ededed;
   padding-bottom: 500px;
-  height: 620px;
+  height: 100vh;
 `;
 
 const Ul1deps = styled.ul``;
@@ -164,66 +177,69 @@ const Header = () => {
   const roles = useRecoilValue(roleState);
 
   return (
-    <HeaderWrapper>
-      <HeaderContainer>
-        <Logo>
-          <span className="blind">그린장터</span>
-        </Logo>
-        <CategoryBtn type="button" onClick={setDisplay}>
-          {display === 'none' ? <TbMenu2 /> : <IoClose />}
-          <span className="blind">카테고리</span>
-        </CategoryBtn>
-        <Navigation style={{ display }}>
-          <Ul1deps>
-            {categoryList.map((category: any) => (
-              <CategoryList key={category.firstCategoryName}>
-                <Link
-                  to={`/${category.firstCategoryName}`}
-                  onClick={setDisplay}
-                >
-                  {category.firstCategoryName}
-                </Link>
-                <Ul2deps key={category.firstCategoryName}>
-                  {category.secondCategories.map((secondCategory: any) => (
-                    <List key={secondCategory.name}>
-                      <Link
-                        to={`/${category.firstCategoryName}/${secondCategory.name}`}
-                        onClick={setDisplay}
-                      >
-                        {secondCategory.name}
-                      </Link>
-                    </List>
-                  ))}
-                </Ul2deps>
-              </CategoryList>
-            ))}
-          </Ul1deps>
-        </Navigation>
-        <UtilBtnBox>
-          <button type="button">
-            <FaBell />
-            <span className="blind">알림</span>
-          </button>
-          <Link
-            // to={`/carts`}
-            to={
-              token && userId !== null
-                ? roles[0] === '구매자'
-                  ? `/carts`
-                  : roles[0] === '판매자'
-                    ? `/carts`
-                    : '/users/login'
-                : '/users/login'
-            }
-          >
+    <>
+      <HeaderWrapper>
+        <HeaderContainer>
+          <Logo>
+            <span className="blind">그린장터</span>
+          </Logo>
+          <CategoryBtn type="button" onClick={setDisplay}>
+            {display === 'none' ? <TbMenu2 /> : <IoClose />}
+            <span className="blind">카테고리</span>
+          </CategoryBtn>
+          <Navigation style={{ display }}>
+            <Ul1deps>
+              {categoryList.map((category: any) => (
+                <CategoryList key={category.firstCategoryName}>
+                  <Link
+                    to={`/${category.firstCategoryName}`}
+                    onClick={setDisplay}
+                  >
+                    {category.firstCategoryName}
+                  </Link>
+                  <Ul2deps key={category.firstCategoryName}>
+                    {category.secondCategories.map((secondCategory: any) => (
+                      <List key={secondCategory.name}>
+                        <Link
+                          to={`/${category.firstCategoryName}/${secondCategory.name}`}
+                          onClick={setDisplay}
+                        >
+                          {secondCategory.name}
+                        </Link>
+                      </List>
+                    ))}
+                  </Ul2deps>
+                </CategoryList>
+              ))}
+            </Ul1deps>
+          </Navigation>
+          <UtilBtnBox>
             <button type="button">
-              <FaShoppingCart />
-              <span className="blind">장바구니</span>
+              <FaBell />
+              <span className="blind">알림</span>
             </button>
-          </Link>
-        </UtilBtnBox>
-      </HeaderContainer>
-    </HeaderWrapper>
+            <Link
+              // to={`/carts`}
+              to={
+                token && userId !== null
+                  ? roles[0] === '구매자'
+                    ? `/carts`
+                    : roles[0] === '판매자'
+                      ? `/carts`
+                      : '/users/login'
+                  : '/users/login'
+              }
+            >
+              <button type="button">
+                <FaShoppingCart />
+                <span className="blind">장바구니</span>
+              </button>
+            </Link>
+          </UtilBtnBox>
+        </HeaderContainer>
+      </HeaderWrapper>
+      <Wrapper></Wrapper>
+    </>
   );
 };
 

@@ -2,6 +2,16 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import useGetProductReview from '../../hooks/useGetProductReview';
 
+interface Review {
+  content: string;
+  createdAt: string;
+  imageUrl: string;
+  modifiedAt: string;
+  productId: string;
+  score: number;
+  userId: string;
+}
+
 export default function Review() {
   const { reviews } = useGetProductReview();
 

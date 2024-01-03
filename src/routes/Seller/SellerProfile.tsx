@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 import { Link, NavLink, Outlet, useMatch } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-// import axios from 'axios';
-// import { BASE_URL } from '../../constant/union';
 import { useRecoilValue } from 'recoil';
 import { tokenState, userIdState } from '../../store/atom/auth';
 import HeaderPrevPageBtn from '../../components/HeaderPrevPageBtn';
@@ -134,7 +132,7 @@ const Image = styled.img`
   transform: translate(-50%, -50%);
 `;
 const ProfileTextBox = styled.div`
-  flex: auto;
+  flex: 1;
   width: calc(100% - 200px);
   display: flex;
   flex-direction: column;
@@ -148,7 +146,7 @@ const StoreName = styled.strong`
   font-weight: bold;
   margin: 30px 0;
   @media screen and (max-width: 768px) {
-    font-size: 24px;
+    font-size: 20px;
     margin: 20px 0;
   }
 `;

@@ -15,7 +15,7 @@ interface Info {
   // modifiedAt: "2023-12-16T14:40:57.955Z";
   price: number;
   productName: string;
-  productId: number;
+  productId: string;
   //   },
   // ];
 }
@@ -27,7 +27,7 @@ const SellerProductList = () => {
       imageUrl: '',
       price: 0,
       productName: '',
-      productId: 1,
+      productId: '',
     },
   ]);
   console.log(products);

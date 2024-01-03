@@ -8,6 +8,41 @@ import { useRecoilValue } from 'recoil';
 import { tokenState } from '../store/atom/auth';
 import useGetProductDescription from '../hooks/useGetProductDescription';
 
+export interface ProductType {
+  categories: [
+    {
+      category: string;
+    },
+    {
+      category: string;
+    },
+  ];
+  count: number;
+  createdAt: string;
+  modifiedAt: string;
+  productName: string;
+  price: number;
+  description: string;
+  images: [
+    {
+      url: string;
+      position: number;
+    },
+  ];
+  review: [
+    {
+      content: string;
+      createdAt: string;
+      imageUrl: string;
+      modifiedAt: string;
+      productId: string;
+      score: number;
+      userId: number;
+    },
+  ];
+  reviewCount: number;
+}
+
 export default function Detail() {
   const { product } = useGetProductDescription();
   const descriptionMatch = useMatch('products/:productId/description');

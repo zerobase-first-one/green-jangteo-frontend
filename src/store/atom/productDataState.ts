@@ -2,7 +2,7 @@
 
 // export interface IProduct {
 //   categories: string[];
-//   productId: number;
+//   productId: string;
 //   description: string;
 //   images: [
 //     {

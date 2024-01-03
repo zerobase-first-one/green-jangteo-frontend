@@ -6,7 +6,7 @@ import customAxios from '../../apiFetcher/customAxios';
 import { useRecoilValue } from 'recoil';
 import { userIdState } from '../../store/atom/auth';
 import { useEffect, useState } from 'react';
-// import OrderConfirm from '../../components/modal/OrderConfirm';
+import OrderConfirm from '../../components/modal/OrderConfirm';
 interface OrderInfo {
   buyerId: number;
   orderProductRequestDtos: [
@@ -79,7 +79,7 @@ const Order = () => {
   const couponDiscount = 0;
   const [orderPrice, setOrderPrice] = useState(totalPrice);
   const ShippingFee = orderPrice > 50000 ? 0 : 3000;
-  // const [modalOpen, setModalOpen] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const toFrom = () => {
     customAxios
       .patch(`/orders/${orderId}/reserve-usage`, {
@@ -88,7 +88,7 @@ const Order = () => {
       })
       .then(response => {
         setProducts(response.data);
-        // setModalOpen(true);
+        setModalOpen(true);
       })
       .catch(err => {
         console.log(err.message);
@@ -194,7 +194,7 @@ const Order = () => {
             </OrderName>
           </TextBox>
           <OrderBtn onClick={toFrom}>주문하기</OrderBtn>
-          {/* {modalOpen && <OrderConfirm setModalOpen={setModalOpen} />} */}
+          {modalOpen && <OrderConfirm setModalOpen={setModalOpen} />}
         </Container>
       </Wrapper>
     </>

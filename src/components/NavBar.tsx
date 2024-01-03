@@ -79,7 +79,7 @@ const Container = styled.div`
   height: 100px;
 
   button {
-    color: #d9d9d9;
+    color: #cccccc;
     background: none;
     border: none;
     font: inherit;

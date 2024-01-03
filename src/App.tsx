@@ -43,6 +43,7 @@ import { DetailBoard } from './views/board/DetailBoard';
 import { MyProfile } from './views/profile/MyProfile';
 import EditReview from './views/review/EditReview';
 import CreateReview from './views/review/CreateReview';
+import SearchPage from './views/SearchPage';
 
 const GlobalStyle = createGlobalStyle`
   ${reset};
@@ -115,6 +116,7 @@ function App() {
         <Route path="reviews/users/:userId" element={<ReviewListContainer />} />
         <Route path="/chat" element={<Chat />} />
         <Route path="/search" element={<Search />}></Route>
+        <Route path="/product" element={<SearchPage />}></Route>
         <Route path="/carts" element={<Cart />}></Route>
         <Route path="/orders" element={<Order />}></Route>
         <Route path="/cart/orders" element={<CartOrder />}></Route>
