@@ -17,7 +17,7 @@ const Title = styled.h2`
 interface List {
   productName: string;
   price: number;
-  productId: number;
+  productId: string;
   categories: [{ firstCategory: string }, { secondCategory: string }];
   images: string;
 }
@@ -25,7 +25,7 @@ interface List {
 const ProductList = () => {
   const [products, setProducts] = useState<List[]>([
     {
-      productId: 0,
+      productId: '',
       productName: '',
       price: 0,
       categories: [{ firstCategory: '' }, { secondCategory: '' }],
@@ -39,7 +39,7 @@ const ProductList = () => {
     // .get(`../product-dummy.json`)
     // .get(`${BASE_URL}/products`)
     customAxios
-      .get('/products', { params: { page: 0, size: 6 } })
+      .get('/products', { params: { page: 0, size: 30 } })
       .then(response => {
         setProducts(response.data);
         console.log(response.data);

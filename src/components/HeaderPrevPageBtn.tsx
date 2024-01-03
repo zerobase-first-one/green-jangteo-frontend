@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { AiOutlineArrowLeft } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+import styled from 'styled-components';
+import { AiOutlineArrowLeft } from 'react-icons/ai';
+import { useNavigate } from 'react-router-dom';
 
 const HeaderWrapper = styled.div`
   background-color: #16a114;

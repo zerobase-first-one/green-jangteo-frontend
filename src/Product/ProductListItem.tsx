@@ -6,7 +6,7 @@ import addCommaPrice from '../../public/module/addComma';
 interface Info {
   title: string;
   price: number;
-  productId: number;
+  productId: string;
   // membership: boolean;
   image: string;
   width: string;
@@ -47,6 +47,10 @@ const Wrapper = styled.div`
   flex-direction: column;
   padding: 0 15px;
   margin-bottom: 20px;
+
+  @media screen and (max-width: 768px) {
+    padding: 0 5px;
+  }
 `;
 const ImgContainer = styled.div`
   width: 100%;

@@ -7,36 +7,57 @@ import Header from '../components/Header';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
 import customAxios from '../apiFetcher/customAxios';
+import { MdKeyboardArrowLeft } from 'react-icons/md';
+import { MdKeyboardArrowRight } from 'react-icons/md';
 
 const CategoryPage = () => {
   const { firstCategory } = useParams();
   const { secondCategory } = useParams();
 
   const [products, setProducts] = useState([]);
+  const [page, setPage] = useState(0);
+  console.log(page);
   console.log(products);
 
   useEffect(() => {
     customAxios
-      .get('/products', { params: { page: 0, size: 6 } })
+      .get('/products', { params: { page: page, size: 8 } })
       .then(response => {
         setProducts(response.data);
       })
       .catch(err => console.log(err.message));
-  }, []);
+  }, [page]);
 
-  const [what, setWhat] = useState({});
-  console.log(what, `category`);
-  useEffect(() => {
-    customAxios
-      .get(`/products/category`, {
-        params: { category: firstCategory },
-      })
-      .then(response => {
-        setWhat(response.data);
-        // console.log(response.data);
-      })
-      .catch(err => console.log(err.message));
-  }, [firstCategory]);
+  // const [what, setWhat] = useState([]);
+  // console.log(what, `category`);
+  // useEffect(() => {
+  //   customAxios
+  //     .get(`/products/category`, {
+  //       params: {
+  //         category: secondCategory,
+  //         paged: false,
+  //         pageSize: 1,
+  //         pageNumber: 0,
+  //         offset: 1,
+  //         unpaged: true,
+  //       },
+  //     })
+  //     .then(response => {
+  //       setWhat(response.data);
+  //       // console.log(response.data);
+  //     })
+  //     .catch(err => console.log(err.message));
+  // }, []);
+
+  // const navigate = useNavigate();
+  const plusPage = () => {
+    setPage(page + 1);
+    window.scrollTo({ top: 0 });
+  };
+  const minusPage = () => {
+    if (page > 0) setPage(page - 1);
+    window.scrollTo({ top: 0 });
+  };
 
   return (
     <>
@@ -53,9 +74,25 @@ const CategoryPage = () => {
             </SecondCategory>
           )}
         </CategoryNameBox>
-        {products.map((item: any) =>
-          secondCategory !== undefined ? (
-            secondCategory == item.categories.secondCategory ? (
+        <Products>
+          {products.map((item: any) =>
+            secondCategory !== undefined ? (
+              secondCategory == item.categories.secondCategory ? (
+                <Div>
+                  <ProductListItem
+                    productId={item.productId}
+                    image={item.image}
+                    title={item.productName}
+                    price={item.price}
+                    key={item.productId}
+                    // membership={item.membership}
+                    width={`100%`}
+                  />
+                </Div>
+              ) : (
+                void 0
+              )
+            ) : firstCategory == item.categories.firstCategory ? (
               <Div>
                 <ProductListItem
                   productId={item.productId}
@@ -69,23 +106,19 @@ const CategoryPage = () => {
               </Div>
             ) : (
               void 0
-            )
-          ) : firstCategory == item.categories.firstCategory ? (
-            <Div>
-              <ProductListItem
-                productId={item.productId}
-                image={item.image}
-                title={item.productName}
-                price={item.price}
-                key={item.productId}
-                // membership={item.membership}
-                width={`100%`}
-              />
-            </Div>
-          ) : (
-            void 0
-          ),
-        )}
+            ),
+          )}
+        </Products>
+        <BtnBox onClick={minusPage}>
+          <Button>
+            <MdKeyboardArrowLeft />
+            이전
+          </Button>
+          <Button onClick={plusPage}>
+            다음
+            <MdKeyboardArrowRight />
+          </Button>
+        </BtnBox>
       </Wrapper>
       <Footer />
       <NavBar />
@@ -117,13 +150,32 @@ const SecondCategory = styled.h3`
   display: flex;
   align-items: center;
 `;
+const Products = styled.div`
+  &::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+`;
 const Div = styled.div`
   float: left;
   width: calc(100% / 3);
 
   @media screen and (max-width: 768px) {
     width: 50%;
-    padding-bottom: 100%;
+    // padding-bottom: 100%;
     margin-right: 0;
   }
+`;
+const BtnBox = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+const Button = styled.button`
+  background-color: transparent;
+  font-size: 16px;
+  border: none;
+  margin: 0 10px;
+  display: flex;
+  align-items: center;
 `;
