@@ -30,7 +30,7 @@ export default function LoginContainer() {
       setToken(token);
       setRoles(roleDescriptions);
       setUserInfo(userInfo);
-      navigate('/');
+      navigate(`/users/${userId}/profile`);
     } catch (error) {
       if (error instanceof AxiosError) {
         setError(error.response?.data.message);

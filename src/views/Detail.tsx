@@ -1,18 +1,12 @@
 import styled from 'styled-components';
 import Header from '../components/Header';
 import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
-import {
-  Link,
-  Outlet,
-  useMatch,
-  useNavigate,
-  useParams,
-} from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { Link, Outlet, useMatch, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import DetailPageModal from '../components/modal/DetailPageModal';
 import { useRecoilValue } from 'recoil';
 import { tokenState } from '../store/atom/auth';
-import customAxios from '../apiFetcher/customAxios';
+import useGetProductDescription from '../hooks/useGetProductDescription';
 
 export interface ProductType {
   categories: [
@@ -50,29 +44,12 @@ export interface ProductType {
 }
 
 export default function Detail() {
-  const { productId } = useParams();
-  const navigate = useNavigate();
-  const [product, setProduct] = useState<ProductType>();
+  const { product } = useGetProductDescription();
   const descriptionMatch = useMatch('products/:productId/description');
   const reviewMatch = useMatch('products/:productId/review');
   const [clicked, setClicked] = useState(false);
   const token = useRecoilValue(tokenState);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await customAxios
-          .get(`/products/${productId}/description`)
-          .then(response => {
-            setProduct(response.data);
-          });
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
+  const navigate = useNavigate();
 
   const onOrderBtnClick = () => {
     if (token === null) {

@@ -7,14 +7,11 @@ import { useNavigate } from 'react-router-dom';
 import customAxios from '../../apiFetcher/customAxios';
 import { useRecoilValue } from 'recoil';
 import { userIdState } from '../../store/atom/auth';
-// import { useGetMyProfile } from '../../hooks/useGetMyProfile';
-import { userDataState } from '../../store/atom/userDataState';
-
+import { useGetMyProfile } from '../../hooks/useGetMyProfile';
 interface Cart {
   productId: string;
   quantity: number;
 }
-
 const Cart = () => {
   // const navigate = useNavigate();
   const [cartList, setCartList] = useState<Cart[]>([]);
@@ -34,27 +31,14 @@ const Cart = () => {
   useEffect(() => {
     getProduct();
   }, []);
-  // useEffect(() => {
-  //   customAxios
-  //     .get(`/carts`, { params: { userId: userId } })
-  //     .then(response => {
-  //       setCartList(response.data);
-  //       console.log(response.data);
-  //     })
-  //     .catch(err => console.log(err.message));
-  // }, [userId]);
-  // console.log(cartList);
-
   const [numbers, setNumber] = useState(0);
   console.log(numbers);
   console.log(cartList);
-
   const getData = (price: any) => {
     // setNumber(price);
     console.log(price);
     setNumber(price);
   };
-
   const [checkedItem, setCheckedItem] = useState([
     ...cartList.map((item: any) => item.productId),
   ]);
@@ -70,7 +54,6 @@ const Cart = () => {
     ...cartList.map((item: any) => item.productId),
   ]);
   console.log(selectOrder);
-
   // 상품 개별 체크
   const checkedItemHandler = (
     checked: any,
@@ -128,27 +111,9 @@ const Cart = () => {
       .catch(error => console.log('삭제 실패', error.message));
     // alert('상품이 삭제되었습니다.');
   };
-
   // 주문하기 post method
   const navigate = useNavigate();
   const orderPost = () => {
-    // customAxios
-    //   .post(`/orders`, {
-    //     buyerId: userId,
-    //     orderProductRequestDtos: selectOrder,
-    //     sellerId: 10,
-    //     shippingAddressDto: {
-    //       city: address?.addressDto.city,
-    //       detailedAddress: address?.addressDto.detailedAddress,
-    //       street: address?.addressDto.street,
-    //       zipcode: address?.addressDto.zipcode,
-    //     },
-    //   })
-    //   .then(response => {
-    //     console.log(`성공`, response);
-    //     navigate('/orders');
-    //   })
-    //   .catch(err => console.log(`실패`, err));
     if (totalPrice == 0) {
       alert(`물품을 골라주세요`);
     } else {
@@ -171,12 +136,11 @@ const Cart = () => {
         .catch(err => console.log(`실패`, err));
     }
   };
-
-  const userData = useRecoilValue(userDataState);
-  const address = userData?.addressDto;
+  // const userData = useRecoilValue(userDataState);
+  // const address = userData?.addressDto;
+  const myInfo = useGetMyProfile();
   // 장바구니 전체 주문
   const cartId = localStorage.getItem('cartId');
-  console.log('address', address);
 
   const AllorderPost = () => {
     customAxios
@@ -184,10 +148,10 @@ const Cart = () => {
         buyerId: userId,
         cartId: cartId,
         shippingAddressDto: {
-          city: address?.city,
-          detailedAddress: address?.detailedAddress,
-          street: address?.street,
-          zipcode: address?.zipcode,
+          city: myInfo?.city,
+          detailedAddress: myInfo?.detailedAddress,
+          street: myInfo?.street,
+          zipcode: myInfo?.zipcode,
         },
       })
       .then(response => {
@@ -247,9 +211,7 @@ const Cart = () => {
     </Wrapper>
   );
 };
-
 export default Cart;
-
 const Wrapper = styled.div`
   font-size: 18px;
 `;
@@ -301,13 +263,11 @@ const PriceName = styled.div`
 `;
 const Price = styled.span`
   margin-left: auto;
-
   &.orderPrice {
     font-weight: bold;
     color: var(--maincolor);
   }
 `;
-
 const OrderBtn = styled.button`
   background: var(--maincolor);
   line-height: 50px;

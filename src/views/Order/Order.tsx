@@ -7,7 +7,6 @@ import { useRecoilValue } from 'recoil';
 import { userIdState } from '../../store/atom/auth';
 import { useEffect, useState } from 'react';
 import OrderConfirm from '../../components/modal/OrderConfirm';
-
 interface OrderInfo {
   buyerId: number;
   orderProductRequestDtos: [
@@ -24,22 +23,18 @@ interface OrderInfo {
     zipcode: number;
   };
 }
-
 const Order = () => {
   const userId = useRecoilValue(userIdState);
-
   const [coupons, setCoupons] = useState([]);
   console.log(coupons);
   const [reserve, setReserve] = useState<any>([]);
   console.log(reserve);
-
   useEffect(() => {
     customAxios
       .get(`/coupons`, { params: { userId: userId } })
       .then(response => setCoupons(response.data))
       .catch(err => err.message);
   }, [userId]);
-
   useEffect(() => {
     customAxios
       .get(`/reserves/current`, { params: { userId: userId } })
@@ -49,11 +44,9 @@ const Order = () => {
         setReserve(0);
       });
   }, [userId]);
-
   const location = useLocation();
   const locate = location.state;
   const orderId = locate.orderId;
-
   const [products, setProducts] = useState();
   console.log(products);
   useEffect(() => {
@@ -65,10 +58,8 @@ const Order = () => {
         setReserve(0);
       });
   }, [userId, orderId]);
-
   const [useReserve, setUseReserve] = useState(0);
   console.log(useReserve);
-
   const handleReserve = (e: any) => {
     setUseReserve(e.target.value);
     setOrderPrice(
@@ -83,14 +74,11 @@ const Order = () => {
       totalPrice - membershipDiscount - couponDiscount - useReserve - amount,
     );
   };
-
   const totalPrice = locate.totalOrderPrice;
   const membershipDiscount = 0;
   const couponDiscount = 0;
   const [orderPrice, setOrderPrice] = useState(totalPrice);
-
   const ShippingFee = orderPrice > 50000 ? 0 : 3000;
-
   const [modalOpen, setModalOpen] = useState(false);
   const toFrom = () => {
     customAxios
@@ -106,7 +94,6 @@ const Order = () => {
         console.log(err.message);
       });
   };
-
   return (
     <>
       <HeaderPrevPageBtn />
@@ -213,9 +200,7 @@ const Order = () => {
     </>
   );
 };
-
 export default Order;
-
 const Wrapper = styled.div`
   background-color: #f1f1f1;
   &::after {
@@ -250,14 +235,13 @@ const TextBox = styled.div`
   display: flex;
   flex-direction: column;
   padding: 10px 0;
-  border-bottom: 1px solid #b0b0b0;
+  border-bottom: 1px solid #B0B0B0;
   }
 `;
 const OrderName = styled.div`
   display: flex;
   justify-content: space-aroud;
   padding: 10px 0;
-
   &.reserve {
     display: flex;
     justify-content: center;

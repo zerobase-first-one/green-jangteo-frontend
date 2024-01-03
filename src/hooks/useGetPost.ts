@@ -24,7 +24,7 @@ export default function useGetPost() {
       setUsername(response.data.username);
       setDate(response.data.createdAt);
     } catch (error) {
-      console.error('첫번째 get요청 에러', error);
+      console.error('게시글을 조회하는데 에러가 발생했습니다.', error);
     }
   };
 

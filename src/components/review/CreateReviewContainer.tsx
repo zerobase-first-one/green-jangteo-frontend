@@ -1,19 +1,20 @@
 import styled from 'styled-components';
-import HeaderPrevPageBtn from './HeaderPrevPageBtn';
 import React, { useEffect, useState } from 'react';
-import { postReview } from '../apiFetcher/postReview';
+import { postReview } from '../../apiFetcher/postReview';
 import { useRecoilValue } from 'recoil';
-import { userIdState } from '../store/atom/auth';
-import { useNavigate } from 'react-router-dom';
+import { userIdState } from '../../store/atom/auth';
+import { useLocation } from 'react-router-dom';
 import AWS from 'aws-sdk';
+import ConfirmModal from '../modal/ConfirmModal';
 
-export default function CreateReview() {
+export default function CreateReviewContainer() {
   const userId = useRecoilValue(userIdState);
-  const productId = '23';
-  const navigate = useNavigate();
+  const location = useLocation();
+  const productId = String(location.state);
   const [content, setContent] = useState('');
   const [myBucket, setMyBucket] = useState(Object);
   const [selectedFile, setSelectedFile] = useState('');
+  const [showModal, setShowModal] = useState(false);
   const [imgURL, setImgURL] = useState('');
 
   useEffect(() => {
@@ -35,7 +36,6 @@ export default function CreateReview() {
 
   const handleFileInput = (e: any) => {
     setSelectedFile(e.target.files[0]);
-    console.log('e', e);
   };
 
   const uploadFile = (file: any) => {
@@ -52,7 +52,6 @@ export default function CreateReview() {
         console.log(err);
       } else {
         const url = myBucket.getSignedUrl('getObject', { Key: param.Key });
-        console.log('url', url);
         setImgURL(url);
       }
     });
@@ -67,12 +66,13 @@ export default function CreateReview() {
       productId,
       imageUrl: imgURL.slice(0, imgURL.indexOf('?')),
     });
-    navigate(`/products/${productId}/review`);
+
+    setShowModal(true);
   };
 
   return (
     <Wrapper>
-      <HeaderPrevPageBtn />
+      <PreviewImage src={imgURL} alt="이미지 미리보기" />
       <Form onSubmit={onSubmit}>
         <TextArea
           placeholder="상품 후기를 작성해주세요."
@@ -80,7 +80,7 @@ export default function CreateReview() {
           value={content}
           required
         />
-        <Box>
+        <FileInputWrapper>
           <Label htmlFor="image">이미지</Label>
           <Input
             type="file"
@@ -89,55 +89,68 @@ export default function CreateReview() {
               handleFileInput(e);
               uploadFile(selectedFile);
             }}
-          ></Input>
-        </Box>
+          />
+        </FileInputWrapper>
         <SubmitBtn type="submit">작성 완료</SubmitBtn>
       </Form>
-      <Image />
+      {showModal && (
+        <ConfirmModal
+          message="상품 후기가 등록되었습니다."
+          linkPath={`/products/${productId}/review`}
+          onClose={() => setShowModal(false)}
+        />
+      )}
     </Wrapper>
   );
 }
 
 const Wrapper = styled.div`
-  background-color: #e7e7e7;
-  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
 `;
 
 const Form = styled.form`
   width: 100%;
-  height: 280px;
   background-color: #ffffff;
   margin-top: 20px;
+  padding: 20px;
+  border-radius: 10px;
 `;
 
 const TextArea = styled.textarea`
   width: 100%;
-  height: 100%;
+  height: 250px;
   resize: none;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 16px;
   &:focus {
     outline: none;
   }
 `;
 
-const Box = styled.div`
+const FileInputWrapper = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: center;
   align-items: center;
-  margin: 10px 0;
-
-  &.category {
-    margin-bottom: 20px;
-  }
+  margin-bottom: 20px;
 `;
 
 const Label = styled.label`
-  width: 120px;
+  width: 80px;
+  margin-right: 10px;
 `;
 
 const Input = styled.input`
   flex: auto;
-  padding: 5px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
 `;
 
 const SubmitBtn = styled.button`
@@ -148,8 +161,15 @@ const SubmitBtn = styled.button`
   color: #ffffff;
   font-size: 16px;
   background-color: #16a114;
-  margin: 10px auto;
+  margin-top: 20px;
   cursor: pointer;
 `;
 
-const Image = styled.img``;
+const PreviewImage = styled.img`
+  width: 90%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin: 0 auto;
+  margin-top: 20px;
+`;

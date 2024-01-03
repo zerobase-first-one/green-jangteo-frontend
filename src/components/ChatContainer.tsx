@@ -19,7 +19,6 @@ export default function ChatContainer() {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [messages, setMessages] = useState<IMessage[]>([]);
   const roles = useRecoilValue(roleState);
-  console.log(roles[0]);
 
   const sendMessage = (e: React.FormEvent) => {
     e.preventDefault();
@@ -87,17 +86,20 @@ export default function ChatContainer() {
   return (
     <Wrapper>
       <ShopProfileContainer>
-        <MainProfileImage />
-        <ShopName>상점명</ShopName>
+        <MainProfileImage src="https://www.interview365.com/news/photo/202205/101973_129439_4443.jpg" />
+        <ShopName>친환경스토어</ShopName>
         <Text>채팅 가능 시간: 평일 08:00 ~ 22:00</Text>
       </ShopProfileContainer>
       {roles[0] === '구매자' ? (
         <MessageContainer>
           <UserProfile>
-            <ProfileImage src="URL_TO_YOUR_PROFILE_IMAGE" alt="Profile" />
+            <ProfileImage
+              src="https://www.interview365.com/news/photo/202205/101973_129439_4443.jpg"
+              alt="Profile"
+            />
           </UserProfile>
           <ChatMessage>
-            안녕하세요. 상점명 입니다. <br />
+            안녕하세요. 친환경스토어 입니다. <br />
             궁금한 내용이 있으시면 메시지를 남겨주세요.
           </ChatMessage>
         </MessageContainer>
@@ -113,7 +115,8 @@ export default function ChatContainer() {
               <UserProfile>
                 {roles[0] === '구매자' ? (
                   <ProfileImage
-                    src="URL_TO_BUYER_PROFILE_IMAGE"
+                    // src="URL_TO_BUYER_PROFILE_IMAGE"
+                    src="https://www.interview365.com/news/photo/202205/101973_129439_4443.jpg"
                     alt="Profile"
                   />
                 ) : (
@@ -142,8 +145,9 @@ export default function ChatContainer() {
 }
 
 const Wrapper = styled.div`
-  background-color: #f4f4f4;
-  border: 1px solid #ccc;
+  width: 90%;
+  height: 100%;
+  background-color: #fff;
   padding: 10px;
   margin: 20px auto;
 `;
@@ -169,7 +173,7 @@ const MainProfileImage = styled.img`
   height: 100px;
   border-radius: 50%;
   margin-right: 10px;
-  background-color: #000;
+  // background-color: #000;
 `;
 
 const UserProfile = styled.div`

@@ -1,24 +1,28 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 
-interface ConfirmModalProps {
+interface AskModalProps {
+  onConfirm: () => void;
   onClose: () => void;
   message: string;
-  linkPath: string;
+  confirmButtonText: string;
+  cancelButtonText: string;
 }
 
-export default function ConfirmModal({
+export default function AskModal({
+  onConfirm,
   onClose,
   message,
-  linkPath,
-}: ConfirmModalProps) {
+  confirmButtonText,
+  cancelButtonText,
+}: AskModalProps) {
   return (
     <Overlay>
       <Wrapper>
         <Text>{message}</Text>
-        <Link to={linkPath}>
-          <Button onClick={onClose}>확인</Button>
-        </Link>
+        <ButtonContainer>
+          <Button onClick={onConfirm}>{confirmButtonText}</Button>
+          <Button onClick={onClose}>{cancelButtonText}</Button>
+        </ButtonContainer>
       </Wrapper>
     </Overlay>
   );
@@ -56,12 +60,18 @@ const Text = styled.span`
   flex-grow: 1;
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
 const Button = styled.button`
-  width: 100%;
+  flex-grow: 1;
   height: 50px;
   background-color: #16a113;
+  color: #fff;
   border: none;
-  color: #ffffff;
+  border-radius: 10px;
   font-size: 18px;
   cursor: pointer;
 `;

@@ -42,7 +42,6 @@ const ProductList = () => {
       .get('/products', { params: { page: 0, size: 30 } })
       .then(response => {
         setProducts(response.data);
-        console.log(response.data);
       })
       .catch(err => console.log(err.message));
   }, []);

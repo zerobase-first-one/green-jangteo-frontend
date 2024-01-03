@@ -3,18 +3,15 @@ import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 import { Login } from './views/Login';
 import { Signup } from './views/Signup';
-import { Board } from './views/Board';
+import { Board } from './views/board/Board';
 import Detail from './views/Detail';
 import Description from './views/Description';
-import Review from './views/Review';
+import Review from './views/review/Review';
 import Home from './views/Home/Home';
 import CategoryPage from './views/CategoryPage';
 import Search from './views/Search';
 import Cart from './views/Cart/Cart';
 import Order from './views/Order/Order';
-import CreatePostForm from './views/CreatePostForm';
-import MyBoardDetail from './views/MyBoardDetail';
-import MyProfile from './views/profile/MyProfile';
 import { ChangePassword } from './views/profile/ChangePassword';
 import MyBoardList from './components/board/MyBoardList';
 import { ChangeEmail } from './views/profile/ChangeEmail';
@@ -29,13 +26,10 @@ import UploadProduct from './routes/Seller/UploadProduct';
 import SellerProductDetail from './routes/Seller/SellerProductDetail';
 import SellerDescription from './routes/Seller/SellerDescription';
 import SellerReview from './routes/Seller/SellerReview';
-import CreateReview from './components/CreateReview';
 import EditProduct from './routes/Seller/EditProduct';
-import EditReview from './components/EditReview';
-import ReviewListContainer from './components/ReviewListContainer';
+import ReviewListContainer from './components/review/ReviewListContainer';
 import Chat from './views/Chat';
 import UserProfile from './views/profile/UserProfile';
-import EditMyBoardDetail from './views/EditMyBoardDetail';
 import CartOrder from './views/Order/CartOrder';
 import { SuccessPage } from './views/Order/Success';
 import EditSellerProfile from './routes/Seller/EditSellerProfile';
@@ -43,6 +37,12 @@ import UpdateCategory from './Product/UpdateCategory';
 import OrderList from './views/Order/OrderList';
 import CreateCoupon from './views/Home/CreateCoupon';
 import OrderListDetail from './views/Order/OrderListDetail';
+import { EditBoard } from './views/board/EditBoard';
+import { CreateBoard } from './views/board/CreateBoard';
+import { DetailBoard } from './views/board/DetailBoard';
+import { MyProfile } from './views/profile/MyProfile';
+import EditReview from './views/review/EditReview';
+import CreateReview from './views/review/CreateReview';
 import SearchPage from './views/SearchPage';
 
 const GlobalStyle = createGlobalStyle`
@@ -104,9 +104,9 @@ function App() {
         <Route path="/posts" element={<Board />}>
           <Route path="my" element={<MyBoardList />} />
         </Route>
-        <Route path="/posts/:postId" element={<MyBoardDetail />} />
-        <Route path="/posts/:postId/edit" element={<EditMyBoardDetail />} />
-        <Route path="/create-post" element={<CreatePostForm />} />
+        <Route path="/posts/:postId" element={<DetailBoard />} />
+        <Route path="/posts/:postId/edit" element={<EditBoard />} />
+        <Route path="/create-post" element={<CreateBoard />} />
         <Route path="/products/:productId" element={<Detail />}>
           <Route path="description" element={<Description />} />
           <Route path="review" element={<Review />} />

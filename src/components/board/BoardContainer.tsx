@@ -1,12 +1,12 @@
-import styled from "styled-components";
-import { useMatch } from "react-router-dom";
-import { Link } from "react-router-dom";
-import AllBoardList from "./AllBoardList";
-import MyBoardList from "./MyBoardList";
+import styled from 'styled-components';
+import { useMatch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import AllBoardList from './AllBoardList';
+import MyBoardList from './MyBoardList';
 
 export default function BoardContainer() {
-  const allPostMatch = useMatch("/posts");
-  const myPostMatch = useMatch("/posts/my");
+  const allPostMatch = useMatch('/posts');
+  const myPostMatch = useMatch('/posts/my');
 
   return (
     <Wrapper>
@@ -19,7 +19,7 @@ export default function BoardContainer() {
         </Tab>
       </Tabs>
       {allPostMatch !== null ? <AllBoardList /> : <MyBoardList />}
-      <Link to={"/create-post"}>
+      <Link to={'/create-post'}>
         <PostButton>글쓰기</PostButton>
       </Link>
     </Wrapper>
@@ -46,15 +46,15 @@ const Tab = styled.span<{ isActive: boolean }>`
   margin-top: 20px;
   padding: 20px 0px;
   border: none;
-  background-color: ${(props) => (props.isActive ? "#149211" : "#E0E0E0")};
-  color: ${(props) => (props.isActive ? "#FFFFFF" : "#AAAAAA")};
+  background-color: ${props => (props.isActive ? '#149211' : '#E0E0E0')};
+  color: ${props => (props.isActive ? '#FFFFFF' : '#AAAAAA')};
 `;
 
 const PostButton = styled.button`
   position: absolute;
-  bottom: 65px;
+  bottom: 25px;
   right: 30px;
-  background-color: #999999;
+  background-color: #4caf50;
   width: 125px;
   height: 50px;
   border: none;

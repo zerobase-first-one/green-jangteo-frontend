@@ -1,5 +1,5 @@
 import ReviewList from './ReviewList';
-import useGetReviewList from '../hooks/useGetReviewList';
+import useGetReviewList from '../../hooks/useGetReviewList';
 
 export default function ReviewListContainer() {
   const { products } = useGetReviewList();
