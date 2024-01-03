@@ -90,19 +90,19 @@ const UploadProduct = () => {
   });
 
   //   setMyBucket(myBucket);
-  // const [imageSrc, setImageSrc] = useState<any>('');
+  const [imageSrc, setImageSrc] = useState<any>('');
   const handleFileInput = (e: any) => {
     setSelectedFile(e.target.files[0]);
     console.log('e', e);
 
-    // const reader = new FileReader();
-    // reader.readAsDataURL(e.target.files[0]);
-    // return new Promise<void>(resolve => {
-    //   reader.onload = () => {
-    //     setImageSrc(reader.result);
-    //     resolve();
-    //   };
-    // });
+    const reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    return new Promise<void>(resolve => {
+      reader.onload = () => {
+        setImageSrc(reader.result);
+        resolve();
+      };
+    });
   };
 
   const [selectCategory, setselectCategory] = useState();
@@ -152,7 +152,7 @@ const UploadProduct = () => {
           </BtnBox>
           <Box>
             <Label htmlFor="image" className="image">
-              {/* <Image src={imageSrc} /> */}
+              <Image src={imageSrc} />
               이미지
             </Label>
             <Input
@@ -279,11 +279,11 @@ const UploadForm = styled.form`
   display: flex;
   flex-direction: column;
 `;
-// const Image = styled.img`
-//   width: 100%;
-//   z-index: 1;
-//   position: absolute;
-// `;
+const Image = styled.img`
+  width: 100%;
+  z-index: 1;
+  position: absolute;
+`;
 const Input = styled.input`
   flex: auto;
   margin: 0 0;
