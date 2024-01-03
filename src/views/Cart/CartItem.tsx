@@ -45,7 +45,7 @@ const CartItem = ({ item, checkedItemHandler, checked, getData }: any) => {
     getData(item.price * (quantity + 1));
   };
 
-  const updateQuantity = (productId: number, quantity: number) => {
+  const updateQuantity = (productId: string, quantity: number) => {
     customAxios
       .put(`/carts/cart-products/${item.cartProductId}`, {
         cartProduct: {

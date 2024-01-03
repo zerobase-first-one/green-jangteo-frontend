@@ -11,7 +11,7 @@ interface Review {
   createdAt: string;
   imageUrl: string;
   modifiedAt: string;
-  productId: number;
+  productId: string;
   score: number;
   userId: number;
   // },
@@ -26,7 +26,7 @@ const SellerReview = () => {
       imageUrl:
         'https://cdn.pixabay.com/photo/2016/12/10/21/28/plums-1898196_1280.jpg',
       modifiedAt: '',
-      productId: 0,
+      productId: '',
       score: 0,
       userId: 0,
     },
@@ -36,7 +36,7 @@ const SellerReview = () => {
       imageUrl:
         'https://cdn.pixabay.com/photo/2016/12/10/21/28/plums-1898196_1280.jpg',
       modifiedAt: '',
-      productId: 0,
+      productId: '',
       score: 0,
       userId: 0,
     },

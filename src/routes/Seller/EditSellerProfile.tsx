@@ -64,8 +64,19 @@ const EditSellerProfile = () => {
   const values = [location.state];
   console.log(values);
 
+  const [imageSrc, setImageSrc] = useState<any>('');
   const handleFileInput = (e: any) => {
     setSelectedFile(e.target.files[0]);
+    console.log('e', e);
+
+    const reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    return new Promise<void>(resolve => {
+      reader.onload = () => {
+        setImageSrc(reader.result);
+        resolve();
+      };
+    });
   };
 
   const uploadFile = (file: any) => {
@@ -125,7 +136,10 @@ const EditSellerProfile = () => {
           {values.map((value: any) => (
             <>
               <Box>
-                <Label htmlFor="image">프로필 사진</Label>
+                <Label htmlFor="image" className="image">
+                  <Image src={imageSrc} />
+                  프로필 사진
+                </Label>
                 <Input
                   type="file"
                   id="image"
@@ -203,17 +217,43 @@ const UploadForm = styled.form`
   display: flex;
   flex-direction: column;
 `;
+const Image = styled.img`
+  width: 100%;
+  z-index: 1;
+  position: absolute;
+`;
 const Input = styled.input`
   flex: auto;
-  padding: 5px;
+  margin: 1px 0;
+  padding: 3px;
+  font-size: 18px;
+  border: 1px solid #aaaaaa;
+
+  &#image {
+    display: none;
+  }
 `;
 const Label = styled.label`
-  width: 120px;
+  width: 100px;
+
+  &.image {
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 200px;
+    background-color: #ededed;
+    position: relative;
+    border-radius: 50%;
+    overflow: hidden;
+  }
 `;
 const Textarea = styled.textarea`
   margin: 10px 0;
   padding: 10px;
   font-size: 16px;
+  border: 1px solid #aaaaaa;
 
   &::placeholder {
     color: #b0b0b0;

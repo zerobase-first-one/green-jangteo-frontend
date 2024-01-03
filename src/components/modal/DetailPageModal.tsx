@@ -5,7 +5,8 @@ import { Link, useParams } from 'react-router-dom';
 import customAxios from '../../apiFetcher/customAxios';
 import { useRecoilValue } from 'recoil';
 import { userIdState } from '../../store/atom/auth';
-import { CartId } from './cartId';
+import CartInModal from './CartInModal';
+// import { CartId } from './cartId';
 
 const variants = {
   hidden: {
@@ -37,9 +38,8 @@ export default function DetailPageModal({
   const userId = useRecoilValue(userIdState);
   const { productId } = useParams();
 
-  const [cartId, setCartId] = useState();
-  CartId(cartId);
-  console.log(cartId);
+  // console.log(cartId);
+  console.log(item);
 
   const AddCart = () => {
     customAxios
@@ -51,10 +51,17 @@ export default function DetailPageModal({
         userId: userId,
       })
       .then(response => {
-        setCartId(response.data.cartId);
+        // setCartId(response.data.cartId);
+        console.log(response.data);
+        setModalOpen(true);
       })
       .catch(err => console.log(err.message));
   };
+
+  const [modalOpen, setModalOpen] = useState(false);
+
+  // const showModal = () => {
+  //   setModalOpen(true);
 
   return (
     <AnimatePresence>
@@ -79,10 +86,11 @@ export default function DetailPageModal({
               </QuantityButton>
             </QuantityContainer>
           </CountTab>
-          <Price>{totalPrice * count}원</Price>
+          <Price>{(totalPrice * count).toLocaleString()}원</Price>
           <Btns>
             <ToCartBtn onClick={AddCart}>장바구니에 담기</ToCartBtn>
-            <Link to={'/orders'}>
+            {modalOpen && <CartInModal setModalOpen={setModalOpen} />}
+            <Link to={'/orders'} state={[item]}>
               <OrderBtn>주문하기</OrderBtn>
             </Link>
           </Btns>

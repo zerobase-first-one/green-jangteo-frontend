@@ -8,9 +8,9 @@ interface Review {
   createdAt: string;
   imageUrl: string;
   modifiedAt: string;
-  productId: number;
+  productId: string;
   score: number;
-  userId: number;
+  userId: string;
 }
 
 export default function Review() {

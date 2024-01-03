@@ -11,7 +11,7 @@ import { userIdState } from '../../store/atom/auth';
 import { userDataState } from '../../store/atom/userDataState';
 
 interface Cart {
-  productId: number;
+  productId: string;
   quantity: number;
 }
 
@@ -75,8 +75,8 @@ const Cart = () => {
   const checkedItemHandler = (
     checked: any,
     productName: string,
-    productId: number,
-    cartProductId: number,
+    productId: string,
+    cartProductId: string,
     quantity: number,
     imageUrl: number,
     price: any,
@@ -152,9 +152,23 @@ const Cart = () => {
     if (totalPrice == 0) {
       alert(`물품을 골라주세요`);
     } else {
-      navigate(`/orders`, {
-        state: selectOrder,
-      });
+      customAxios
+        .post(`/orders`, {
+          buyerId: userId,
+          orderProductRequestDtos: selectOrder,
+          sellerId: 745,
+          shippingAddressDto: {
+            city: `서울`,
+            detailedAddress: `길동아파트 101동 102호`,
+            street: `테헤란로 231`,
+            zipcode: `06142`,
+          },
+        })
+        .then(response => {
+          console.log(`성공`, response);
+          navigate('/orders', { state: response.data });
+        })
+        .catch(err => console.log(`실패`, err));
     }
   };
 
@@ -162,12 +176,7 @@ const Cart = () => {
   const address = userData?.addressDto;
   // 장바구니 전체 주문
   const cartId = localStorage.getItem('cartId');
-  // const { address } = useGetMyProfile();
-  // console.log(userName);
-
-  const myInfo = useGetMyProfile();
   console.log('address', address);
-  console.log('myInfo', myInfo);
 
   const AllorderPost = () => {
     customAxios
@@ -232,9 +241,7 @@ const Cart = () => {
             <Price className="orderPrice">{addCommaPrice(totalPrice)} 원</Price>
           </PriceName>
         </TextBox>
-        {/* <Link to={`/orders`} state={selectOrder}> */}
         <OrderBtn onClick={orderPost}>주문하기</OrderBtn>
-        {/* </Link> */}
         <OrderBtn onClick={AllorderPost}>장바구니 전체 주문하기</OrderBtn>
       </Container>
     </Wrapper>

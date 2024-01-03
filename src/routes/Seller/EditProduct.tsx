@@ -15,7 +15,7 @@ interface FormValue {
   description: string;
   inventory: number;
   price: number;
-  productId: number;
+  productId: string;
   productName: string;
   // images: [
   //   {
@@ -294,7 +294,7 @@ const Input = styled.input`
   height: 2rem;
   flex: auto;
   padding: 5px;
-  border: 1px solid #dedede;
+  border: 1px solid #aaaaaa;
   font-size: 18px;
 `;
 const Label = styled.label`
@@ -304,7 +304,7 @@ const Select = styled.select`
   flex: auto;
   padding: 5px;
   fon-tsize: 16px;
-  border: 1px solid #dedede;
+  border: 1px solid #aaaaaa;
 `;
 const Option = styled.option`
   text-align: center;
@@ -314,7 +314,7 @@ const Textarea = styled.textarea`
   margin: 10px 0;
   padding: 10px;
   font-size: 18px;
-  border: 1px solid #dedede;
+  border: 1px solid #aaaaaa;
   &::placeholder {
     color: #b0b0b0;
   }

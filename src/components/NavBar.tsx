@@ -18,8 +18,8 @@ const NavBar = () => {
     if (token && userId !== null) {
       console.log(token, userId);
       console.log(roles[0]);
-      if (roles[0] === '구매자') return `users/${userId}/profile`;
-      if (roles[0] === '판매자') return `stores/${userId}`;
+      if (roles[0] === '구매자') return `/users/${userId}/profile`;
+      if (roles[0] === '판매자') return `/stores/${userId}`;
     }
     return '/users/login';
   };
@@ -83,7 +83,7 @@ const Container = styled.div`
   height: 100px;
 
   button {
-    color: #d9d9d9;
+    color: #cccccc;
     background: none;
     border: none;
     font: inherit;

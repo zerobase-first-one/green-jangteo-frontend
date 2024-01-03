@@ -41,7 +41,7 @@ export interface ProductType {
       createdAt: string;
       imageUrl: string;
       modifiedAt: string;
-      productId: number;
+      productId: string;
       score: number;
       userId: number;
     },

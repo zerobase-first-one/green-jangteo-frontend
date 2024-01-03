@@ -1,28 +1,36 @@
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-export function UploadPageModal({ setModalOpen }: any) {
-  // 모달 끄기
+const CartInModal = ({ setModalOpen }: any) => {
   const closeModal = () => {
     setModalOpen(false);
+  };
+  const navigate = useNavigate();
+  const goCart = () => {
+    navigate(`/carts`);
   };
 
   return (
     <Modal>
       <ModalBox>
-        <Content>물품을 등록하시겠습니까?</Content>
+        <Content>
+          장바구니에 물품을 담았습니다. <br /> 장바구니로 이동하시겠습니까?
+        </Content>
         <BtnBox>
-          <Btn type="submit" className="upload">
-            등록
+          <Btn onClick={goCart} className="confirm">
+            확인
           </Btn>
           <Btn onClick={closeModal}>취소</Btn>
         </BtnBox>
       </ModalBox>
     </Modal>
   );
-}
+};
+
+export default CartInModal;
 
 const Modal = styled.div`
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -35,7 +43,7 @@ const ModalBox = styled.div`
   width: 80%;
   background-color: #ffffff;
   position: absolute;
-  top: 40%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 10px;
@@ -46,6 +54,7 @@ const Content = styled.p`
   height: 150px;
   align-items: center;
   justify-content: center;
+  line-height: 2rem;
 `;
 const Btn = styled.button`
   flex: 1;
@@ -55,7 +64,7 @@ const Btn = styled.button`
   font-size: inherit;
   cursor: pointer;
 
-  &.upload {
+  &.confirm {
     background-color: var(--maincolor);
     color: #ffffff;
   }

@@ -43,6 +43,7 @@ import UpdateCategory from './Product/UpdateCategory';
 import OrderList from './views/Order/OrderList';
 import CreateCoupon from './views/Home/CreateCoupon';
 import OrderListDetail from './views/Order/OrderListDetail';
+import SearchPage from './views/SearchPage';
 
 const GlobalStyle = createGlobalStyle`
   ${reset};
@@ -115,6 +116,7 @@ function App() {
         <Route path="reviews/users/:userId" element={<ReviewListContainer />} />
         <Route path="/chat" element={<Chat />} />
         <Route path="/search" element={<Search />}></Route>
+        <Route path="/product" element={<SearchPage />}></Route>
         <Route path="/carts" element={<Cart />}></Route>
         <Route path="/orders" element={<Order />}></Route>
         <Route path="/cart/orders" element={<CartOrder />}></Route>
@@ -123,7 +125,6 @@ function App() {
           <Route path="order" element={<SellerOrderList />}></Route>
         </Route>
         <Route path="/stores/:userId/profile" element={<EditSellerProfile />} />
-        <Route path="/reviews" element={<CreateReview />} />
         <Route
           path="/stores/:userId/products/:productId"
           element={<SellerProductDetail />}
