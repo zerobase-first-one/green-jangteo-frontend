@@ -7,6 +7,7 @@ export interface IBoard {
   createdAt: string;
   modifiedAt?: string;
   viewCount: number;
+  commentCount: number;
 }
 
 export const postState = atom<IBoard[]>({

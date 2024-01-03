@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
-import { userIdState } from '../store/atom/auth';
-import customAxios from '../apiFetcher/customAxios';
+import { userIdState } from '../../store/atom/auth';
+import customAxios from '../../apiFetcher/customAxios';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import ConfirmModal from '../modal/ConfirmModal';
 
 const EditMyBoardDetail = () => {
   const location = useLocation();
@@ -11,6 +12,7 @@ const EditMyBoardDetail = () => {
   const [editedSubject, setEditedSubject] = useState(value.subject);
   const [editedContent, setEditedContent] = useState(value.content);
   const userId = useRecoilValue(userIdState);
+  const [showModal, setShowModal] = useState(false);
   const { postId } = useParams();
   const navigate = useNavigate();
 
@@ -43,9 +45,7 @@ const EditMyBoardDetail = () => {
 
       await customAxios.put(`/posts/${postId}`, data);
 
-      alert('게시글이 수정되었습니다.');
-
-      navigate(-1);
+      setShowModal(true);
     } catch (error) {
       console.error('게시물 업데이트 오류:', error);
       alert('게시물 업데이트 중 오류가 발생했습니다. 다시 시도해주세요.');
@@ -53,14 +53,32 @@ const EditMyBoardDetail = () => {
   };
 
   return (
-    <Form onSubmit={handleSave}>
-      <Title type="text" value={editedSubject} onChange={handleTitleChange} />
-      <TextArea value={editedContent} onChange={handleContentChange} />
-      <ButtonWrapper>
-        <SaveButton type="submit">수정 저장</SaveButton>
-        <CancelButton onClick={onCancelClick}>취소</CancelButton>
-      </ButtonWrapper>
-    </Form>
+    <>
+      <Form onSubmit={handleSave}>
+        <Title
+          type="text"
+          value={editedSubject}
+          onChange={handleTitleChange}
+          placeholder="제목"
+        />
+        <TextArea
+          value={editedContent}
+          onChange={handleContentChange}
+          placeholder="내용"
+        />
+        <ButtonWrapper>
+          <SaveButton type="submit">수정 저장</SaveButton>
+          <CancelButton onClick={onCancelClick}>취소</CancelButton>
+        </ButtonWrapper>
+      </Form>
+      {showModal && (
+        <ConfirmModal
+          message="게시글이 수정되었습니다."
+          linkPath={`/posts/${postId}`}
+          onClose={() => setShowModal(false)}
+        />
+      )}
+    </>
   );
 };
 
@@ -68,15 +86,18 @@ export default EditMyBoardDetail;
 
 const Form = styled.form`
   width: 100%;
-  height: 280px;
-  background-color: #ffffff;
+  margin: 0 auto;
   padding: 20px;
 `;
 
 const Title = styled.input`
   width: 100%;
-  height: 40px;
+  height: 30%;
   margin-bottom: 10px;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
   outline: none;
   &:focus {
     outline: none;
@@ -85,9 +106,14 @@ const Title = styled.input`
 
 const TextArea = styled.textarea`
   width: 100%;
-  height: 100%;
-  resize: none;
+  height: 250px;
   margin-bottom: 10px;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  resize: none;
+  outline: none;
   &:focus {
     outline: none;
   }
@@ -100,21 +126,23 @@ const ButtonWrapper = styled.div`
 
 const SaveButton = styled.button`
   width: 100px;
-  height: 35px;
+  height: 40px;
   background-color: #007bff;
   color: #fff;
   border: 1px solid #007bff;
   border-radius: 10px;
   cursor: pointer;
   margin-right: 10px;
+  font-size: 16px;
 `;
 
 const CancelButton = styled.button`
   width: 100px;
-  height: 35px;
+  height: 40px;
   background-color: #ccc;
   color: #fff;
   border: 1px solid #ccc;
   border-radius: 10px;
   cursor: pointer;
+  font-size: 16px;
 `;

@@ -163,8 +163,6 @@ const Header = () => {
   const userId = useRecoilValue(userIdState);
   const roles = useRecoilValue(roleState);
 
-  console.log(categoryList);
-
   return (
     <HeaderWrapper>
       <HeaderContainer>

@@ -1,6 +1,20 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+const Footer = () => {
+  return (
+    <Wrapper>
+      <FooterList>
+        <li>
+          <Link to={'/posts'}>그린장터 문의 게시판 바로가기 &rarr;</Link>
+        </li>
+      </FooterList>
+    </Wrapper>
+  );
+};
+
+export default Footer;
+
 const Wrapper = styled.div`
   height: 100px;
   background-color: #222;
@@ -33,17 +47,3 @@ const FooterList = styled.ul`
     }
   }
 `;
-
-const Footer = () => {
-  return (
-    <Wrapper>
-      <FooterList>
-        <li>
-          <Link to={'/posts'}>그린장터 문의 게시판 바로가기 &rarr;</Link>
-        </li>
-      </FooterList>
-    </Wrapper>
-  );
-};
-
-export default Footer;

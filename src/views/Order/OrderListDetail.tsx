@@ -148,7 +148,10 @@ const OrderListDetail = () => {
                   <ProductPrice>
                     {addCommaPrice(item.orderPrice)} 원
                   </ProductPrice>
-                  <Link to={`/`}>
+                  <Link
+                    to={`/reviews`}
+                    state={item.productToOrderResponseDto.productId}
+                  >
                     <Button>리뷰 작성</Button>
                   </Link>
                 </ProductInfoBox>

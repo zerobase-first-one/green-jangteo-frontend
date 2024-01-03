@@ -9,15 +9,11 @@ import { roleState, tokenState, userIdState } from '../store/atom/auth';
 
 const NavBar = () => {
   const token = useRecoilValue(tokenState);
-  console.log(token);
   const userId = useRecoilValue(userIdState);
-  console.log(userId);
   const roles = useRecoilValue(roleState);
 
   const generateProfileLink = () => {
     if (token && userId !== null) {
-      console.log(token, userId);
-      console.log(roles[0]);
       if (roles[0] === '구매자') return `users/${userId}/profile`;
       if (roles[0] === '판매자') return `stores/${userId}`;
     }

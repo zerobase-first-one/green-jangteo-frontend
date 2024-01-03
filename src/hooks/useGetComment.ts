@@ -32,7 +32,6 @@ export default function useGetComment() {
 
   useEffect(() => {
     fetchComment();
-    // setPage;
   }, [postId, page]);
 
   const refreshComments = () => {

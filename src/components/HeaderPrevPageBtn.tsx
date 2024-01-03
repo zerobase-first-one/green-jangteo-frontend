@@ -1,6 +1,31 @@
-import styled from "styled-components";
-import { AiOutlineArrowLeft } from "react-icons/ai";
-import { useNavigate } from "react-router-dom";
+import styled from 'styled-components';
+import { AiOutlineArrowLeft, AiFillHome } from 'react-icons/ai';
+import { useNavigate } from 'react-router-dom';
+
+const HeaderPrevPageBtn = () => {
+  const navigate = useNavigate();
+
+  const prevPage = () => {
+    navigate(-1);
+  };
+
+  const goHome = () => {
+    navigate('/');
+  };
+
+  return (
+    <HeaderWrapper>
+      <HeaderContainer>
+        <PrevBtn onClick={prevPage}>
+          <AiOutlineArrowLeft />
+        </PrevBtn>
+        <HomeIcon onClick={goHome} />
+      </HeaderContainer>
+    </HeaderWrapper>
+  );
+};
+
+export default HeaderPrevPageBtn;
 
 const HeaderWrapper = styled.div`
   background-color: #16a114;
@@ -23,10 +48,6 @@ const HeaderContainer = styled.header`
 const PrevBtn = styled.button`
   display: flex;
   align-items: center;
-  position: absolute;
-  top: 50%;
-  left: 20px;
-  transform: translateY(-50%);
   font-size: 30px;
   color: #ffffff;
   background: none;
@@ -35,22 +56,8 @@ const PrevBtn = styled.button`
   padding: 0;
 `;
 
-const HeaderPrevPageBtn = () => {
-  const navigate = useNavigate();
-
-  const prevPage = () => {
-    navigate(-1);
-  };
-
-  return (
-    <HeaderWrapper>
-      <HeaderContainer>
-        <PrevBtn onClick={prevPage}>
-          <AiOutlineArrowLeft />
-        </PrevBtn>
-      </HeaderContainer>
-    </HeaderWrapper>
-  );
-};
-
-export default HeaderPrevPageBtn;
+const HomeIcon = styled(AiFillHome)`
+  font-size: 30px;
+  color: #fff;
+  cursor: pointer;
+`;

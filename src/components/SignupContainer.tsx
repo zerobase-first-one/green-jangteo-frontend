@@ -1,29 +1,45 @@
 import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 import { postUserSignup } from '../apiFetcher/user/postUserSignup';
-import { IForm, userDataState } from '../store/atom/userDataState';
-import { useSetRecoilState } from 'recoil';
 import React, { useState } from 'react';
 import { AxiosError } from 'axios';
+import ConfirmModal from './modal/ConfirmModal';
+
+export interface AddressDto {
+  city: string;
+  detailedAddress: string;
+  street: string;
+  zipcode: string;
+}
+
+export interface SignupProps {
+  email: string;
+  username: string;
+  password: string;
+  passwordConfirm: string;
+  fullName: string;
+  phone: string;
+  addressDto: AddressDto;
+  storeName?: string;
+  roles: string[];
+}
 
 export default function SignupContainer() {
-  const navigate = useNavigate();
   const [selectedRole, setSelectedRole] = React.useState<string>('ROLE_BUYER');
+  const [showModal, setShowModal] = useState(false);
   const [err, setErr] = useState('');
-  const setUserInfo = useSetRecoilState(userDataState);
   const {
     register,
     handleSubmit,
     formState: { errors },
     setError,
-  } = useForm<IForm>({
+  } = useForm<SignupProps>({
     defaultValues: {
       email: '@abc.com',
     },
   });
 
-  const onValid = async (data: IForm) => {
+  const onValid = async (data: SignupProps) => {
     if (data.password !== data.passwordConfirm) {
       return setError(
         'passwordConfirm',
@@ -33,7 +49,7 @@ export default function SignupContainer() {
     }
 
     try {
-      const userData: IForm = {
+      const userData: SignupProps = {
         username: data.username,
         fullName: data.fullName,
         password: data.password,
@@ -52,9 +68,8 @@ export default function SignupContainer() {
 
       console.log(userData);
       await postUserSignup(userData);
-      alert('회원가입이 완료되었습니다.');
-      setUserInfo(userData);
-      navigate('/users/login');
+
+      setShowModal(true);
     } catch (error) {
       if (error instanceof AxiosError) {
         setErr(error.response?.data.message);
@@ -63,113 +78,124 @@ export default function SignupContainer() {
   };
 
   return (
-    <Form onSubmit={handleSubmit(onValid)}>
-      <Tabs>
-        <label>
-          <input
-            type="radio"
-            {...register('roles', { required: '가입유형을 선택해주세요' })}
-            value="ROLE_BUYER"
-            name="roles"
-            checked={selectedRole === 'ROLE_BUYER'}
-            onChange={() => setSelectedRole('ROLE_BUYER')}
-          />
-          구매자
-        </label>
-        <label>
-          <input
-            type="radio"
-            {...register('roles', { required: '가입유형을 선택해주세요' })}
-            value="ROLE_SELLER"
-            name="roles"
-            checked={selectedRole === 'ROLE_SELLER'}
-            onChange={() => setSelectedRole('ROLE_SELLER')}
-          />
-          판매자
-        </label>
-      </Tabs>
-      <Input
-        {...register('fullName', { required: '성명을 입력해주세요' })}
-        placeholder="성명"
-      />
-      <Error>{errors?.fullName?.message}</Error>
-      <Input
-        {...register('username', { required: '아이디를 입력해주세요' })}
-        placeholder="아이디"
-      />
-      <Error>{errors?.username?.message}</Error>
-      <Input
-        {...register('password', {
-          required: '비밀번호를 입력해주세요',
-          minLength: {
-            value: 8,
-            message: '비밀번호를 8자 이상 입력해주세요',
-          },
-        })}
-        placeholder="비밀번호"
-      />
-      <Error>{errors?.password?.message}</Error>
-      <Input
-        {...register('passwordConfirm', {
-          required: '비밀번호를 다시 한번 입력해주세요',
-          minLength: {
-            value: 8,
-            message: '비밀번호를 8자 이상 입력해주세요',
-          },
-        })}
-        placeholder="비밀번호 확인"
-      />
-      <Error>{errors?.passwordConfirm?.message}</Error>
-      <Input
-        {...register('email', {
-          required: '이메일을 입력해주세요',
-          pattern: {
-            value: /^[A-Za-z0-9._%+-]+@abc.com$/,
-            message: '@abc.com 이메일을 사용해주세요',
-          },
-        })}
-        placeholder="이메일@abc.com"
-      />
-      <Error>{errors?.email?.message}</Error>
-      <Input
-        {...register('phone', { required: '전화번호를 입력해주세요' })}
-        placeholder="전화번호"
-      />
-      <Error>{errors?.phone?.message}</Error>
-      <Input
-        {...register('addressDto.city', { required: '도시를 입력해주세요' })}
-        placeholder="도시"
-      />
-      <Error>{errors?.addressDto?.city?.message}</Error>
-      <Input
-        {...register('addressDto.detailedAddress', {
-          required: '상세주소를 입력해주세요',
-        })}
-        placeholder="상세주소"
-      />
-      <Error>{errors?.addressDto?.detailedAddress?.message}</Error>
-      <Input
-        {...register('addressDto.street', {
-          required: '도로명을 입력해주세요',
-        })}
-        placeholder="도로명"
-      />
-      <Error>{errors?.addressDto?.street?.message}</Error>
-      <Input
-        {...register('addressDto.zipcode', {
-          required: '우편번호를 입력해주세요',
-        })}
-        placeholder="우편번호"
-      />
-      <Error>{errors?.addressDto?.zipcode?.message}</Error>
-      <Input
-        {...register('storeName', { required: false })}
-        placeholder="상점명 (판매자로 가입할 경우 필수 입력)"
-      />
-      <Error>{errors?.storeName?.message}</Error>
-      {err !== '' ? <Error>{err}</Error> : null}
-      <Input className="signup-btn" type="submit" value="회원가입하기" />
-    </Form>
+    <>
+      <Form onSubmit={handleSubmit(onValid)}>
+        <Tabs>
+          <label>
+            <input
+              type="radio"
+              {...register('roles', { required: '가입유형을 선택해주세요' })}
+              value="ROLE_BUYER"
+              name="roles"
+              checked={selectedRole === 'ROLE_BUYER'}
+              onChange={() => setSelectedRole('ROLE_BUYER')}
+            />
+            구매자
+          </label>
+          <label>
+            <input
+              type="radio"
+              {...register('roles', { required: '가입유형을 선택해주세요' })}
+              value="ROLE_SELLER"
+              name="roles"
+              checked={selectedRole === 'ROLE_SELLER'}
+              onChange={() => setSelectedRole('ROLE_SELLER')}
+            />
+            판매자
+          </label>
+        </Tabs>
+        <Input
+          {...register('fullName', { required: '성명을 입력해주세요' })}
+          placeholder="성명"
+        />
+        <Error>{errors?.fullName?.message}</Error>
+        <Input
+          {...register('username', { required: '아이디를 입력해주세요' })}
+          placeholder="아이디"
+        />
+        <Error>{errors?.username?.message}</Error>
+        <Input
+          {...register('password', {
+            required: '비밀번호를 입력해주세요',
+            minLength: {
+              value: 8,
+              message: '비밀번호를 8자 이상 입력해주세요',
+            },
+          })}
+          type="password"
+          placeholder="비밀번호"
+        />
+        <Error>{errors?.password?.message}</Error>
+        <Input
+          {...register('passwordConfirm', {
+            required: '비밀번호를 다시 한번 입력해주세요',
+            minLength: {
+              value: 8,
+              message: '비밀번호를 8자 이상 입력해주세요',
+            },
+          })}
+          type="password"
+          placeholder="비밀번호 확인"
+        />
+        <Error>{errors?.passwordConfirm?.message}</Error>
+        <Input
+          {...register('email', {
+            required: '이메일을 입력해주세요',
+            pattern: {
+              value: /^[A-Za-z0-9._%+-]+@abc.com$/,
+              message: '@abc.com 이메일을 사용해주세요',
+            },
+          })}
+          placeholder="이메일@abc.com"
+        />
+        <Error>{errors?.email?.message}</Error>
+        <Input
+          {...register('phone', { required: '전화번호를 입력해주세요' })}
+          placeholder="전화번호"
+        />
+        <Error>{errors?.phone?.message}</Error>
+        <Input
+          {...register('addressDto.city', { required: '도시를 입력해주세요' })}
+          placeholder="도시"
+        />
+        <Error>{errors?.addressDto?.city?.message}</Error>
+        <Input
+          {...register('addressDto.detailedAddress', {
+            required: '상세주소를 입력해주세요',
+          })}
+          placeholder="상세주소"
+        />
+        <Error>{errors?.addressDto?.detailedAddress?.message}</Error>
+        <Input
+          {...register('addressDto.street', {
+            required: '도로명을 입력해주세요',
+          })}
+          placeholder="도로명"
+        />
+        <Error>{errors?.addressDto?.street?.message}</Error>
+        <Input
+          {...register('addressDto.zipcode', {
+            required: '우편번호를 입력해주세요',
+          })}
+          placeholder="우편번호"
+        />
+        <Error>{errors?.addressDto?.zipcode?.message}</Error>
+        <Input
+          {...register('storeName', { required: false })}
+          placeholder="상점명 (판매자로 가입할 경우 필수 입력)"
+        />
+        <Error>{errors?.storeName?.message}</Error>
+        {err !== '' ? <Error>{err}</Error> : null}
+        <Input className="signup-btn" type="submit" value="회원가입하기" />
+      </Form>
+      {showModal && (
+        <ConfirmModal
+          message="회원가입이 완료되었습니다."
+          linkPath="/users/login"
+          onClose={() => setShowModal(false)}
+        />
+      )}
+    </>
   );
 }
 

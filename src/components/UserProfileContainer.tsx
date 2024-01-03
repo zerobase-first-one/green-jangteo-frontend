@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import useGetUserProfile from '../hooks/useGetUserProfile';
-import ReviewListContainer from './ReviewListContainer';
+import ReviewListContainer from './review/ReviewListContainer';
 
 export default function UserProfileContainer() {
   const { userInfo } = useGetUserProfile();
@@ -8,7 +8,7 @@ export default function UserProfileContainer() {
   return (
     <>
       <ProfileContainer>
-        <ProfileImgBox />
+        <ProfileImgBox src="https://www.paperone.co.kr/images/global/greenlabel.png" />
         <ProfileTextBox>
           <UserName>{userInfo?.username}</UserName>
         </ProfileTextBox>
@@ -26,7 +26,7 @@ const ProfileContainer = styled.div`
   text-align: center;
 `;
 
-const ProfileImgBox = styled.div`
+const ProfileImgBox = styled.img`
   width: 120px;
   height: 120px;
   margin: 0 auto 20px;
@@ -55,18 +55,3 @@ const UserName = styled.strong`
     font-size: 18px;
   }
 `;
-
-// const ShowReviewsButton = styled.button`
-//   margin-top: 10px;
-//   padding: 10px;
-//   background-color: #4caf50;
-//   color: white;
-//   border: none;
-//   border-radius: 5px;
-//   cursor: pointer;
-//   transition: background-color 0.3s;
-
-//   &:hover {
-//     background-color: #45a049;
-//   }
-// `;
