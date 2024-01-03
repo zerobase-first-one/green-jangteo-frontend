@@ -64,19 +64,19 @@ const EditSellerProfile = () => {
   const values = [location.state];
   console.log(values);
 
-  const [imageSrc, setImageSrc] = useState<any>('');
+  // const [imageSrc, setImageSrc] = useState<any>('');
   const handleFileInput = (e: any) => {
     setSelectedFile(e.target.files[0]);
     console.log('e', e);
 
-    const reader = new FileReader();
-    reader.readAsDataURL(e.target.files[0]);
-    return new Promise<void>(resolve => {
-      reader.onload = () => {
-        setImageSrc(reader.result);
-        resolve();
-      };
-    });
+    // const reader = new FileReader();
+    // reader.readAsDataURL(e.target.files[0]);
+    // return new Promise<void>(resolve => {
+    //   reader.onload = () => {
+    //     setImageSrc(reader.result);
+    //     resolve();
+    //   };
+    // });
   };
 
   const uploadFile = (file: any) => {
@@ -137,7 +137,7 @@ const EditSellerProfile = () => {
             <>
               <Box>
                 <Label htmlFor="image" className="image">
-                  <Image src={imageSrc} />
+                  {/* <Image src={imageSrc} /> */}
                   프로필 사진
                 </Label>
                 <Input
@@ -217,11 +217,11 @@ const UploadForm = styled.form`
   display: flex;
   flex-direction: column;
 `;
-const Image = styled.img`
-  width: 100%;
-  z-index: 1;
-  position: absolute;
-`;
+// const Image = styled.img`
+//   width: 100%;
+//   z-index: 1;
+//   position: absolute;
+// `;
 const Input = styled.input`
   flex: auto;
   margin: 1px 0;
