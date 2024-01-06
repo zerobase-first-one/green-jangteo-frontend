@@ -9,6 +9,7 @@ export default defineConfig({
   },
 
   // is not a constructor를 위해 추가한 코드
+
   build: {
     commonjsOptions: { include: [] },
   },

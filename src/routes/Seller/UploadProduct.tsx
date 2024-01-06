@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 // import { BASE_URL } from "../../constant/union";
 import { useEffect, useState } from 'react';
 import customAxios from '../../apiFetcher/customAxios';
-import AWS from 'aws-sdk';
+import CognitoIdentityServiceProvider from 'aws-sdk';
 import { categoryList } from '../../Product/categoryList';
 import { UploadPageModal } from '../../components/modal/UploadPageModal';
 import axios from 'axios';
@@ -79,12 +79,12 @@ const UploadProduct = () => {
   const limit = imgURL.indexOf('?');
 
   useEffect(() => {
-    AWS.config.update({
+    CognitoIdentityServiceProvider.config.update({
       accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
       secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
     });
   }, []);
-  const myBucket = new AWS.S3({
+  const myBucket = new CognitoIdentityServiceProvider.S3({
     params: { Bucket: `greengangteo` },
     region: import.meta.env.VITE_AWS_DEFAULT_REGION,
   });

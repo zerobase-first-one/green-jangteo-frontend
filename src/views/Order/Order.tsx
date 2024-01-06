@@ -195,7 +195,19 @@ const Order = () => {
             </OrderName>
             <OrderName className="reserve">
               <Label>적립금 사용</Label>
-              <Input onChange={e => handleReserve(e)} />원
+              <Input
+                onChange={e => handleReserve(e)}
+                onInput={(e: any) => {
+                  if (e.target.value >= 0) {
+                    if (e.target.value > Number(reserve.currentReserve)) {
+                      alert(`${reserve.currentReserve}까지 입력가능`);
+                    }
+                  } else {
+                    e.target.value = 0;
+                  }
+                }}
+              />
+              원
             </OrderName>
           </TextBox>
           <TextBox style={{ border: `none` }}>
