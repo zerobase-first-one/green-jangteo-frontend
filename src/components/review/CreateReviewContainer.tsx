@@ -4,7 +4,7 @@ import { postReview } from '../../apiFetcher/postReview';
 import { useRecoilValue } from 'recoil';
 import { userIdState } from '../../store/atom/auth';
 import { useLocation } from 'react-router-dom';
-import CognitoIdentityServiceProvider from 'aws-sdk';
+import aws from 'aws-sdk';
 import ConfirmModal from '../modal/ConfirmModal';
 
 export default function CreateReviewContainer() {
@@ -18,12 +18,12 @@ export default function CreateReviewContainer() {
   const [imgURL, setImgURL] = useState('');
 
   useEffect(() => {
-    CognitoIdentityServiceProvider.config.update({
+    aws.config.update({
       accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
       secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
     });
   }, []);
-  const myBucket = new CognitoIdentityServiceProvider.S3({
+  const myBucket = new aws.S3({
     params: { Bucket: `greengangteo` },
     region: import.meta.env.VITE_AWS_DEFAULT_REGION,
   });

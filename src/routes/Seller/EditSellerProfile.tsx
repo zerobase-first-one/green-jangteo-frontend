@@ -3,7 +3,7 @@ import HeaderPrevPageBtn from '../../components/HeaderPrevPageBtn';
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import CognitoIdentityServiceProvider from 'aws-sdk';
+import aws from 'aws-sdk';
 import { SellerEditProfileModal } from '../../components/modal/SellerEditProfileModal';
 import customAxios from '../../apiFetcher/customAxios';
 
@@ -50,12 +50,12 @@ const EditSellerProfile = () => {
   };
 
   useEffect(() => {
-    CognitoIdentityServiceProvider.config.update({
+    aws.config.update({
       accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
       secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
     });
   }, []);
-  const myBucket = new CognitoIdentityServiceProvider.S3({
+  const myBucket = new aws.S3({
     params: { Bucket: `greengangteo` },
     region: import.meta.env.VITE_AWS_DEFAULT_REGION,
   });

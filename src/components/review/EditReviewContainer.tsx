@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { userIdState } from '../../store/atom/auth';
 import { useLocation, useParams } from 'react-router-dom';
-import CognitoIdentityServiceProvider from 'aws-sdk';
+import aws from 'aws-sdk';
 import ConfirmModal from '../modal/ConfirmModal';
 import customAxios from '../../apiFetcher/customAxios';
 
@@ -14,18 +14,16 @@ export default function EditReviewContainer() {
   const value = location.state;
   const [editedContent, setEditedContent] = useState(value.content);
   const [imgURL, setImgURL] = useState<string | null>(value.imageUrl);
-  const [myBucket, setMyBucket] = useState(
-    new CognitoIdentityServiceProvider.S3(),
-  );
+  const [myBucket, setMyBucket] = useState(new aws.S3());
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    CognitoIdentityServiceProvider.config.update({
+    aws.config.update({
       accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
       secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
     });
-    const myBucket = new CognitoIdentityServiceProvider.S3({
+    const myBucket = new aws.S3({
       params: { Bucket: `greengangteo` },
       region: import.meta.env.VITE_AWS_DEFAULT_REGION,
     });
