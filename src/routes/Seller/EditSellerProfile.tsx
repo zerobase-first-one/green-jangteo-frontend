@@ -3,7 +3,7 @@ import HeaderPrevPageBtn from '../../components/HeaderPrevPageBtn';
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import aws from 'aws-sdk';
+import AWS from 'aws-sdk';
 import { SellerEditProfileModal } from '../../components/modal/SellerEditProfileModal';
 import customAxios from '../../apiFetcher/customAxios';
 
@@ -49,16 +49,17 @@ const EditSellerProfile = () => {
       });
   };
 
+  const myBucket = new AWS.S3({
+    params: { Bucket: `greengangteo` },
+    region: import.meta.env.VITE_AWS_DEFAULT_REGION,
+  });
+
   useEffect(() => {
-    aws.config.update({
+    AWS.config.update({
       accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
       secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
     });
   }, []);
-  const myBucket = new aws.S3({
-    params: { Bucket: `greengangteo` },
-    region: import.meta.env.VITE_AWS_DEFAULT_REGION,
-  });
 
   const location = useLocation();
   const values = [location.state];

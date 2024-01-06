@@ -4,7 +4,7 @@ import { postReview } from '../../apiFetcher/postReview';
 import { useRecoilValue } from 'recoil';
 import { userIdState } from '../../store/atom/auth';
 import { useLocation } from 'react-router-dom';
-import aws from 'aws-sdk';
+import AWS from 'aws-sdk';
 import ConfirmModal from '../modal/ConfirmModal';
 
 export default function CreateReviewContainer() {
@@ -17,16 +17,17 @@ export default function CreateReviewContainer() {
   const [showModal, setShowModal] = useState(false);
   const [imgURL, setImgURL] = useState('');
 
+  const myBucket = new AWS.S3({
+    params: { Bucket: `greengangteo` },
+    region: import.meta.env.VITE_AWS_DEFAULT_REGION,
+  });
+
   useEffect(() => {
-    aws.config.update({
+    AWS.config.update({
       accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
       secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
     });
   }, []);
-  const myBucket = new aws.S3({
-    params: { Bucket: `greengangteo` },
-    region: import.meta.env.VITE_AWS_DEFAULT_REGION,
-  });
 
   const onContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.currentTarget.value);
