@@ -17,13 +17,13 @@ export default function CreateReviewContainer() {
   const [showModal, setShowModal] = useState(false);
   const [imgURL, setImgURL] = useState('');
 
-  const myBucket = new AWS.S3({
-    params: { Bucket: `greengangteo` },
-    region: import.meta.env.VITE_AWS_DEFAULT_REGION,
-  });
+  // const myBucket = new AWS.S3({
+  //   params: { Bucket: `greengangteo` },
+  //   region: import.meta.env.VITE_AWS_DEFAULT_REGION,
+  // });
 
   useEffect(() => {
-    myBucket.config.update({
+    AWS.config.update({
       accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
       secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
     });
@@ -45,6 +45,10 @@ export default function CreateReviewContainer() {
       Bucket: `greengangteo`,
       Key: `product/${file.name}`,
     };
+    const myBucket = new AWS.S3({
+      params: { Bucket: `greengangteo` },
+      region: import.meta.env.VITE_AWS_DEFAULT_REGION,
+    });
 
     myBucket.putObject(param).send((err: any) => {
       if (err) {
