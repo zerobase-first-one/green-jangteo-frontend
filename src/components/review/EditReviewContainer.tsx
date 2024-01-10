@@ -1,9 +1,10 @@
 import styled from 'styled-components';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { userIdState } from '../../store/atom/auth';
 import { useLocation, useParams } from 'react-router-dom';
-import AWS from 'aws-sdk';
+// import AWS from 'aws-sdk';
+import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import ConfirmModal from '../modal/ConfirmModal';
 import customAxios from '../../apiFetcher/customAxios';
 
@@ -14,22 +15,30 @@ export default function EditReviewContainer() {
   const value = location.state;
   const [editedContent, setEditedContent] = useState(value.content);
   const [imgURL, setImgURL] = useState<string | null>(value.imageUrl);
-  const [myBucket, setMyBucket] = useState(new AWS.S3());
+  // const [myBucket, setMyBucket] = useState(new AWS.S3());
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [showModal, setShowModal] = useState(false);
 
-  useEffect(() => {
-    AWS.config.update({
+  // useEffect(() => {
+  //   const myBucket = new AWS.S3({
+  //     params: { Bucket: `greengangteo` },
+  //     region: import.meta.env.VITE_AWS_DEFAULT_REGION,
+  //   });
+
+  //   AWS.config.update({
+  //     accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
+  //     secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
+  //   });
+
+  //   setMyBucket(myBucket);
+  // }, []);
+  const s3 = new S3Client({
+    credentials: {
       accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
       secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
-    });
-    const myBucket = new AWS.S3({
-      params: { Bucket: `greengangteo` },
-      region: import.meta.env.VITE_AWS_DEFAULT_REGION,
-    });
-
-    setMyBucket(myBucket);
-  }, []);
+    },
+    region: import.meta.env.VITE_AWS_DEFAULT_REGION,
+  });
 
   const onContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setEditedContent(e.currentTarget.value);
@@ -45,17 +54,19 @@ export default function EditReviewContainer() {
   const uploadFile = async () => {
     if (!selectedFile) return;
 
-    const param = {
+    const param = new PutObjectCommand({
       ACL: 'public-read',
       ContentType: `image/*`,
       Body: selectedFile,
       Bucket: `greengangteo`,
       Key: `product/${selectedFile.name}`,
-    };
+    });
 
     try {
-      await myBucket.upload(param).promise();
-      const url = `https://greengangteo.s3.amazonaws.com/${param.Key}`;
+      // await myBucket.upload(param).promise();
+      await s3.send(param);
+      // const url = `https://greengangteo.s3.amazonaws.com/${param.Key}`;
+      const url = `https://greengangteo.s3.amazonaws.com/product/${selectedFile.name}`;
       setImgURL(url);
     } catch (error) {
       console.error('파일 업로드 중 오류 발생:', error);

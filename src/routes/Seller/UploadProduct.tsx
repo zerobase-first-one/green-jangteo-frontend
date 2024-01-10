@@ -3,9 +3,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 // import { BASE_URL } from "../../constant/union";
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import customAxios from '../../apiFetcher/customAxios';
-import AWS from 'aws-sdk';
+// import AWS from 'aws-sdk';
+import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { categoryList } from '../../Product/categoryList';
 import { UploadPageModal } from '../../components/modal/UploadPageModal';
 import axios from 'axios';
@@ -41,11 +42,9 @@ const UploadProduct = () => {
     navigate(-1);
   };
 
-  // const [myBucket, setMyBucket] = useState(Object);
-  // console.log(Object);
   const [selectedFile, setSelectedFile] = useState('');
   const [imgURL, setImgURL] = useState(``);
-  // console.log(myBucket);
+
   const onSubmit = async (data: FormValue) => {
     await axios
       .all([
@@ -59,7 +58,7 @@ const UploadProduct = () => {
           inventory: data.inventory,
           images: [
             {
-              url: imgURL.slice(0, limit),
+              url: imgURL,
               position: 0,
             },
           ],
@@ -76,18 +75,24 @@ const UploadProduct = () => {
       });
   };
 
-  const limit = imgURL.indexOf('?');
+  // const limit = imgURL.indexOf('?');
+  console.log(imgURL);
 
-  useEffect(() => {
-    AWS.config.update({
+  // const myBucket = new AWS.S3({
+  const s3 = new S3Client({
+    credentials: {
       accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
       secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
-    });
-  }, []);
-  const myBucket = new AWS.S3({
-    params: { Bucket: `greengangteo` },
+    },
     region: import.meta.env.VITE_AWS_DEFAULT_REGION,
   });
+
+  // useEffect(() => {
+  //   AWS.config.update({
+  //     accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
+  //     secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
+  //   });
+  // }, []);
 
   //   setMyBucket(myBucket);
   const [imageSrc, setImageSrc] = useState<any>('');
@@ -109,25 +114,27 @@ const UploadProduct = () => {
   const handleSelectInput = (e: any) => {
     setselectCategory(e.target.value);
   };
-  const uploadFile = (file: any) => {
-    const param = {
+  async function uploadFile(file: any) {
+    const param = new PutObjectCommand({
       ACL: 'public-read',
       ContentType: `image/*`,
       Body: file,
       Bucket: `greengangteo`,
       Key: `product/${file.name}`,
-    };
-
-    myBucket.putObject(param).send((err: any) => {
-      if (err) {
-        console.log(err);
-      } else {
-        const url = myBucket.getSignedUrl('getObject', { Key: param.Key });
-        console.log(url, 'url');
-        setImgURL(url);
-      }
     });
-  };
+
+    await s3.send(param);
+
+    setImgURL(
+      `https://s3.${
+        import.meta.env.VITE_AWS_DEFAULT_REGION
+      }.amazonaws.com/greengangteo/product/${file.name}`,
+    );
+
+    // return `https://s3.${
+    //   import.meta.env.VITE_AWS_DEFAULT_REGION
+    // }.amazonaws.com/greengangteo/${file.name}`;
+  }
 
   const [modalOpen, setModalOpen] = useState(false);
 

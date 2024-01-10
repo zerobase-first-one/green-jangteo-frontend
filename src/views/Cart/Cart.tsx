@@ -13,10 +13,10 @@ interface Cart {
   quantity: number;
 }
 const Cart = () => {
-  // const navigate = useNavigate();
   const [cartList, setCartList] = useState<Cart[]>([]);
   const userId = useRecoilValue(userIdState);
   console.log('userId', userId);
+
   // 장바구니 목록 get method
   const getProduct = async () => {
     try {
@@ -77,6 +77,7 @@ const Cart = () => {
       setCheckedItemPrice(checkedItemPrice.filter(item => item !== price));
     }
   };
+
   // 전체 체크
   const allCheckedHandler = (e: any) => {
     if (e.target.checked) {
@@ -91,6 +92,7 @@ const Cart = () => {
       setSelectOrder([]);
     }
   };
+
   // 장바구니 전체 삭제
   const deleteAllCart = () => {
     customAxios
@@ -98,6 +100,7 @@ const Cart = () => {
       .then(response => console.log('삭제 성공', response))
       .catch(error => console.log('삭제 실패', error.message));
   };
+
   // 장바구니 선택 삭제
   const deleteSellectCart = () => {
     customAxios
