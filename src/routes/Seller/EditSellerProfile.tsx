@@ -2,8 +2,9 @@ import styled from 'styled-components';
 import HeaderPrevPageBtn from '../../components/HeaderPrevPageBtn';
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import AWS from 'aws-sdk';
+import { useState } from 'react';
+// import AWS from 'aws-sdk';
+import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { SellerEditProfileModal } from '../../components/modal/SellerEditProfileModal';
 import customAxios from '../../apiFetcher/customAxios';
 
@@ -31,13 +32,13 @@ const EditSellerProfile = () => {
     navigate(-1);
   };
 
-  const limit = imgURL.indexOf('?');
+  // const limit = imgURL.indexOf('?');
 
   const onSubmit = async (data: FormValue) => {
     await customAxios
       .put(`/stores/${userId}`, {
         description: data.description,
-        imageUrl: imgURL.slice(0, limit),
+        imageUrl: imgURL,
         storeName: data.storeName,
       })
       .then(response => {
@@ -49,17 +50,20 @@ const EditSellerProfile = () => {
       });
   };
 
-  const myBucket = new AWS.S3({
-    params: { Bucket: `greengangteo` },
+  const s3 = new S3Client({
+    credentials: {
+      accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
+      secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
+    },
     region: import.meta.env.VITE_AWS_DEFAULT_REGION,
   });
 
-  useEffect(() => {
-    AWS.config.update({
-      accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
-      secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
-    });
-  }, []);
+  // useEffect(() => {
+  //   AWS.config.update({
+  //     accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
+  //     secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
+  //   });
+  // }, []);
 
   const location = useLocation();
   const values = [location.state];
@@ -80,25 +84,27 @@ const EditSellerProfile = () => {
     });
   };
 
-  const uploadFile = (file: any) => {
-    const param = {
+  async function uploadFile(file: any) {
+    const param = new PutObjectCommand({
       ACL: 'public-read',
       ContentType: `image/*`,
       Body: file,
       Bucket: `greengangteo`,
-      Key: `profile/${file.name}`,
-    };
-
-    myBucket.putObject(param).send((err: any) => {
-      if (err) {
-        console.log(err);
-      } else {
-        const url = myBucket.getSignedUrl('getObject', { Key: param.Key });
-        console.log(url, 'url');
-        setImgURL(url);
-      }
+      Key: `product/${file.name}`,
     });
-  };
+
+    await s3.send(param);
+
+    setImgURL(
+      `https://s3.${
+        import.meta.env.VITE_AWS_DEFAULT_REGION
+      }.amazonaws.com/greengangteo/product/${file.name}`,
+    );
+
+    // return `https://s3.${
+    //   import.meta.env.VITE_AWS_DEFAULT_REGION
+    // }.amazonaws.com/greengangteo/${file.name}`;
+  }
 
   const [modalOpen, setModalOpen] = useState(false);
 
