@@ -3,21 +3,13 @@ import styled from 'styled-components';
 import addCommaPrice from '../../../public/module/addComma';
 import { Link, useParams } from 'react-router-dom';
 import customAxios from '../../apiFetcher/customAxios';
-// import axios from 'axios';
-// import { BASE_URL } from '../../constant/union';
 
 interface Info {
-  // storeProductDtos: [
-  //   {
   averageScore: number;
-  // createdAt: "2023-12-16T14:40:57.955Z";
   imageUrl: string;
-  // modifiedAt: "2023-12-16T14:40:57.955Z";
   price: number;
   productName: string;
   productId: string;
-  //   },
-  // ];
 }
 
 const SellerProductList = () => {
@@ -72,8 +64,6 @@ export default SellerProductList;
 
 const Wrapper = styled.div`
   width: 100%;
-  // height: 100px;
-  // background-color: #dedede;
 `;
 const Ul = styled.ul`
   padding: 20px 0;
@@ -103,8 +93,6 @@ const Img = styled.img`
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
-
-  // height: 120px;
 `;
 const InfoBox = styled.div`
   display: flex;
@@ -114,7 +102,6 @@ const InfoBox = styled.div`
 `;
 const ProductName = styled.strong`
   font-size: 20px;
-  // font-weight: bold;
 `;
 // const ProductRate = styled.div``;
 const ProductPrice = styled.span``;

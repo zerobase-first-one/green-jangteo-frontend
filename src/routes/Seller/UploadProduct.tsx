@@ -2,10 +2,8 @@ import HeaderPrevPageBtn from '../../components/HeaderPrevPageBtn';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
-// import { BASE_URL } from "../../constant/union";
 import { useState } from 'react';
 import customAxios from '../../apiFetcher/customAxios';
-// import AWS from 'aws-sdk';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { categoryList } from '../../Product/categoryList';
 import { UploadPageModal } from '../../components/modal/UploadPageModal';
@@ -75,10 +73,8 @@ const UploadProduct = () => {
       });
   };
 
-  // const limit = imgURL.indexOf('?');
   console.log(imgURL);
 
-  // const myBucket = new AWS.S3({
   const s3 = new S3Client({
     credentials: {
       accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
@@ -87,14 +83,6 @@ const UploadProduct = () => {
     region: import.meta.env.VITE_AWS_DEFAULT_REGION,
   });
 
-  // useEffect(() => {
-  //   AWS.config.update({
-  //     accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
-  //     secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
-  //   });
-  // }, []);
-
-  //   setMyBucket(myBucket);
   const [imageSrc, setImageSrc] = useState<any>('');
   const handleFileInput = (e: any) => {
     setSelectedFile(e.target.files[0]);
@@ -130,10 +118,6 @@ const UploadProduct = () => {
         import.meta.env.VITE_AWS_DEFAULT_REGION
       }.amazonaws.com/greengangteo/product/${file.name}`,
     );
-
-    // return `https://s3.${
-    //   import.meta.env.VITE_AWS_DEFAULT_REGION
-    // }.amazonaws.com/greengangteo/${file.name}`;
   }
 
   const [modalOpen, setModalOpen] = useState(false);

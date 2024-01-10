@@ -11,8 +11,6 @@ import {
 import { useEffect, useState } from 'react';
 import addCommaPrice from '../../../public/module/addComma';
 import customAxios from '../../apiFetcher/customAxios';
-// import axios from 'axios';
-// import { BASE_URL } from '../../constant/union';
 
 interface Info {
   categories: [
@@ -79,15 +77,11 @@ const SellerProductDetail = () => {
       },
     ],
   });
-  // const { userId } = useParams();
   const { productId } = useParams();
   console.log(product);
   useEffect(() => {
     customAxios
-      // .get(`/products/${productId}/review`)
       .get(`/products/${productId}/description`)
-      // axios
-      //   .get(`${BASE_URL}products/${productId}/description,`)
       .then(response => {
         setProduct(response.data);
         console.log(response.data);
@@ -171,7 +165,6 @@ const Box = styled.div`
   padding: 20px 0;
   display: flex;
   flex-direction: row;
-  // justify-content: center;
   align-items: center;
 
   @media screen and (max-width: 768px) {

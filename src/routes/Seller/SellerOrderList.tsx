@@ -3,9 +3,6 @@ import styled from 'styled-components';
 import addCommaPrice from '../../../public/module/addComma';
 import { useEffect, useState } from 'react';
 import customAxios from '../../apiFetcher/customAxios';
-// import { useEffect, useState } from "react";
-// import { BASE_URL } from "../../constant/union";
-// import axios from "axios";
 
 interface Order {
   createdAt: string;
@@ -34,23 +31,6 @@ const SellerOrderList = () => {
       })
       .catch(err => console.log(err.message));
   }, [userId]);
-
-  // const order = [
-  //   {
-  //     createdAt: '2023-12-19T07:10:20.683Z',
-  //     modifiedAt: '2023-12-19T07:10:20.683Z',
-  //     orderId: 0,
-  //     orderStatus: '발송전',
-  //     totalOrderPrice: 545150,
-  //   },
-  //   {
-  //     createdAt: '2023-12-19T07:10:20.683Z',
-  //     modifiedAt: '2023-12-19T07:10:20.683Z',
-  //     orderId: 1,
-  //     orderStatus: '발송전',
-  //     totalOrderPrice: 5450,
-  //   },
-  // ];
 
   return (
     <Wrapper>
@@ -113,7 +93,6 @@ const Title = styled.span`
 const OrderDate = styled.span`
   margin-bottom: 5px;
 `;
-// const OrderProducdt = styled.span``;
 const OrderNumber = styled.span``;
 const Price = styled.span``;
 const OrderState = styled.span``;
