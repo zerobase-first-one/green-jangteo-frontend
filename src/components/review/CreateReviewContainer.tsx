@@ -1,10 +1,11 @@
 import styled from 'styled-components';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { postReview } from '../../apiFetcher/postReview';
 import { useRecoilValue } from 'recoil';
 import { userIdState } from '../../store/atom/auth';
 import { useLocation } from 'react-router-dom';
-import AWS from 'aws-sdk';
+// import AWS from 'aws-sdk';
+import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import ConfirmModal from '../modal/ConfirmModal';
 
 export default function CreateReviewContainer() {
@@ -17,17 +18,20 @@ export default function CreateReviewContainer() {
   const [showModal, setShowModal] = useState(false);
   const [imgURL, setImgURL] = useState('');
 
-  // const myBucket = new AWS.S3({
-  //   params: { Bucket: `greengangteo` },
-  //   region: import.meta.env.VITE_AWS_DEFAULT_REGION,
-  // });
-
-  useEffect(() => {
-    AWS.config.update({
+  const s3 = new S3Client({
+    credentials: {
       accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
       secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
-    });
-  }, []);
+    },
+    region: import.meta.env.VITE_AWS_DEFAULT_REGION,
+  });
+
+  // useEffect(() => {
+  //   AWS.config.update({
+  //     accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
+  //     secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
+  //   });
+  // }, []);
 
   const onContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setContent(e.currentTarget.value);
@@ -37,28 +41,23 @@ export default function CreateReviewContainer() {
     setSelectedFile(e.target.files[0]);
   };
 
-  const uploadFile = (file: any) => {
-    const param = {
+  async function uploadFile(file: any) {
+    const param = new PutObjectCommand({
       ACL: 'public-read',
       ContentType: `image/*`,
       Body: file,
       Bucket: `greengangteo`,
       Key: `product/${file.name}`,
-    };
-    const myBucket = new AWS.S3({
-      params: { Bucket: `greengangteo` },
-      region: import.meta.env.VITE_AWS_DEFAULT_REGION,
     });
 
-    myBucket.putObject(param).send((err: any) => {
-      if (err) {
-        console.log(err);
-      } else {
-        const url = myBucket.getSignedUrl('getObject', { Key: param.Key });
-        setImgURL(url);
-      }
-    });
-  };
+    await s3.send(param);
+
+    setImgURL(
+      `https://s3.${
+        import.meta.env.VITE_AWS_DEFAULT_REGION
+      }.amazonaws.com/greengangteo/product/${file.name}`,
+    );
+  }
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

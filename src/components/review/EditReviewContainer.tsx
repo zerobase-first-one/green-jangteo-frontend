@@ -4,6 +4,7 @@ import { useRecoilValue } from 'recoil';
 import { userIdState } from '../../store/atom/auth';
 import { useLocation, useParams } from 'react-router-dom';
 // import AWS from 'aws-sdk';
+import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import ConfirmModal from '../modal/ConfirmModal';
 import customAxios from '../../apiFetcher/customAxios';
 
@@ -31,6 +32,13 @@ export default function EditReviewContainer() {
 
   //   setMyBucket(myBucket);
   // }, []);
+  const s3 = new S3Client({
+    credentials: {
+      accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
+      secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
+    },
+    region: import.meta.env.VITE_AWS_DEFAULT_REGION,
+  });
 
   const onContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setEditedContent(e.currentTarget.value);
@@ -46,17 +54,19 @@ export default function EditReviewContainer() {
   const uploadFile = async () => {
     if (!selectedFile) return;
 
-    const param = {
+    const param = new PutObjectCommand({
       ACL: 'public-read',
       ContentType: `image/*`,
       Body: selectedFile,
       Bucket: `greengangteo`,
       Key: `product/${selectedFile.name}`,
-    };
+    });
 
     try {
       // await myBucket.upload(param).promise();
-      const url = `https://greengangteo.s3.amazonaws.com/${param.Key}`;
+      await s3.send(param);
+      // const url = `https://greengangteo.s3.amazonaws.com/${param.Key}`;
+      const url = `https://greengangteo.s3.amazonaws.com/product/${selectedFile.name}`;
       setImgURL(url);
     } catch (error) {
       console.error('파일 업로드 중 오류 발생:', error);
