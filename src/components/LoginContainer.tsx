@@ -22,12 +22,14 @@ export default function LoginContainer() {
     e.preventDefault();
     if (isLoading || emailOrUsername === '' || password === '') return;
     try {
-      const { token, userId, roleDescriptions } = await postUserLogin({
-        emailOrUsername,
-        password,
-      });
+      const { accessToken, refreshToken, userId, roleDescriptions } =
+        await postUserLogin({
+          emailOrUsername,
+          password,
+        });
+      localStorage.setItem('refreshToken', JSON.stringify(refreshToken));
       setUserId(userId);
-      setToken(token);
+      setToken(accessToken);
       setRoles(roleDescriptions);
       setUserInfo(userInfo);
       navigate(`/users/${userId}/profile`);
@@ -52,12 +54,6 @@ export default function LoginContainer() {
       setError('');
     }
   };
-
-  // useEffect(() => {
-  //   if (token) {
-  //     navigate("/");
-  //   }
-  // }, [navigate, token]);
 
   return (
     <Form onSubmit={onSubmit}>
