@@ -66,6 +66,7 @@ export default function SignupContainer() {
         roles: [selectedRole],
       };
 
+      console.log(userData);
       await postUserSignup(userData);
 
       setShowModal(true);

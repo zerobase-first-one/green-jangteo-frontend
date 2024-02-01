@@ -46,7 +46,7 @@ const UploadProduct = () => {
   const onSubmit = async (data: FormValue) => {
     await axios
       .all([
-        customAxios.post(`/products`, {
+        customAxios.post(`/product`, {
           userId: userId,
           productName: data.productName,
           price: data.price,

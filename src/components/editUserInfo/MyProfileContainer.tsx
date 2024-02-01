@@ -20,7 +20,7 @@ export default function MyProfileContainer() {
 
   const handleLogout = () => {
     setShowModal(true);
-    localStorage.clear();
+    localStorage.setItem('token', '');
   };
 
   return (
@@ -148,5 +148,4 @@ const LogoutButton = styled.button`
   border-radius: 5px;
   border: none;
   text-align: center;
-  cursor: pointer;
 `;

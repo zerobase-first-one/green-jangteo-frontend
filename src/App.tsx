@@ -33,7 +33,7 @@ import UserProfile from './views/profile/UserProfile';
 import CartOrder from './views/Order/CartOrder';
 import { SuccessPage } from './views/Order/Success';
 import EditSellerProfile from './routes/Seller/EditSellerProfile';
-// import UpdateCategory from './Product/UpdateCategory';
+import UpdateCategory from './Product/UpdateCategory';
 import OrderList from './views/Order/OrderList';
 import OrderListDetail from './views/Order/OrderListDetail';
 import { EditBoard } from './views/board/EditBoard';
@@ -144,7 +144,7 @@ function App() {
           element={<EditProduct />}
         ></Route>
         <Route path="/orders/sucess" element={<SuccessPage />}></Route>
-        {/* <Route path="/categorySetting" element={<UpdateCategory />}></Route> */}
+        <Route path="/categorySetting" element={<UpdateCategory />}></Route>
         <Route path="/users/:userId/orderList" element={<OrderList />}></Route>
         <Route
           path="/users/:userId/orderList/:orderId"

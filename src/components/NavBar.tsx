@@ -5,18 +5,18 @@ import { IoIosDocument } from 'react-icons/io';
 import { BsPersonFill } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { userIdState } from '../store/atom/auth';
+import { roleState, tokenState, userIdState } from '../store/atom/auth';
 
 const NavBar = () => {
+  const token = useRecoilValue(tokenState);
   const userId = useRecoilValue(userIdState);
+  const roles = useRecoilValue(roleState);
 
   const generateProfileLink = () => {
-    const storedToken = localStorage.getItem('token');
-
-    if (storedToken && userId !== null) {
-      return `/users/${userId}/profile`;
+    if (token && userId !== null) {
+      if (roles[0] === '구매자') return `users/${userId}/profile`;
+      if (roles[0] === '판매자') return `stores/${userId}`;
     }
-
     return '/users/login';
   };
 
