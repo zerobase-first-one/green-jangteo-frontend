@@ -3,13 +3,24 @@ import react from '@vitejs/plugin-react-swc';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  define: {
-    global: {},
-  },
+  // plugins: [react()],
+  // define: {
+  //   global: {},
+  // },
 
+  plugins: [react()],
+  optimizeDeps: {
+    exclude: ['js-big-decimal'],
+  },
+  define: { _global: {} },
+  resolve: {
+    alias: {
+      './runtimeConfig': './runtimeConfig.browser',
+    },
+  },
   build: {
     commonjsOptions: {
+      // include: [],
       include: [/node_modules/],
       extensions: ['.js', '.cjs'],
       strictRequires: true,
