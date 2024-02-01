@@ -10,8 +10,8 @@ export const postUserLogin = async ({ emailOrUsername, password }: ILogin) => {
 
   try {
     const response = await customAxios.post(`/users/login`, data);
-    const { token, userId, roleDescriptions } = response.data;
-    return { token, userId, roleDescriptions };
+    const { accessToken, userId, roleDescriptions } = response.data;
+    return { accessToken, userId, roleDescriptions };
   } catch (error) {
     console.error('로그인 오류:', error);
     throw error;

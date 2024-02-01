@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 // import { ImLeaf } from 'react-icons/im';
 import Slick from './slick';
 import ProductListItem from './ProductListItem';
-import customAxios from '../apiFetcher/customAxios';
+// import customAxios from '../apiFetcher/customAxios';
+import axios from 'axios';
 
 const Wrapper = styled.div`
   padding: 0 20px;
@@ -33,13 +34,14 @@ const ProductList = () => {
         'https://cdn.pixabay.com/photo/2016/12/10/21/28/plums-1898196_1280.jpg',
     },
   ]);
+  console.log(products);
 
   useEffect(() => {
-    // axios;
-    // .get(`../product-dummy.json`)
-    // .get(`${BASE_URL}/products`)
-    customAxios
-      .get('/products', { params: { page: 0, size: 30 } })
+    axios
+      .get(`../product-dummy.json`)
+      // .get(`${BASE_URL}/products`)
+      // customAxios
+      //   .get('/products', { params: { page: 0, size: 30 } })
       .then(response => {
         setProducts(response.data);
       })
@@ -48,34 +50,12 @@ const ProductList = () => {
 
   return (
     <Wrapper>
-      {/* <Title>
-        멤버십 제품
-        <ImLeaf
-          style={{
-            marginLeft: '5px',
-            transform: 'translateY(2px)',
-            color: 'var(--maincolor)',
-          }}
-        />
-      </Title>
-      <Slick>
-        {products.map((item: any) => (
-          // item.membership == true && (
-          <ProductListItem
-            image={item.image}
-            title={item.title}
-            price={item.price}
-            key={item.productId}
-            width={`100%`}
-          />
-        ))}
-      </Slick> */}
       <Title>음식</Title>
       <Slick>
         {products
           .reverse()
           .map((item: any) =>
-            item.categories.firstCategory == `음식` ? (
+            item.categories[0].firstCategory == `음식` ? (
               <ProductListItem
                 image={item.image}
                 title={item.productName}
@@ -110,7 +90,6 @@ const ProductList = () => {
       <Slick>
         {products.map(
           (item: any) => (
-            // item.categories.secondCategory == `하의` && (
             <ProductListItem
               image={item.image}
               title={item.productName}

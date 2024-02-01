@@ -22,12 +22,12 @@ export default function LoginContainer() {
     e.preventDefault();
     if (isLoading || emailOrUsername === '' || password === '') return;
     try {
-      const { token, userId, roleDescriptions } = await postUserLogin({
+      const { accessToken, userId, roleDescriptions } = await postUserLogin({
         emailOrUsername,
         password,
       });
       setUserId(userId);
-      setToken(token);
+      setToken(accessToken);
       setRoles(roleDescriptions);
       setUserInfo(userInfo);
       navigate(`/users/${userId}/profile`);

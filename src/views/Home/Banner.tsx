@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import BannerSlick from './bannerSlick';
 
 const BannerContainer = styled.div`
@@ -60,12 +59,14 @@ const Banner = () => {
               환경 보호의 날 기념 <br /> <span>EVENT</span>
             </TextBox>
           </Container>
-          <Link to={`/categorySetting`}>
-            <Container>나</Container>
-          </Link>
-          <Link to={`/createCoupon`}>
-            <Container>쿠폰 발행</Container>
-          </Link>
+          <Container>
+            <Img
+              src={`https://cdn.pixabay.com/photo/2023/06/13/09/27/ai-generated-8060484_1280.jpg`}
+            />
+            <TextBox>
+              환경 보호의 날 기념 <br /> <span>EVENT</span>
+            </TextBox>
+          </Container>
         </BannerSlick>
       </BannerContainer>
     </>
