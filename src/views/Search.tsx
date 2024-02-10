@@ -11,6 +11,8 @@ const Search = () => {
   const [currentValue, setCurrentValue] = useState([]);
   const debouncedValue = useDebounce(currentValue, 300);
 
+  console.log('vercel 테스트 코드');
+
   useEffect(() => {
     customAxios
       .get('/products/auto-complete', { params: { keyword: debouncedValue } })
