@@ -11,6 +11,8 @@ const Search = () => {
   const [currentValue, setCurrentValue] = useState([]);
   const debouncedValue = useDebounce(currentValue, 300);
 
+  console.log('노드 버전 수정 커밋');
+
   useEffect(() => {
     customAxios
       .get('/products/auto-complete', { params: { keyword: debouncedValue } })
