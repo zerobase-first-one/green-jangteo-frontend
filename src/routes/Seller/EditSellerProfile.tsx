@@ -86,7 +86,7 @@ const EditSellerProfile = () => {
     setImgURL(
       `https://s3.${
         import.meta.env.VITE_AWS_DEFAULT_REGION
-      }.amazonaws.com/greengangteo/product/${file.name}`,
+      }.amazonaws.com/greengangteo/profile/${file.name}`,
     );
   }
 

@@ -1,10 +1,9 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-// import { ImLeaf } from 'react-icons/im';
 import Slick from './slick';
 import ProductListItem from './ProductListItem';
-// import customAxios from '../apiFetcher/customAxios';
-import axios from 'axios';
+// import axios from 'axios';
+import customAxios from '../apiFetcher/customAxios';
 
 const Wrapper = styled.div`
   padding: 0 20px;
@@ -37,11 +36,10 @@ const ProductList = () => {
   console.log(products);
 
   useEffect(() => {
-    axios
-      .get(`../product-dummy.json`)
-      // .get(`${BASE_URL}/products`)
-      // customAxios
-      //   .get('/products', { params: { page: 0, size: 30 } })
+    // axios
+    // .get(`../product-dummy.json`)
+    customAxios
+      .get('/products', { params: { page: 0, size: 30 } })
       .then(response => {
         setProducts(response.data);
       })

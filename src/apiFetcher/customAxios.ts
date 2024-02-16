@@ -13,9 +13,14 @@ customAxios.interceptors.request.use(
   config => {
     const token = JSON.parse(localStorage.getItem('token') as string);
 
-    if (token) {
+    if (config.headers && token) {
+      const refreshToken = JSON.parse(
+        localStorage.getItem('refreshToken') as string,
+      );
       config.headers['Authorization'] = `Bearer ${token}`;
+      config.headers['refreshToken'] = `Bearer ${refreshToken}`;
     }
+
     return config;
   },
   error => {
@@ -28,9 +33,24 @@ customAxios.interceptors.response.use(
   response => {
     return response;
   },
-  error => {
-    console.log(error);
+  async error => {
     const err = error as AxiosError;
+
+    if (err.code === 'ERR_BAD_REQUEST') {
+      const originalRequest = error.config;
+      const refreshToken = JSON.parse(
+        localStorage.getItem('refreshToken') as string,
+      );
+
+      const response = await axios.post(
+        `${BASE_URL}/token?refreshToken=${refreshToken}`,
+      );
+      const newAccessToken = response.data;
+
+      originalRequest.headers.authorization = `Bearer ${newAccessToken}`;
+      return axios(originalRequest);
+    }
+
     return Promise.reject(err);
   },
 );

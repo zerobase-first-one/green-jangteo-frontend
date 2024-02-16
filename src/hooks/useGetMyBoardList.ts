@@ -18,7 +18,7 @@ export default function useGetMyBoardList() {
         params: { userId, page, paged: true, size: 4, sort: 'createdAt,desc' },
       });
       const postData = response.data || [];
-      console.log(postData);
+
       setPosts(postData);
     } catch (error) {
       console.error('Error fetching data:', error);

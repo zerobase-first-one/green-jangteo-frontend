@@ -1,6 +1,6 @@
 [
   {
-    "categories": [{ "firstCategory": "음식" }, { "secondCategory": "완구류" }],
+    "categories": [{ "firstCategory": "음식" }, { "secondCategory": "과일" }],
     "description": "이 제품은 11차 재활용하여 만든 제품입니다.",
     "image": "https://cdn.pixabay.com/photo/2016/12/10/21/28/plums-1898196_1280.jpg",
     "inventory": 10,
@@ -11,7 +11,7 @@
   },
 
   {
-    "categories": [{ "firstCategory": "음식" }, { "secondCategory": "가구류" }],
+    "categories": [{ "firstCategory": "음식" }, { "secondCategory": "채소" }],
     "description": "이 제품은 31차 재활용하여 만든 제품입니다.",
     "image": "https://cdn.pixabay.com/photo/2016/12/10/21/28/plums-1898196_1280.jpg",
     "inventory": 29,
@@ -98,7 +98,7 @@
     "inventory": 14,
     "price": 5000,
     "productName": "업사이클링 제품 8번",
-    "productId": 1,
+    "productId": 8,
     "userId": 1
   }
 ]

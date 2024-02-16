@@ -1,6 +1,18 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+/*
+* @Example
+* 
+* import ConfirmModal from './modal/ConfirmModal';
+
+* <ConfirmModal
+*   message="회원가입이 완료되었습니다."
+*   linkPath="/users/login"
+*   onClose={() => setShowModal(false)}
+* />
+*/
+
 interface ConfirmModalProps {
   onClose: () => void;
   message: string;

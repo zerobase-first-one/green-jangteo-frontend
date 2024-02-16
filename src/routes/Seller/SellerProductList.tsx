@@ -22,16 +22,14 @@ const SellerProductList = () => {
       productId: '',
     },
   ]);
-  console.log(products);
+
   const { userId } = useParams();
 
-  console.log(products);
   useEffect(() => {
     customAxios
       .get(`/stores/${userId}`, { params: { userId } })
       .then(response => {
         setProducts(response.data.storeProductDtos);
-        console.log(response.data);
       })
       .catch(err => console.log(err.message));
   }, [userId]);

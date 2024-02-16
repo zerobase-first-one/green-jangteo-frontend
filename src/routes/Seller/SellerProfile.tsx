@@ -24,8 +24,6 @@ const SellerProfile = () => {
   const userId = useRecoilValue(userIdState);
 
   const orderMatch = useMatch('stores/:userId/order');
-  console.log(profile);
-  console.log(userId);
 
   useEffect(() => {
     customAxios

@@ -20,6 +20,8 @@ export const useGetMyProfile = () => {
           street: response.data.addressDto.street || '',
           zipcode: response.data.addressDto.zipcode || '',
           isLoading: false,
+          phone: response.data.phone || '',
+          fullName: response.data.fullName || '',
         });
       } catch (error) {
         console.error('사용자 프로필을 불러오는 중 오류 발생:', error);
@@ -31,6 +33,8 @@ export const useGetMyProfile = () => {
           street: '',
           zipcode: '',
           isLoading: false,
+          phone: '',
+          fullName: '',
         });
       }
     };
