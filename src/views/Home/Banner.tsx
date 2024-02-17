@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import BannerSlick from './bannerSlick';
+import { Link } from 'react-router-dom';
 
 const BannerContainer = styled.div`
   height: 450px;
@@ -7,17 +8,17 @@ const BannerContainer = styled.div`
 `;
 const Container = styled.div`
   height: 450px;
-  background-color: #ededed;
+  background-color: #fff;
   position: relative;
   overflow: hidden;
   cursor: pointer;
 `;
 const Img = styled.img`
-  width: 120%;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  background-image: cover;
 
   @media screen and (max-width: 768px) {
     width: auto;
@@ -59,14 +60,21 @@ const Banner = () => {
               환경 보호의 날 기념 <br /> <span>EVENT</span>
             </TextBox>
           </Container>
-          <Container>
-            <Img
-              src={`https://cdn.pixabay.com/photo/2023/06/13/09/27/ai-generated-8060484_1280.jpg`}
-            />
-            <TextBox>
-              환경 보호의 날 기념 <br /> <span>EVENT</span>
-            </TextBox>
-          </Container>
+          {/* <Link to={`/categorySetting`}>
+            <Container>
+              <Img
+                src={`https://cdn.pixabay.com/photo/2023/06/13/09/27/ai-generated-8060484_1280.jpg`}
+              />
+              <TextBox>나</TextBox>
+            </Container>
+          </Link> */}
+          <Link to={`/categorySetting`}>
+            <Container>
+              <Img
+                src={`https://vrthumb.imagetoday.co.kr/2023/04/03/tid277t001541.jpg`}
+              />
+            </Container>
+          </Link>
         </BannerSlick>
       </BannerContainer>
     </>

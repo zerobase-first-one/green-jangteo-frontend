@@ -13,7 +13,6 @@ interface FormValue {
   userId: number;
   productName: string;
   price: number;
-  // imageStoragePath: 'C:/greenjangteo/product';
   images: [
     {
       url: string;
@@ -26,11 +25,7 @@ interface FormValue {
 }
 
 const UploadProduct = () => {
-  const {
-    register,
-    handleSubmit,
-    // formState: { errors },
-  } = useForm<FormValue>({
+  const { register, handleSubmit } = useForm<FormValue>({
     mode: 'onSubmit',
   });
 

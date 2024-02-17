@@ -35,7 +35,7 @@ const SellerOrderList = () => {
   return (
     <Wrapper>
       <Ul>
-        {order.map((item: any, idx) => (
+        {order.reverse().map((item: any, idx) => (
           <List key={idx}>
             <OrderDate>{item.createdAt.slice(0, 10)}</OrderDate>
             <OrderNumber>

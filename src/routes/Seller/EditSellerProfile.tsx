@@ -78,7 +78,7 @@ const EditSellerProfile = () => {
       ContentType: `image/*`,
       Body: file,
       Bucket: `greengangteo`,
-      Key: `product/${file.name}`,
+      Key: `profile/${file.name}`,
     });
 
     await s3.send(param);
