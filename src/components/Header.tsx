@@ -150,23 +150,6 @@ const UtilBtnBox = styled.div`
 `;
 
 const Header = () => {
-  // const categories = [
-  //   {
-  //     firstCategory: '음식',
-  //     secondCategoryList: [
-  //       { secondCategory: '스낵' },
-  //       { secondCategory: '과일' },
-  //     ],
-  //   },
-  //   {
-  //     firstCategory: '의류',
-  //     secondCategoryList: [
-  //       { secondCategory: '상의' },
-  //       { secondCategory: '하의' },
-  //     ],
-  //   },
-  // ];
-
   const [display, setDisplay] = useReducer(
     val => (val === 'none' ? 'block' : 'none'),
     'none',

@@ -17,7 +17,7 @@ const ProductListItem = (props: Info) => {
     <Link to={`/products/${props.productId}/description`}>
       <Wrapper style={{ width: props.width }}>
         <ImgContainer>
-          <Image src={props.image} alt="" />
+          <Image src={props.image} alt={props.title} />
         </ImgContainer>
         <ProductName>
           {props.title}

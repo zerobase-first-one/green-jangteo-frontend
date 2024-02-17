@@ -8,6 +8,8 @@ export interface IForm {
   zipcode: string;
   storeName?: string;
   isLoading: boolean;
+  phone: string;
+  fullName: string;
 }
 
 const initialData: IForm | null = JSON.parse(
@@ -23,6 +25,8 @@ export const userDataState = atom<IForm | null>({
     street: '',
     zipcode: '',
     isLoading: true,
+    phone: '',
+    fullName: '',
   },
   effects_UNSTABLE: [
     ({ onSet }) => {

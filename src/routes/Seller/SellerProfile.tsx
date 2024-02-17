@@ -14,24 +14,6 @@ interface Info {
 }
 
 const SellerProfile = () => {
-  // const profile = {
-  //   "createdAt": "2023-12-16T14:40:57.955Z",
-  //   "description": "string",
-  //   "imageUrl": "string",
-  //   "modifiedAt": "2023-12-16T14:40:57.955Z",
-  //   "storeName": "string",
-  //   "storeProductDtos": [
-  //     {
-  //       "averageScore": 0,
-  //       "createdAt": "2023-12-16T14:40:57.955Z",
-  //       "imageUrl": "string",
-  //       "modifiedAt": "2023-12-16T14:40:57.955Z",
-  //       "price": 0,
-  //       "productName": "string"
-  //     }
-  //   ]
-  // }
-  // const { userId } = useParams();
   const [profile, setProfile] = useState<Info>({
     storeName: '',
     description: '',
@@ -42,8 +24,6 @@ const SellerProfile = () => {
   const userId = useRecoilValue(userIdState);
 
   const orderMatch = useMatch('stores/:userId/order');
-  console.log(profile);
-  console.log(userId);
 
   useEffect(() => {
     customAxios

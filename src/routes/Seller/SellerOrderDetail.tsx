@@ -4,9 +4,6 @@ import styled from 'styled-components';
 import addCommaPrice from '../../../public/module/addComma';
 import { useEffect, useState } from 'react';
 import customAxios from '../../apiFetcher/customAxios';
-// import { useEffect, useState } from "react";
-// import axios from "axios";
-// import { BASE_URL } from "../../constant/union";
 
 interface OrderDetail {
   amountToPay: number;
@@ -28,7 +25,7 @@ interface OrderDetail {
       productToOrderResponseDto: {
         productId: string;
         name: string;
-        imageUrl: `https://cdn.pixabay.com/photo/2017/01/20/15/12/oranges-1995079_1280.jpg`;
+        imageUrl: string;
       };
       quantity: number;
     },
@@ -41,47 +38,6 @@ interface OrderDetail {
 
 const SellerOrderDetail = () => {
   const { orderId } = useParams();
-
-  // const order = {
-  //   amountToPay: 216510,
-  //   buyerResponseDto: {
-  //     buyerName: `구매자이름1`,
-  //     buyerPhone: 11111111,
-  //     shippingAddress: {
-  //       city: `서울시`,
-  //       street: `테헤란로`,
-  //       zipcode: 65489,
-  //       detailedAddress: `1450호`,
-  //     },
-  //   },
-  //   orderId: orderId,
-  //   orderProductResponseDtos: [
-  //     {
-  //       orderPrice: 10000,
-  //       orderProductId: 1,
-  //       productToOrderResponseDto: {
-  //         productId: 1,
-  //         name: `아이템1`,
-  //         imageUrl: `https://cdn.pixabay.com/photo/2017/01/20/15/12/oranges-1995079_1280.jpg`,
-  //       },
-  //       quantity: 1,
-  //     },
-  //     {
-  //       orderPrice: 10000,
-  //       orderProductId: 1,
-  //       productToOrderResponseDto: {
-  //         productId: 1,
-  //         name: `아이템1`,
-  //         imageUrl: `https://cdn.pixabay.com/photo/2017/01/20/15/12/oranges-1995079_1280.jpg`,
-  //       },
-  //       quantity: 1,
-  //     },
-  //   ],
-  //   orderStatus: '배송전',
-  //   storeName: `상점1`,
-  //   totalOrderPrice: 205454,
-  //   createdAt: '2023-12-19T07:19:54.195Z',
-  // };
 
   const { userId } = useParams();
   const [order, setOrder] = useState<OrderDetail>({
@@ -114,7 +70,6 @@ const SellerOrderDetail = () => {
     totalOrderPrice: 0,
     createdAt: '',
   });
-  console.log(order);
   useEffect(() => {
     customAxios
       .get(`/orders/${orderId}`, { params: { userId: userId } })

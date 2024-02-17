@@ -14,11 +14,9 @@ export default function useGetMyBoardList() {
   const fetchData = async () => {
     try {
       setLoading(true);
-
       const response = await customAxios.get(`/posts/my`, {
         params: { userId, page, paged: true, size: 4, sort: 'createdAt,desc' },
       });
-
       const postData = response.data || [];
 
       setPosts(postData);

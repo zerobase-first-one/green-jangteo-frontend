@@ -7,6 +7,7 @@ import { useRecoilValue } from 'recoil';
 import { userIdState } from '../../store/atom/auth';
 import { useEffect, useState } from 'react';
 import OrderConfirm from '../../components/modal/OrderConfirm';
+import { userDataState } from '../../store/atom/userDataState';
 
 interface OrderInfo {
   buyerId: number;
@@ -27,6 +28,7 @@ interface OrderInfo {
 
 const Order = () => {
   const userId = useRecoilValue(userIdState);
+  const userData = useRecoilValue(userDataState);
 
   const [coupons, setCoupons] = useState([]);
   console.log(coupons);
@@ -43,12 +45,19 @@ const Order = () => {
   useEffect(() => {
     customAxios
       .get(`/reserves/current`, { params: { userId: userId } })
-      .then(response => setReserve(response.data))
+      .then(response => {
+        if (response.status === 404) {
+          setReserve(0);
+        } else {
+          setReserve(response.data);
+        }
+      })
       .catch(err => {
         console.log(err.message);
         setReserve(0);
       });
   }, [userId]);
+  console.log(reserve);
 
   const location = useLocation();
   const locate = location.state;
@@ -106,6 +115,8 @@ const Order = () => {
         console.log(err.message);
       });
   };
+  const useableReserve =
+    reserve.currentReserve == undefined ? reserve : reserve.currentReserve;
 
   return (
     <>
@@ -116,18 +127,18 @@ const Order = () => {
           <TextBox>
             <OrderName>
               이름
-              <OrderInfo>홍길동</OrderInfo>
+              <OrderInfo>{userData?.fullName}</OrderInfo>
             </OrderName>
             <OrderName>
               연락처
-              <OrderInfo>010-1234-1112</OrderInfo>
+              <OrderInfo>{userData?.phone}</OrderInfo>
             </OrderName>
             <OrderName>
               배송지
               <OrderInfo className="shippingInfo">
-                06142
-                <Box>서울 테헤란로 231</Box>
-                길동아파트 101동 102호
+                {userData?.zipcode}
+                <Box>{userData?.city + ` ` + userData?.street}</Box>
+                {userData?.detailedAddress}
               </OrderInfo>
             </OrderName>
           </TextBox>
@@ -191,7 +202,7 @@ const Order = () => {
             </OrderName>
             <OrderName>
               보유 적립금
-              <OrderInfo>{reserve.currentReserve} 원</OrderInfo>
+              <OrderInfo>{useableReserve} 원</OrderInfo>
             </OrderName>
             <OrderName className="reserve">
               <Label>적립금 사용</Label>
@@ -199,8 +210,8 @@ const Order = () => {
                 onChange={e => handleReserve(e)}
                 onInput={(e: any) => {
                   if (e.target.value >= 0) {
-                    if (e.target.value > Number(reserve.currentReserve)) {
-                      alert(`${reserve.currentReserve}까지 입력가능`);
+                    if (e.target.value > Number(useableReserve)) {
+                      alert(`${useableReserve}까지 입력가능`);
                     }
                   } else {
                     e.target.value = 0;

@@ -2,11 +2,8 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import customAxios from '../../apiFetcher/customAxios';
 import { useParams } from 'react-router-dom';
-// import addCommaPrice from '../../../public/module/addComma';
 
 interface Review {
-  // review: [
-  // {
   content: string;
   createdAt: string;
   imageUrl: string;
@@ -14,8 +11,6 @@ interface Review {
   productId: string;
   score: number;
   userId: number;
-  // },
-  // ];
 }
 
 const SellerReview = () => {
@@ -29,17 +24,7 @@ const SellerReview = () => {
       productId: '',
       score: 0,
       userId: 0,
-    },
-    {
-      content: '정말 좋아요',
-      createdAt: '2023-12-19T18:22:27.989Z',
-      imageUrl:
-        'https://cdn.pixabay.com/photo/2016/12/10/21/28/plums-1898196_1280.jpg',
-      modifiedAt: '',
-      productId: '',
-      score: 0,
-      userId: 0,
-    },
+    }
   ]);
   const { productId } = useParams();
   useEffect(() => {
@@ -50,8 +35,6 @@ const SellerReview = () => {
       })
       .catch(err => console.log(err.message));
   }, [productId]);
-  // const reviews = useOutletContext<Review>();
-  // console.log(reviews);
 
   return (
     <Wrapper>

@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { userIdState } from '../../store/atom/auth';
 import { useLocation, useParams } from 'react-router-dom';
-// import AWS from 'aws-sdk';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import ConfirmModal from '../modal/ConfirmModal';
 import customAxios from '../../apiFetcher/customAxios';
@@ -15,23 +14,9 @@ export default function EditReviewContainer() {
   const value = location.state;
   const [editedContent, setEditedContent] = useState(value.content);
   const [imgURL, setImgURL] = useState<string | null>(value.imageUrl);
-  // const [myBucket, setMyBucket] = useState(new AWS.S3());
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [showModal, setShowModal] = useState(false);
 
-  // useEffect(() => {
-  //   const myBucket = new AWS.S3({
-  //     params: { Bucket: `greengangteo` },
-  //     region: import.meta.env.VITE_AWS_DEFAULT_REGION,
-  //   });
-
-  //   AWS.config.update({
-  //     accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
-  //     secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
-  //   });
-
-  //   setMyBucket(myBucket);
-  // }, []);
   const s3 = new S3Client({
     credentials: {
       accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,

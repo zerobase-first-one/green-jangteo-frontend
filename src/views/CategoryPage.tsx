@@ -6,9 +6,10 @@ import ProductListItem from '../Product/ProductListItem';
 import Header from '../components/Header';
 import NavBar from '../components/NavBar';
 import Footer from '../components/Footer';
-import customAxios from '../apiFetcher/customAxios';
+// import customAxios from '../apiFetcher/customAxios';
 import { MdKeyboardArrowLeft } from 'react-icons/md';
 import { MdKeyboardArrowRight } from 'react-icons/md';
+import axios from 'axios';
 
 const CategoryPage = () => {
   const { firstCategory } = useParams();
@@ -20,8 +21,10 @@ const CategoryPage = () => {
   console.log(products);
 
   useEffect(() => {
-    customAxios
-      .get('/products', { params: { page: page, size: 8 } })
+    // customAxios
+    //   .get('/products', { params: { page: page, size: 8 } })
+    axios
+      .get(`../product-dummy.json`)
       .then(response => {
         setProducts(response.data);
       })
@@ -77,7 +80,7 @@ const CategoryPage = () => {
         <Products>
           {products.map((item: any) =>
             secondCategory !== undefined ? (
-              secondCategory == item.categories.secondCategory ? (
+              secondCategory == item.categories[1].secondCategory ? (
                 <Div>
                   <ProductListItem
                     productId={item.productId}
@@ -85,14 +88,13 @@ const CategoryPage = () => {
                     title={item.productName}
                     price={item.price}
                     key={item.productId}
-                    // membership={item.membership}
                     width={`100%`}
                   />
                 </Div>
               ) : (
                 void 0
               )
-            ) : firstCategory == item.categories.firstCategory ? (
+            ) : firstCategory == item.categories[0].firstCategory ? (
               <Div>
                 <ProductListItem
                   productId={item.productId}
@@ -100,7 +102,6 @@ const CategoryPage = () => {
                   title={item.productName}
                   price={item.price}
                   key={item.productId}
-                  // membership={item.membership}
                   width={`100%`}
                 />
               </Div>

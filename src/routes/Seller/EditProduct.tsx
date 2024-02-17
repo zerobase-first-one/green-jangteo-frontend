@@ -2,11 +2,8 @@ import HeaderPrevPageBtn from '../../components/HeaderPrevPageBtn';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useForm } from 'react-hook-form';
-// import { BASE_URL } from "../../constant/union";
-// import { useEffect, useState } from 'react';
 import { useState } from 'react';
 import customAxios from '../../apiFetcher/customAxios';
-// import AWS from 'aws-sdk';
 import { categoryList } from '../../Product/categoryList';
 import axios from 'axios';
 
@@ -39,10 +36,8 @@ const EditProduct = () => {
   const onReset = () => {
     navigate(-1);
   };
-  // const [myBucket, setMyBucket] = useState(Object);
   // const [selectedFile, setSelectedFile] = useState('');
   // const [imgURL, setImgURL] = useState(``);
-  // console.log(myBucket);
 
   const location = useLocation();
   const value = [location.state];
@@ -76,49 +71,11 @@ const EditProduct = () => {
       });
   };
 
-  // useEffect(() => {
-  //   AWS.config.update({
-  //     accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
-  //     secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
-  //   });
-  //   const myBucket = new AWS.S3({
-  //     params: { Bucket: `greengangteo` },
-  //     region: import.meta.env.VITE_AWS_DEFAULT_REGION,
-  //   });
-  //   console.log(myBucket);
-
-  //   setMyBucket(myBucket);
-  // }, []);
-
-  // const handleFileInput = (e: any) => {
-  //   setSelectedFile(e.target.files[0]);
-  //   console.log('e', e);
-  // };
-  // const uploadFile = (file: any) => {
-  //   const param = {
-  //     ACL: 'public-read',
-  //     ContentType: `image/*`,
-  //     Body: file,
-  //     Bucket: `greengangteo`,
-  //     Key: `product/${file.name}`,
-  //   };
-
-  //   myBucket.putObject(param).send((err: any) => {
-  //     if (err) {
-  //       console.log(err);
-  //     } else {
-  //       const url = myBucket.getSignedUrl('getObject', { Key: param.Key });
-  //       console.log(url, 'url');
-  //       setImgURL(url);
-  //     }
-  //   });
-  // };
-
   const [board, setBoard] = useState<FormValue[]>([]);
   console.log(board);
 
   const onChange = (e: any) => {
-    const { value, name } = e.target; //event.target에서 name과 value만 가져오기
+    const { value, name } = e.target;
     setBoard({
       ...board,
       [name]: value,
@@ -140,7 +97,6 @@ const EditProduct = () => {
               취소
             </Button>
             <Button type="submit">수정완료</Button>
-            {/* <Button type="submit">작성완료</Button> */}
           </BtnBox>
           {value.map((val: any) => (
             <>

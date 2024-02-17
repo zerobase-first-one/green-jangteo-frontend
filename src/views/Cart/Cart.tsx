@@ -8,6 +8,8 @@ import customAxios from '../../apiFetcher/customAxios';
 import { useRecoilValue } from 'recoil';
 import { userIdState } from '../../store/atom/auth';
 import { useGetMyProfile } from '../../hooks/useGetMyProfile';
+import { userDataState } from '../../store/atom/userDataState';
+
 interface Cart {
   productId: string;
   quantity: number;
@@ -15,7 +17,7 @@ interface Cart {
 const Cart = () => {
   const [cartList, setCartList] = useState<Cart[]>([]);
   const userId = useRecoilValue(userIdState);
-  console.log('userId', userId);
+  const userData = useRecoilValue(userDataState);
 
   // 장바구니 목록 get method
   const getProduct = async () => {
@@ -31,6 +33,7 @@ const Cart = () => {
   useEffect(() => {
     getProduct();
   }, []);
+
   const [numbers, setNumber] = useState(0);
   console.log(numbers);
   console.log(cartList);
@@ -124,12 +127,12 @@ const Cart = () => {
         .post(`/orders`, {
           buyerId: userId,
           orderProductRequestDtos: selectOrder,
-          sellerId: 745,
+          sellerId: 42,
           shippingAddressDto: {
-            city: `서울`,
-            detailedAddress: `길동아파트 101동 102호`,
-            street: `테헤란로 231`,
-            zipcode: `06142`,
+            city: userData?.city,
+            detailedAddress: userData?.detailedAddress,
+            street: userData?.street,
+            zipcode: userData?.zipcode,
           },
         })
         .then(response => {
@@ -139,8 +142,6 @@ const Cart = () => {
         .catch(err => console.log(`실패`, err));
     }
   };
-  // const userData = useRecoilValue(userDataState);
-  // const address = userData?.addressDto;
   const myInfo = useGetMyProfile();
   // 장바구니 전체 주문
   const cartId = localStorage.getItem('cartId');

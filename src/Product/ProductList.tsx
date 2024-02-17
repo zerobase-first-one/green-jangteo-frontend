@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-// import { ImLeaf } from 'react-icons/im';
 import Slick from './slick';
 import ProductListItem from './ProductListItem';
+// import axios from 'axios';
 import customAxios from '../apiFetcher/customAxios';
 interface List {
   productName: string;
@@ -23,11 +23,11 @@ const ProductList = () => {
         'https://cdn.pixabay.com/photo/2016/12/10/21/28/plums-1898196_1280.jpg',
     },
   ]);
+  console.log(products);
 
   useEffect(() => {
-    // axios;
+    // axios
     // .get(`../product-dummy.json`)
-    // .get(`${BASE_URL}/products`)
     customAxios
       .get('/products', { params: { page: 0, size: 30 } })
       .then(response => {
@@ -61,28 +61,6 @@ const ProductList = () => {
 
   return (
     <Wrapper>
-      {/* <Title>
-        멤버십 제품
-        <ImLeaf
-          style={{
-            marginLeft: '5px',
-            transform: 'translateY(2px)',
-            color: 'var(--maincolor)',
-          }}
-        />
-      </Title>
-      <Slick>
-        {products.map((item: any) => (
-          // item.membership == true && (
-          <ProductListItem
-            image={item.image}
-            title={item.title}
-            price={item.price}
-            key={item.productId}
-            width={`100%`}
-          />
-        ))}
-      </Slick> */}
       <Title>음식</Title>
       {ProductsFilterByCategory('음식')}
       <Title>의류</Title>

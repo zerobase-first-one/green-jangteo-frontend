@@ -3,7 +3,6 @@ import HeaderPrevPageBtn from '../../components/HeaderPrevPageBtn';
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useState } from 'react';
-// import AWS from 'aws-sdk';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { SellerEditProfileModal } from '../../components/modal/SellerEditProfileModal';
 import customAxios from '../../apiFetcher/customAxios';
@@ -32,8 +31,6 @@ const EditSellerProfile = () => {
     navigate(-1);
   };
 
-  // const limit = imgURL.indexOf('?');
-
   const onSubmit = async (data: FormValue) => {
     await customAxios
       .put(`/stores/${userId}`, {
@@ -58,21 +55,12 @@ const EditSellerProfile = () => {
     region: import.meta.env.VITE_AWS_DEFAULT_REGION,
   });
 
-  // useEffect(() => {
-  //   AWS.config.update({
-  //     accessKeyId: import.meta.env.VITE_AWS_ACCESS_KEY_ID,
-  //     secretAccessKey: import.meta.env.VITE_AWS_SECRET_ACCESS_KEY,
-  //   });
-  // }, []);
-
   const location = useLocation();
   const values = [location.state];
-  console.log(values);
 
   const [imageSrc, setImageSrc] = useState<any>('');
   const handleFileInput = (e: any) => {
     setSelectedFile(e.target.files[0]);
-    console.log('e', e);
 
     const reader = new FileReader();
     reader.readAsDataURL(e.target.files[0]);
@@ -90,7 +78,7 @@ const EditSellerProfile = () => {
       ContentType: `image/*`,
       Body: file,
       Bucket: `greengangteo`,
-      Key: `product/${file.name}`,
+      Key: `profile/${file.name}`,
     });
 
     await s3.send(param);
@@ -98,12 +86,8 @@ const EditSellerProfile = () => {
     setImgURL(
       `https://s3.${
         import.meta.env.VITE_AWS_DEFAULT_REGION
-      }.amazonaws.com/greengangteo/product/${file.name}`,
+      }.amazonaws.com/greengangteo/profile/${file.name}`,
     );
-
-    // return `https://s3.${
-    //   import.meta.env.VITE_AWS_DEFAULT_REGION
-    // }.amazonaws.com/greengangteo/${file.name}`;
   }
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -117,7 +101,7 @@ const EditSellerProfile = () => {
   console.log(board);
 
   const onChange = (e: any) => {
-    const { value, name } = e.target; //event.target에서 name과 value만 가져오기
+    const { value, name } = e.target;
     setBoard({
       ...board,
       [name]: value,
