@@ -52,23 +52,17 @@ const Banner = () => {
     <>
       <BannerContainer>
         <BannerSlick>
-          <Container>
-            <Img
-              src={`https://cdn.pixabay.com/photo/2023/06/13/09/27/ai-generated-8060484_1280.jpg`}
-            />
-            <TextBox>
-              환경 보호의 날 기념 <br /> <span>EVENT</span>
-            </TextBox>
-          </Container>
-          {/* <Link to={`/categorySetting`}>
+          <Link to={`/`}>
             <Container>
               <Img
                 src={`https://cdn.pixabay.com/photo/2023/06/13/09/27/ai-generated-8060484_1280.jpg`}
               />
-              <TextBox>나</TextBox>
+              <TextBox>
+                환경 보호의 날 기념 <br /> <span>EVENT</span>
+              </TextBox>
             </Container>
-          </Link> */}
-          <Link to={`/categorySetting`}>
+          </Link>
+          <Link to={`/couponCreate`}>
             <Container>
               <Img
                 src={`https://vrthumb.imagetoday.co.kr/2023/04/03/tid277t001541.jpg`}
